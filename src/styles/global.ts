@@ -9,7 +9,7 @@ export const GlobalStyle = createGlobalStyle`
     body{
         background-color: ${props => props.theme["blue-700"]};
         color: ${props => props.theme.white};
-        -webkit-font-smoothing: antialiassed;
+        -webkit-font-smoothing: antialiased;
     }
     body, input, button{
         font: 1rem Poppins, sans-serif;

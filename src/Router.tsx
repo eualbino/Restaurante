@@ -14,15 +14,17 @@ import LanchesMenu from "./pages/Menu/LanchesMenu";
 import PorcoesMenu from "./pages/Menu/PorcoesMenu";
 import MesaAdicionarDeletar from "./pages/MesaAdicionarDeletar";
 import Observacao from "./pages/Observacao";
-import PedidosMesas from "./pages/PedidosMesas";
+import PedidosMesas from "./pages/Mesas/PedidosMesas";
 import PorcaoAdicionar from "./pages/Porcao/PorcaoAdicionar";
 import PorcaoEditar from "./pages/Porcao/PorcaoEditar";
+import Mesas from "./pages/Mesas";
 
 const Router = () => {
     return ( 
         <Routes>
             <Route path="/" element={<Login/>}/>
             <Route path="/menu" element={<Menu/>}/>
+            <Route path="/mesas" element={<Mesas/>}/>
             <Route path="/acrescimoAdicionar" element={<AcrescimoAdicionar/>}/>
             <Route path="/acrescimoEditar" element={<AcrescimoEditar/>}/>
             <Route path="/bebidaAdicionar" element={<BebidaAdicionar/>}/>
