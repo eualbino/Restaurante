@@ -5,11 +5,12 @@ export const MenuContainer = styled.main`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  text-align: center;
-  a{
+  nav{
     display: flex;
+    flex-direction: column;
+  }
+  a{
     text-align: center;
-    justify-content: center;
     font-size: 3.2rem;
     font-weight: bold;
     padding: 0.15rem 0rem;
