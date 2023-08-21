@@ -1,11 +1,11 @@
 import Header from "../components/Header";
-import { MesasContainer, MessasAcessiveis } from "./styles";
+import { MessasContainer } from "./styles";
 
 const Mesas = () => {
   return (
-    <MesasContainer>
+    <div>
       <Header children="MESAS" />
-      <MessasAcessiveis>
+      <MessasContainer>
         <div>
           <h2>Mesa 1</h2>
           <button>ACESSAR</button>
@@ -30,8 +30,8 @@ const Mesas = () => {
           <h2>Mesa 1</h2>
           <button>ACESSAR</button>
         </div>
-      </MessasAcessiveis>
-    </MesasContainer>
+      </MessasContainer>
+    </div>
   );
 };
 
