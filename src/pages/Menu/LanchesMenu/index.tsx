@@ -1,5 +1,15 @@
+import Header from "../../components/Header";
+
 const LanchesMenu = () => {
-    return ( <h1>LanchesMenu</h1> );
+    return ( 
+        <div>
+            <div>
+            <Header/>
+            </div>
+            
+            
+        </div>
+     );
 }
  
 export default LanchesMenu;

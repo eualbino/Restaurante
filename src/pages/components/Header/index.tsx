@@ -3,7 +3,7 @@ import { HeaderContainer } from "./styles";
 import { NavLink } from "react-router-dom";
 
 interface headerProps{
-    children: string,
+    children?: string,
 }
 
 const Header = ({ children }: headerProps) => {

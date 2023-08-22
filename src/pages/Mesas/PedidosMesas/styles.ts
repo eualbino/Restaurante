@@ -42,8 +42,8 @@ export const PedidosMesaLanches = styled.div`
 
 export const PedidosMesaBebidas = styled.div`
   text-align: center;
-  border-right: 3px solid ${(props) => props.theme["purple-500"]};
-  
+  border-right: 4px solid ${(props) => props.theme["purple-500"]};
+
   div {
     margin-top: 1.5rem;
     border: 2px solid ${(props) => props.theme["purple-500"]};
@@ -71,7 +71,7 @@ export const PedidosMesaBebidas = styled.div`
 
 export const PedidosMesaPorcoes = styled.div`
   text-align: center;
-  
+
   div {
     margin-top: 1.5rem;
     border: 2px solid ${(props) => props.theme["purple-500"]};
@@ -95,4 +95,40 @@ export const PedidosMesaPorcoes = styled.div`
     border-radius: 9999rem;
     height: 1.5rem;
   }
+`;
+
+export const TotalAndButtonOptions = styled.div`
+  margin-top: 3.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const ButtonOptions = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.3rem;
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 10rem;
+    height: 2.5rem;
+    color: ${(props) => props.theme.white};
+    background-color: ${(props) => props.theme["purple-500"]};
+    border: none;
+    border-radius: 6px;
+    gap: 0.5rem;
+  }
+`;
+
+export const TotalPrice = styled.div`
+  width: 60%;
+  margin-top: -1rem;
+  h2{
+    float: right;
+  }
+  
 `;
