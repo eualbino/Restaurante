@@ -29,6 +29,7 @@ export const MessasContainer = styled.div`
       border-radius: 5px;
       color: ${(props) => props.theme.white};
       background-color: ${(props) => props.theme["purple-500"]};
+      cursor: pointer;
     }
   }
 `;

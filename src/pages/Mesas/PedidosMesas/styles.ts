@@ -1,8 +1,13 @@
 import { styled } from "styled-components";
 
 export const PedidosMesasContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const PedidosMesasContain = styled.div`
+  display: flex;
+  justify-content: center;
   max-width: 71rem;
   margin: 0 auto;
   margin-top: 3rem;
@@ -16,6 +21,7 @@ export const PedidosMesaLanches = styled.div`
   border-right: 4px solid ${(props) => props.theme["purple-500"]};
 
   div {
+    position: relative;
     margin-top: 1.5rem;
     border: 2px solid ${(props) => props.theme["purple-500"]};
     border-radius: 8px;
@@ -29,9 +35,10 @@ export const PedidosMesaLanches = styled.div`
   }
 
   button {
+    cursor: pointer;
     position: absolute;
-    margin-left: 4rem;
-    margin-top: -1rem;
+    top: 19px;
+    right: 30px;
     color: ${(props) => props.theme.white};
     background-color: ${(props) => props.theme["red-400"]};
     border: none;
@@ -45,6 +52,7 @@ export const PedidosMesaBebidas = styled.div`
   border-right: 4px solid ${(props) => props.theme["purple-500"]};
 
   div {
+    position: relative;
     margin-top: 1.5rem;
     border: 2px solid ${(props) => props.theme["purple-500"]};
     border-radius: 8px;
@@ -58,9 +66,10 @@ export const PedidosMesaBebidas = styled.div`
   }
 
   button {
+    cursor: pointer;
     position: absolute;
-    margin-left: 4rem;
-    margin-top: -1rem;
+    top: 19px;
+    right: 30px;
     color: ${(props) => props.theme.white};
     background-color: ${(props) => props.theme["red-400"]};
     border: none;
@@ -73,6 +82,7 @@ export const PedidosMesaPorcoes = styled.div`
   text-align: center;
 
   div {
+    position: relative;
     margin-top: 1.5rem;
     border: 2px solid ${(props) => props.theme["purple-500"]};
     border-radius: 8px;
@@ -86,9 +96,10 @@ export const PedidosMesaPorcoes = styled.div`
   }
 
   button {
+    cursor: pointer;
     position: absolute;
-    margin-left: 4rem;
-    margin-top: -1rem;
+    top: 19px;
+    right: 30px;
     color: ${(props) => props.theme.white};
     background-color: ${(props) => props.theme["red-400"]};
     border: none;
@@ -121,14 +132,14 @@ export const ButtonOptions = styled.div`
     border: none;
     border-radius: 6px;
     gap: 0.5rem;
+    cursor: pointer;
+    &:hover{
+      box-shadow: 0px 0px 10px -5px ${props => props.theme["purple-500"]};
+    }
   }
 `;
 
 export const TotalPrice = styled.div`
-  width: 60%;
-  margin-top: -1rem;
-  h2{
-    float: right;
-  }
+  margin-top: 0.75rem;
   
 `;

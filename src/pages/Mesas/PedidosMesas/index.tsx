@@ -5,6 +5,7 @@ import {
   PedidosMesaBebidas,
   PedidosMesaLanches,
   PedidosMesaPorcoes,
+  PedidosMesasContain,
   PedidosMesasContainer,
   TotalAndButtonOptions,
   TotalPrice,
@@ -13,9 +14,9 @@ import { PlusCircle, CheckCircle } from "phosphor-react";
 
 const PedidosMesas = () => {
   return (
-    <div>
+    <PedidosMesasContainer>
       <Header children="MESA 4" />
-      <PedidosMesasContainer>
+      <PedidosMesasContain>
         <PedidosMesaLanches>
           <h1>LANCHES</h1>
           <div>
@@ -72,7 +73,7 @@ const PedidosMesas = () => {
           </div>
         </PedidosMesaPorcoes>
         
-      </PedidosMesasContainer>
+      </PedidosMesasContain>
       <TotalAndButtonOptions>
             <ButtonOptions>
               <button>
@@ -88,7 +89,7 @@ const PedidosMesas = () => {
               <h2>TOTAL: R$ 123,00</h2>
             </TotalPrice>
         </TotalAndButtonOptions>
-    </div>
+    </PedidosMesasContainer>
   );
 };
 
