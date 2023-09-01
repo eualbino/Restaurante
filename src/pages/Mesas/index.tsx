@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import Header from "../components/Header";
+import Header from "../../components/Header";
 import { MessasContainer } from "./styles";
 
 const Mesas = () => {
@@ -22,7 +22,7 @@ const Mesas = () => {
         <div>
           <h2>Mesa 4</h2>
           <NavLink to="/pedidosMesas" title="Pedidos das Mesas">
-          <button>ACESSAR</button>
+            <button>ACESSAR</button>
           </NavLink>
         </div>
         <div>

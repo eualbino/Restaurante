@@ -1,5 +1,5 @@
 import { X } from "lucide-react";
-import Header from "../../components/Header";
+import Header from "../../../components/Header";
 import {
   ButtonOptions,
   PedidosMesaBebidas,
@@ -22,19 +22,17 @@ const PedidosMesas = () => {
           <div>
             <h2>X-Tudo</h2>
             <span>R$ 32,00</span>
-              <button>
+            <button>
               <X />
-              </button>
+            </button>
           </div>
           <div>
             <h2>X-Tudo</h2>
             <span>R$ 32,00</span>
-              <button>
+            <button>
               <X />
-              </button>
+            </button>
           </div>
-          
-          
         </PedidosMesaLanches>
         <PedidosMesaBebidas>
           <h1>BEBIDAS</h1>
@@ -42,23 +40,23 @@ const PedidosMesas = () => {
           <div>
             <h2>X-Tudo</h2>
             <span>R$ 32,00</span>
-              <button>
+            <button>
               <X />
-              </button>
+            </button>
           </div>
           <div>
             <h2>X-Tudo</h2>
             <span>R$ 32,00</span>
-              <button>
+            <button>
               <X />
-              </button>
+            </button>
           </div>
           <div>
             <h2>X-Tudo</h2>
             <span>R$ 32,00</span>
-              <button>
+            <button>
               <X />
-              </button>
+            </button>
           </div>
         </PedidosMesaBebidas>
         <PedidosMesaPorcoes>
@@ -67,28 +65,27 @@ const PedidosMesas = () => {
           <div>
             <h2>X-Tudo</h2>
             <span>R$ 32,00</span>
-              <button>
+            <button>
               <X />
-              </button>
+            </button>
           </div>
         </PedidosMesaPorcoes>
-        
       </PedidosMesasContain>
       <TotalAndButtonOptions>
-            <ButtonOptions>
-              <button>
-              <span>Adicionar</span>
-              <PlusCircle size={24} color="#ffffff" weight="fill" />
-              </button>
-              <button>
-                <span>Finalizar</span>
-                <CheckCircle size={24} color="#ffffff" weight="fill" />
-              </button>
-            </ButtonOptions>
-            <TotalPrice>
-              <h2>TOTAL: R$ 123,00</h2>
-            </TotalPrice>
-        </TotalAndButtonOptions>
+        <ButtonOptions>
+          <button>
+            <span>Adicionar</span>
+            <PlusCircle size={24} color="#ffffff" weight="fill" />
+          </button>
+          <button>
+            <span>Finalizar</span>
+            <CheckCircle size={24} color="#ffffff" weight="fill" />
+          </button>
+        </ButtonOptions>
+        <TotalPrice>
+          <h2>TOTAL: R$ 123,00</h2>
+        </TotalPrice>
+      </TotalAndButtonOptions>
     </PedidosMesasContainer>
   );
 };
