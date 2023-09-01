@@ -11,6 +11,7 @@ import {
   TotalPrice,
 } from "./styles";
 import { PlusCircle, CheckCircle } from "phosphor-react";
+import { NavLink } from "react-router-dom";
 
 const PedidosMesas = () => {
   return (
@@ -73,10 +74,12 @@ const PedidosMesas = () => {
       </PedidosMesasContain>
       <TotalAndButtonOptions>
         <ButtonOptions>
-          <button>
-            <span>Adicionar</span>
-            <PlusCircle size={24} color="#ffffff" weight="fill" />
-          </button>
+          <NavLink to="/lanchesMenu" title="Adicionar lanche ao menu">
+            <button>
+              <span>Adicionar</span>
+              <PlusCircle size={24} color="#ffffff" weight="fill" />
+            </button>
+          </NavLink>
           <button>
             <span>Finalizar</span>
             <CheckCircle size={24} color="#ffffff" weight="fill" />

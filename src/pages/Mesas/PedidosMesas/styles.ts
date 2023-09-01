@@ -133,9 +133,17 @@ export const ButtonOptions = styled.div`
     border-radius: 6px;
     gap: 0.5rem;
     cursor: pointer;
+    span{
+      font-weight: bold;
+    }
     &:hover{
       box-shadow: 0px 0px 10px -5px ${props => props.theme["purple-500"]};
     }
+  }
+  a{
+    text-decoration: none;
+    color: ${props => props.theme.white};
+    
   }
 `;
 
