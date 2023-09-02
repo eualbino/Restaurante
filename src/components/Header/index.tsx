@@ -9,7 +9,7 @@ interface headerProps {
 
 const Header = ({ children }: headerProps) => {
   function backPagePrevious() {
-    window.history.back()
+    window.history.back();
   }
   return (
     <HeaderContainer>
@@ -23,24 +23,34 @@ const Header = ({ children }: headerProps) => {
           <ArrowLeft size={40} />
         </button>
       )}
-      {location.pathname === "/lanchesMenu" || location.pathname === "/bebidasMenu" || location.pathname === "/porcoesMenu" ? 
-      <HeaderMenuContain>
-        <button>
-          <span>Lanches</span>
-        </button>
-        <button>
-          <span>Bebidas</span>
-        </button>
-        <button>
-          <span>Porcoes</span>
-        </button>
-      </HeaderMenuContain>
-      : 
-      (<h1>{children}</h1>)}
-      
+      {location.pathname === "/lanchesMenu" ||
+      location.pathname === "/bebidasMenu" ||
+      location.pathname === "/porcoesMenu" ? (
+        <HeaderMenuContain>
+          <nav>
+            <NavLink to="/lanchesMenu" title="Menu de lanches">
+              <button>
+                <span>Lanches</span>
+              </button>
+            </NavLink>
+            <NavLink to="/bebidasMenu" title="Menu de bebidas">
+              <button>
+                <span>Bebidas</span>
+              </button>
+            </NavLink>
+            <NavLink to="/porcoesMenu" title="Menu de porcoes">
+              <button>
+                <span>Porções</span>
+              </button>
+            </NavLink>
+          </nav>
+        </HeaderMenuContain>
+      ) : (
+        <h1>{children}</h1>
+      )}
+
       <span></span>
     </HeaderContainer>
-    
   );
 };
 
