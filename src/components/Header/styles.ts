@@ -9,11 +9,10 @@ export const HeaderContainer = styled.header`
   a {
     text-decoration: none;
     color: ${(props) => props.theme.white};
-    margin-left: 8rem;
   }
   button {
     color: ${(props) => props.theme.white};
-    margin-left: 8rem;
+    margin-left: 5rem;
     border: none;
     background-color: transparent;
     cursor: pointer;
@@ -34,7 +33,7 @@ export const HeaderMenuContain = styled.div`
     border: 3px solid ${(props) => props.theme["purple-500"]};
     cursor: pointer;
     padding: 0.55rem;
-    font-size: 20px;
+    font-size: 25px;
     &:hover {
       color: ${(props) => props.theme["green-300"]};
     }
