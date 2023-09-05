@@ -48,6 +48,7 @@ const Login = () => {
             </button>
           </NavLink>
         </form>
+        {/* Retirar depois */}
         <pre>{output}</pre>
       </Content>
     </LoginContainer>
