@@ -1,6 +1,7 @@
 import * as z from "zod";
 import Header from "../../components/Header";
 import {
+  FinishButton,
   InsertAddition,
   InsertedAddition,
   ObservationContain,
@@ -12,6 +13,7 @@ import {
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
+import { CheckCircle } from "phosphor-react";
 const textObservationSchema = z.object({
   observation: z.string(),
 });
@@ -46,20 +48,33 @@ const Observacao = () => {
             </form>
             <pre>{output}</pre>
           </TextObservacao>
-        
-        <InsertedAddition></InsertedAddition>
+
+          <InsertedAddition></InsertedAddition>
         </SepareteObservationFromInsert>
         <InsertAddition>
           <span>DESEJA INSERIR ALGUM ACRÉSCIMO?</span>
           <ProductsInsert>
-            <div><button>Cebola <span>R$25,00</span></button></div>
-            <div><button></button></div>
-            <div><button></button></div>
-            
-            
+            <div>
+              <button>
+                Cebola <span>R$25,00</span>
+              </button>
+            </div>
+            <div>
+              <button>
+                Cebola <span>R$25,00</span>
+              </button>
+            </div>
+            <div>
+              <button>
+                Cebola <span>R$25,00</span>
+              </button>
+            </div>
           </ProductsInsert>
-        
         </InsertAddition>
+        <FinishButton>
+          <span>Finalizar</span>
+          <CheckCircle size={24} color="#ffffff" weight="fill" />
+        </FinishButton>
       </ObservationContain>
     </ObservationContainer>
   );

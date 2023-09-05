@@ -30,7 +30,6 @@ export const MessasContainer = styled.div`
       color: ${(props) => props.theme.white};
       background-color: ${(props) => props.theme["purple-500"]};
       cursor: pointer;
-      
     }
   }
 `;
