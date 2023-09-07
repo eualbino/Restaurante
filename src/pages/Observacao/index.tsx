@@ -14,6 +14,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { CheckCircle } from "phosphor-react";
+import { X } from "lucide-react";
 const textObservationSchema = z.object({
   observation: z.string(),
 });
@@ -49,7 +50,14 @@ const Observacao = () => {
             <pre>{output}</pre>
           </TextObservacao>
 
-          <InsertedAddition></InsertedAddition>
+          <InsertedAddition>
+            <div>
+              <span>2x Cattupiry - R$12,00</span>
+              <button>
+                <X />
+              </button>
+            </div>
+          </InsertedAddition>
         </SepareteObservationFromInsert>
         <InsertAddition>
           <span>DESEJA INSERIR ALGUM ACRÉSCIMO?</span>
