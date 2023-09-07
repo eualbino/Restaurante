@@ -14,7 +14,8 @@ const Header = ({ children }: headerProps) => {
   return (
     <HeaderContainer>
       {location.pathname === "/mesas" ||
-      location.pathname === "/pedidosMesas" ? (
+      location.pathname === "/pedidosMesas" ||
+      location.pathname === "/mesaAdicionarDeletar" ? (
         <NavLink to="/menu" title="Menu">
           <AlignJustify size={40} />
         </NavLink>
@@ -25,7 +26,7 @@ const Header = ({ children }: headerProps) => {
       )}
       {location.pathname === "/lanchesMenu" ||
       location.pathname === "/bebidasMenu" ||
-      location.pathname === "/porcoesMenu" ? (
+      location.pathname === "/porcoesMenu"  ? (
         <HeaderMenuContain>
           <nav>
             <NavLink to="/lanchesMenu" title="Menu de lanches">
