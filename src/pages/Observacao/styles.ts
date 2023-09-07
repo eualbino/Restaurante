@@ -2,7 +2,6 @@ import { styled } from "styled-components";
 
 export const ObservationContainer = styled.div`
   display: flex;
-  width: 100vw;
   header {
     align-items: flex-start;
   }
@@ -44,8 +43,26 @@ export const InsertedAddition = styled.div`
   border: 3px solid ${(props) => props.theme["purple-500"]};
   border-radius: 12px;
   width: 25rem;
-  height: 25rem;
+  min-height: 25rem;
   margin-top: 2rem;
+
+  div{
+    display: flex;
+    flex-direction: row;
+    margin-left: 1rem;
+    margin-top: 0.5rem;
+    
+    button{
+    cursor: pointer;
+    margin-left: 1rem;
+    color: ${(props) => props.theme.white};
+    background-color: ${(props) => props.theme["red-400"]};
+    border: none;
+    border-radius: 9rem;
+    height: 1.5rem;
+  }
+  }
+ 
 `;
 
 export const InsertAddition = styled.div`
