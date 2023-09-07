@@ -46,23 +46,22 @@ export const InsertedAddition = styled.div`
   min-height: 25rem;
   margin-top: 2rem;
 
-  div{
+  div {
     display: flex;
     flex-direction: row;
     margin-left: 1rem;
     margin-top: 0.5rem;
-    
-    button{
-    cursor: pointer;
-    margin-left: 1rem;
-    color: ${(props) => props.theme.white};
-    background-color: ${(props) => props.theme["red-400"]};
-    border: none;
-    border-radius: 9rem;
-    height: 1.5rem;
+
+    button {
+      cursor: pointer;
+      margin-left: 1rem;
+      color: ${(props) => props.theme.white};
+      background-color: ${(props) => props.theme["red-400"]};
+      border: none;
+      border-radius: 9rem;
+      height: 1.5rem;
+    }
   }
-  }
- 
 `;
 
 export const InsertAddition = styled.div`
