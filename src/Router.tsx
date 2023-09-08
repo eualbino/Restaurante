@@ -1,13 +1,13 @@
 import { Route, Routes  } from "react-router-dom";
 import Login from "./pages/Login";
-import AcrescimoAdicionar from "./pages/Acrescimo/AcrescimoAdicionar";
-import AcrescimoEditar from "./pages/Acrescimo/AcrescimoEditar";
-import BebidaAdicionar from "./pages/Bebida/BebidaAdicionar";
-import BebidaEditar from "./pages/Bebida/BebidaEditar";
+import AcrescimoAdicionar from "./pages/CardapioAdicionarEditar/Acrescimo/AcrescimoAdicionar";
+import AcrescimoEditar from "./pages/CardapioAdicionarEditar/Acrescimo/AcrescimoEditar";
+import BebidaAdicionar from "./pages/CardapioAdicionarEditar/Bebida/BebidaAdicionar";
+import BebidaEditar from "./pages/CardapioAdicionarEditar/Bebida/BebidaEditar";
 import FuncionarioAdicionar from "./pages/Funcionario/FuncionarioAdicionar";
 import FuncionarioEditar from "./pages/Funcionario/FuncionarioEditar";
-import LancheAdicionar from "./pages/Lanche/LancheAdicionar";
-import LancheEditar from "./pages/Lanche/LancheEditar";
+import LancheAdicionar from "./pages/CardapioAdicionarEditar/Lanche/LancheAdicionar";
+import LancheEditar from "./pages/CardapioAdicionarEditar/Lanche/LancheEditar";
 import Menu from "./pages/Menu";
 import BebidasMenu from "./pages/Menu/BebidasMenu";
 import LanchesMenu from "./pages/Menu/LanchesMenu";
@@ -15,8 +15,8 @@ import PorcoesMenu from "./pages/Menu/PorcoesMenu";
 import MesaAdicionarDeletar from "./pages/MesaAdicionarDeletar";
 import Observacao from "./pages/Observacao";
 import PedidosMesas from "./pages/Mesas/PedidosMesas";
-import PorcaoAdicionar from "./pages/Porcao/PorcaoAdicionar";
-import PorcaoEditar from "./pages/Porcao/PorcaoEditar";
+import PorcaoAdicionar from "./pages/CardapioAdicionarEditar/Porcao/PorcaoAdicionar";
+import PorcaoEditar from "./pages/CardapioAdicionarEditar/Porcao/PorcaoEditar";
 import Mesas from "./pages/Mesas";
 
 const Router = () => {

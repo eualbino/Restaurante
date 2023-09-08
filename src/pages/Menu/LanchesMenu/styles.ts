@@ -33,6 +33,8 @@ export const TextLanches = styled.div`
 `;
 
 export const PriceLanches = styled.div`
+    font-size: 18px;
+    font-weight: 600;
     text-align: right;
     margin-right: 0.4rem;
     padding-bottom: 3px;

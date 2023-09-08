@@ -6,14 +6,13 @@ export const TableSetupContain = styled.div`
   justify-content: center;
   align-items: center;
   height: 85vh;
-  width: 87vw;
+  width: 100vw;
   gap: 10rem;   
 `;
 
 export const AddTable = styled.div`
   border: 4px solid ${(props) => props.theme["purple-500"]};
   border-radius: 12px;
-  height: 170px;
   width: 400px;
   background: ${(props) => props.theme["blue-500"]};
   text-align: center;
@@ -40,6 +39,7 @@ export const AddTable = styled.div`
     border: none;
     border-radius: 6px;
     margin-top: 1rem;
+    margin-bottom: 2.5rem;
     height: 35px;
     color: ${(props) => props.theme.white};
     width: 308px;
