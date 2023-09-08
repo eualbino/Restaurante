@@ -12,7 +12,12 @@ import {
 const MesaAdicionarDeletar = () => {
   return (
     <div>
-      <Header children="CONFIGURAÇÕES DE MESAS" />
+      <Header
+        children="CONFIGURAÇÕES DE MESAS"
+        childrenLanche=""
+        childrenBebida=""
+        childrenPorcao=""
+      />
       <TableSetupContain>
         <AddTable>
           <div>

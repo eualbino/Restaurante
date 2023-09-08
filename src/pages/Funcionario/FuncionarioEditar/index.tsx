@@ -5,7 +5,12 @@ import { EmployeeEditContain } from "./styles";
 const FuncionarioEditar = () => {
   return (
     <div>
-      <Header children="EDITAR FUNCIONARIOS" />
+      <Header
+        children="EDITAR FUNCIONARIOS"
+        childrenLanche=""
+        childrenBebida=""
+        childrenPorcao=""
+      />
       <EmployeeEditContain>
         <AddEmployee>
           <div>

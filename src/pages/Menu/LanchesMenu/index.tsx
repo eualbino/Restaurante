@@ -10,21 +10,21 @@ import {
 const LanchesMenu = () => {
   return (
     <div>
-      <Header />
+      <Header childrenLanche="/lanchesMenu" childrenBebida="/bebidasMenu" childrenPorcao="/porcoesMenu"/>
       <LanchesMenuContainer>
         <MainDivLanches>
-          <TitleLanches>
-            <span>X-Tudo</span>
-          </TitleLanches>
-          <TextLanches>
-            <span>
-              Dois hambúrgueres, frango, calabresa, cebola, ovo, catupiry,
-              milho, muçarela, presunto, azeitona, tomate, alface e maionese
-            </span>
-          </TextLanches>
-          <PriceLanches>
-            <span>R$ 32,00</span>
-          </PriceLanches>
+            <TitleLanches>
+              <span>X-Tudo</span>
+            </TitleLanches>
+            <TextLanches>
+              <span>
+                Dois hambúrgueres, frango, calabresa, cebola, ovo, catupiry,
+                milho, muçarela, presunto, azeitona, tomate, alface e maionese
+              </span>
+            </TextLanches>
+            <PriceLanches>
+              <span>R$ 32,00</span>
+            </PriceLanches>
         </MainDivLanches>
 
         <MainDivLanches>
@@ -47,15 +47,12 @@ const LanchesMenu = () => {
             <span>X-Frango</span>
           </TitleLanches>
           <TextLanches>
-            <span>
-            Frango, muçarela, tomate, alface e maionese
-            </span>
+            <span>Frango, muçarela, tomate, alface e maionese</span>
           </TextLanches>
           <PriceLanches>
             <span>R$ 28,00</span>
           </PriceLanches>
         </MainDivLanches>
-        
 
         <MainDivLanches>
           <TitleLanches>

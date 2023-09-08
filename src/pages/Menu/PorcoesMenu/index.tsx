@@ -10,7 +10,7 @@ import {
 const PorcoesMenu = () => {
   return (
     <div>
-      <Header />
+      <Header childrenLanche="/lanchesMenu" childrenBebida="/bebidasMenu" childrenPorcao="/porcoesMenu"/>
       <PorcoesMenuContainer>
         <MainDivPorcoes>
           <TitlePorcoes>

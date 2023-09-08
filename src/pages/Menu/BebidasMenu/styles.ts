@@ -17,6 +17,12 @@ export const MainDivBebidas = styled.div`
     border-radius: 12px;
     justify-content: space-between;
     height: 6rem;
+    button{
+        all: initial;
+        all: unset;
+        cursor: pointer;
+    }
+    
 `;
 
 export const TitleBebidas = styled.div`

@@ -9,11 +9,17 @@ import {
   CreatedEmployeesText,
   EmployeeContain,
 } from "./styles";
+import { NavLink } from "react-router-dom";
 
 const FuncionarioAdicionar = () => {
   return (
     <div>
-      <Header children="CONFIGURAÇÕES DE FUNCIONARIOS"></Header>
+      <Header
+        children="CONFIGURAÇÕES DE FUNCIONARIOS"
+        childrenLanche=""
+        childrenBebida=""
+        childrenPorcao=""
+      ></Header>
       <EmployeeContain>
         <AddEmployee>
           <div>
@@ -54,7 +60,9 @@ const FuncionarioAdicionar = () => {
             </CreatedEmployeesDelete>
             <CreatedEmployeesEdit>
               <button>
-                <PencilLine />
+                <NavLink to="/funcionarioEditar" title="Editar Funcionario">
+                  <PencilLine />
+                </NavLink>
               </button>
             </CreatedEmployeesEdit>
           </CreatedEmployeesContain>

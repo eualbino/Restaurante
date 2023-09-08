@@ -42,8 +42,8 @@ export const InsertedAddition = styled.div`
   margin: 0 auto;
   border: 3px solid ${(props) => props.theme["purple-500"]};
   border-radius: 12px;
-  width: 25rem;
-  min-height: 25rem;
+  width: 23rem;
+  min-height: 22rem;
   margin-top: 2rem;
 
   div {

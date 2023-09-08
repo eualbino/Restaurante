@@ -5,7 +5,12 @@ import { MessasContainer } from "./styles";
 const Mesas = () => {
   return (
     <div>
-      <Header children="MESAS" />
+      <Header
+        children="MESAS"
+        childrenLanche=""
+        childrenBebida=""
+        childrenPorcao=""
+      />
       <MessasContainer>
         <div>
           <h2>Mesa 1</h2>

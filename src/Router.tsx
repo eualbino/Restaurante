@@ -18,6 +18,9 @@ import PedidosMesas from "./pages/Mesas/PedidosMesas";
 import PorcaoAdicionar from "./pages/CardapioAdicionarEditar/Porcao/PorcaoAdicionar";
 import PorcaoEditar from "./pages/CardapioAdicionarEditar/Porcao/PorcaoEditar";
 import Mesas from "./pages/Mesas";
+import BebidasComprar from "./pages/MenuComprar/BebidasMenu";
+import LanchesComprar from "./pages/MenuComprar/LanchesMenu";
+import PorcoesComprar from "./pages/MenuComprar/PorcoesMenu";
 
 const Router = () => {
     return ( 
@@ -41,6 +44,9 @@ const Router = () => {
             <Route path="/pedidosMesas" element={<PedidosMesas/>}/>
             <Route path="/porcaoAdicionar" element={<PorcaoAdicionar/>}/>
             <Route path="/porcaoEditar" element={<PorcaoEditar/>}/>
+            <Route path="/bebidaComprar" element={<BebidasComprar/>}/>
+            <Route path="/lancheComprar" element={<LanchesComprar/>}/>
+            <Route path="/porcaoComprar" element={<PorcoesComprar/>}/>
         </Routes>
     );
 }

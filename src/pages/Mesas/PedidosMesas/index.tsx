@@ -16,7 +16,12 @@ import { NavLink } from "react-router-dom";
 const PedidosMesas = () => {
   return (
     <PedidosMesasContainer>
-      <Header children="MESA 4" />
+      <Header
+        children="MESA 4"
+        childrenLanche=""
+        childrenBebida=""
+        childrenPorcao=""
+      />
       <PedidosMesasContain>
         <PedidosMesaLanches>
           <h1>LANCHES</h1>
@@ -74,7 +79,7 @@ const PedidosMesas = () => {
       </PedidosMesasContain>
       <TotalAndButtonOptions>
         <ButtonOptions>
-          <NavLink to="/lanchesMenu" title="Adicionar lanche ao menu">
+          <NavLink to="/lancheComprar" title="Adicionar lanche ao menu">
             <button>
               <span>Adicionar</span>
               <PlusCircle size={24} color="#ffffff" weight="fill" />

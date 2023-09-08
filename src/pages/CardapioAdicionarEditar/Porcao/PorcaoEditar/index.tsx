@@ -1,5 +1,34 @@
+import Header from "../../../../components/Header";
+import { AddPorcao, PorcaoContain } from "../PorcaoAdicionar/styles";
+
 const PorcaoEditar = () => {
-    return ( <h1>PorcaoEditar</h1> );
-}
- 
+  return (
+    <div>
+      <Header
+        children="EDITAR PORÇÃO"
+        childrenLanche=""
+        childrenBebida=""
+        childrenPorcao=""
+      />
+      <PorcaoContain>
+        <AddPorcao>
+          <div>
+            <span>Nome:</span>
+            <input type="text" />
+          </div>
+          <div>
+            <span>Tamanho:</span>
+            <input type="text" />
+          </div>
+          <div>
+            <span>Preço:</span>
+            <input type="number" />
+          </div>
+          <button>ADICIONAR</button>
+        </AddPorcao>
+      </PorcaoContain>
+    </div>
+  );
+};
+
 export default PorcaoEditar;

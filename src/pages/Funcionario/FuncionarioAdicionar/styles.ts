@@ -35,8 +35,12 @@ export const AddEmployee = styled.div`
       height: 40px;
       outline: none;
       padding: 10px;
+      &[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+      }
     }
   }
+  
 
   button {
     background: ${(props) => props.theme["purple-500"]};
@@ -105,15 +109,15 @@ export const CreatedEmployeesEdit = styled.div`
   border-radius: 8px;
   border: 3px solid ${(props) => props.theme["purple-500"]};
   margin-left: 0.5rem;
-  button{
+  button {
     margin-top: 2px;
     border: none;
     background: transparent;
-    svg{
-        color: ${props => props.theme["red-400"]};
-        &:hover{
-            color: ${props => props.theme["green-300"]};
-        }
+    svg {
+      color: ${(props) => props.theme["red-400"]};
+      &:hover {
+        color: ${(props) => props.theme["green-300"]};
+      }
     }
   }
 `;

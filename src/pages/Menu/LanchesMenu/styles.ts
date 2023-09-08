@@ -8,6 +8,7 @@ export const LanchesMenuContainer = styled.div`
     row-gap: 2rem;
     margin: 0 auto;
     width: 65rem;
+
 `;
 
 export const MainDivLanches = styled.div`
@@ -17,6 +18,14 @@ export const MainDivLanches = styled.div`
     border-radius: 12px;
     justify-content: space-between;
     height: 9.3rem;
+    button{
+        all: initial;
+        all: unset;
+        cursor: pointer;
+    }
+    a{
+        text-decoration: none;
+    }
 `;
 
 export const TitleLanches = styled.div`
@@ -24,12 +33,14 @@ export const TitleLanches = styled.div`
     margin-top: 0.3rem;
     font-size: 22px;
     font-weight: bold;
+    color: ${props => props.theme.white};
 `;
 
 export const TextLanches = styled.div`
     margin-left: 0.5rem;
     font-size: 15px;
     padding: 0.3rem;
+    color: ${props => props.theme.white};
 `;
 
 export const PriceLanches = styled.div`

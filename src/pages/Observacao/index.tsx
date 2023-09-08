@@ -34,7 +34,7 @@ const Observacao = () => {
 
   return (
     <ObservationContainer>
-      <Header />
+      <Header childrenLanche="" childrenBebida="" childrenPorcao=""/>
       <ObservationContain>
         <SepareteObservationFromInsert>
           <TextObservacao>
