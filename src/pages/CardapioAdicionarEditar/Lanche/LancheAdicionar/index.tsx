@@ -12,8 +12,45 @@ import {
   IngredientesCreate,
   LancheContain,
 } from "./styles";
+import * as z from "zod";
+import { useContext } from "react";
+
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { LanchesContext } from "../../../../context/LanchesContext";
+
+
+const newLancheFormSchema = z.object({
+  nome: z.string(),
+  preco: z.number(),
+  ingredientes: z.string(),
+});
+
+type NewLancheFormInputs = z.infer<typeof newLancheFormSchema>;
 
 const LancheAdicionar = () => {
+  const { createLanche, lanches } = useContext(LanchesContext);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+    reset,
+  } = useForm<NewLancheFormInputs>({
+    resolver: zodResolver(newLancheFormSchema),
+  });
+
+  async function handleCreateNewLanche(data: NewLancheFormInputs) {
+    const { nome, preco, ingredientes } = data;
+
+    await createLanche({
+      nome,
+      preco,
+      ingredientes,
+    });
+    reset();
+  }
+
   return (
     <div>
       <Header
@@ -24,43 +61,52 @@ const LancheAdicionar = () => {
       />
       <SelectOptionsAdicionar />
       <LancheContain>
-        <AddLanche>
-          <div>
-            <span>Nome:</span>
-            <input type="text" />
-          </div>
-          <div>
-            <span>Preço:</span>
-            <input type="number" />
-          </div>
-          <IngredientesCreate>
-            <span>Ingledientes</span>
-            <textarea
-              cols={27}
-              rows={5}
-              placeholder="Ex: Dois Hamburguer, frango, catupiry..."
-            ></textarea>
-          </IngredientesCreate>
-          <button>ADICIONAR</button>
-        </AddLanche>
+        <form onSubmit={handleSubmit(handleCreateNewLanche)}>
+          <AddLanche>
+            <div>
+              <span>Nome:</span>
+              <input type="text" {...register("nome")} />
+            </div>
+            <div>
+              <span>Preço:</span>
+              <input type="number" {...register("preco")} />
+            </div>
+            <IngredientesCreate>
+              <span>Ingledientes</span>
+              <textarea
+                cols={27}
+                rows={5}
+                placeholder="Ex: Dois Hamburguer, frango, catupiry..."
+                {...register("ingredientes")}
+              ></textarea>
+            </IngredientesCreate>
+            <button type="submit" disabled={isSubmitting}>
+              ADICIONAR
+            </button>
+          </AddLanche>
+        </form>
         <CreatedLancheContainer>
-          <CreatedLancheContain>
-            <CreatedLancheText>
-              <span>X-Tudo</span>
-            </CreatedLancheText>
-            <CreatedLancheDelete>
-              <button>
-                <X />
-              </button>
-            </CreatedLancheDelete>
-            <CreatedLancheEdit>
-              <button>
-                <NavLink to="/lancheEditar" title="Editar Funcionario">
-                  <PencilLine />
-                </NavLink>
-              </button>
-            </CreatedLancheEdit>
-          </CreatedLancheContain>
+          {lanches.map((lanche) => {
+            return (
+              <CreatedLancheContain key={lanche.id}>
+                <CreatedLancheText>
+                  <span>{lanche.nome}</span>
+                </CreatedLancheText>
+                <CreatedLancheDelete>
+                  <button>
+                    <X />
+                  </button>
+                </CreatedLancheDelete>
+                <CreatedLancheEdit>
+                  <button>
+                    <NavLink to="/lancheEditar" title="Editar Funcionario">
+                      <PencilLine />
+                    </NavLink>
+                  </button>
+                </CreatedLancheEdit>
+              </CreatedLancheContain>
+            );
+          })}
         </CreatedLancheContainer>
       </LancheContain>
     </div>

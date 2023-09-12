@@ -15,6 +15,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { CheckCircle } from "phosphor-react";
 import { X } from "lucide-react";
+
 const textObservationSchema = z.object({
   observation: z.string(),
 });
