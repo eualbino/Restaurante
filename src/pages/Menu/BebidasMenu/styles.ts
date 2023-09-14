@@ -30,6 +30,10 @@ export const TitleBebidas = styled.div`
     margin-top: 0.3rem;
     font-size: 24px;
     font-weight: bold;
+    span:nth-child(2){
+        margin-left: 1rem;
+        font-weight: 100;
+    }
 `;
 
 export const PriceBebidas = styled.div`

@@ -22,7 +22,7 @@ import { LanchesContext } from "../../../../context/lanchesContext";
 
 const newLancheFormSchema = z.object({
   nome: z.string(),
-  preco: z.number(),
+  preco: z.coerce.number(),
   ingredientes: z.string(),
 });
 

@@ -24,8 +24,9 @@ const BebidasMenu = () => {
             <MainDivBebidas key={bebida.id}>
               <TitleBebidas>
                 <span>
-                  {bebida.nome}{}{bebida.litragem}
+                  {bebida.nome}
                 </span>
+                <span>{bebida.litragem}</span>
               </TitleBebidas>
               <PriceBebidas>
                 <span>{priceFormatter.format(bebida.preco)}</span>

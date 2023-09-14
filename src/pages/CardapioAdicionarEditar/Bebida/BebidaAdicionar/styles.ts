@@ -50,6 +50,10 @@ export const AddBebida = styled.div`
     width: 210px;
     cursor: pointer;
 
+    &:disabled{
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
     &:hover {
       box-shadow: 0px 0px 12px -5px ${(props) => props.theme["purple-500"]};
     }

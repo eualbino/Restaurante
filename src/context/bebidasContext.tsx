@@ -19,9 +19,9 @@ interface BebidasProviderProps {
 }
 
 interface BebidasContextType {
-    bebidas: Bebidas[];
-    bebidaGet: () => Promise<void>;
-    createBebida: (data: CreateBebidaInput) => Promise<void>;
+  bebidas: Bebidas[];
+  bebidaGet: () => Promise<void>;
+  createBebida: (data: CreateBebidaInput) => Promise<void>;
 }
 
 export const BebidasContext = createContext({} as BebidasContextType);
@@ -38,11 +38,11 @@ const BebidasProvider = ({ children }: BebidasProviderProps) => {
     const { nome, litragem, preco } = data;
 
     const response = await api.post("/menu/bebida", {
-        nome,
-        litragem,
-        preco,
+      nome,
+      litragem,
+      preco,
     });
-    setBebidas(state => [response.data, ...state]);
+    setBebidas((state) => [response.data, ...state]);
   }
 
   useEffect(() => {
@@ -51,7 +51,7 @@ const BebidasProvider = ({ children }: BebidasProviderProps) => {
 
   return (
     <BebidasContext.Provider value={{ bebidas, bebidaGet, createBebida }}>
-        {children}
+      {children}
     </BebidasContext.Provider>
   );
 };

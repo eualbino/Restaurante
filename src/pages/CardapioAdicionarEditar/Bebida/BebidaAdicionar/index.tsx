@@ -14,38 +14,37 @@ import { NavLink } from "react-router-dom";
 import * as z from "zod";
 import { useContext } from "react";
 import { BebidasContext } from "../../../../context/bebidasContext";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 
 const newBebidaFormSchema = z.object({
   nome: z.string(),
   litragem: z.string(),
-  preco: z.number(),
-});
+  preco: z.coerce.number(),
+})
 
-type NewBebidaFormInputs = z.infer<typeof newBebidaFormSchema>;
+type newBebidaFormData = z.infer<typeof newBebidaFormSchema>
 
 const BebidaAdicionar = () => {
   const { createBebida, bebidas } = useContext(BebidasContext);
 
-  const {
+  const{
     register,
     handleSubmit,
-    formState: { isSubmitting },
-    reset,
-  } = useForm<NewBebidaFormInputs>({
-    resolver: zodResolver(newBebidaFormSchema),
-  });
+  } = useForm<newBebidaFormData>({
+    resolver: zodResolver(newBebidaFormSchema)
+  })
 
-  async function handleCreateNewBebida(data: NewBebidaFormInputs) {
+  async function handleCreateNewBebida(data: newBebidaFormData) {
+    
     const { nome, litragem, preco } = data;
-
+    console.log("Bebida antes")
     await createBebida({
       nome,
       litragem,
       preco,
     });
-    reset();
+    console.log("seila1")
   }
 
   return (
@@ -62,21 +61,26 @@ const BebidaAdicionar = () => {
           <AddBebida>
             <div>
               <span>Nome:</span>
-              <input type="text" {...register("nome")} />
+              <input placeholder="Nome" type="text" {...register("nome")} />
             </div>
             <div>
               <span>Litragem:</span>
-              <input type="text" {...register("litragem")} />
+              <input
+                placeholder="litragem"
+                type="text"
+                {...register("litragem")}
+              />
             </div>
             <div>
               <span>Preço:</span>
-              <input type="number" {...register("preco")} />
+              <input placeholder="Preco" type="number" {...register("preco")} />
             </div>
-            <button type="submit" disabled={isSubmitting}>
+            <button type="submit">
               ADICIONAR
             </button>
           </AddBebida>
         </form>
+
         <CreatedBebidaContainer>
           {bebidas.map((bebida) => {
             return (
