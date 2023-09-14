@@ -7,8 +7,13 @@ import {
   TextLanches,
   TitleLanches,
 } from "../../Menu/LanchesMenu/styles";
+import { useContext } from "react";
+import { LanchesContext } from "../../../context/lanchesContext";
+import { priceFormatter } from "../../../utils/formatter";
 
 const LanchesComprar = () => {
+  const { lanches } = useContext(LanchesContext);
+
   return (
     <div>
       <Header
@@ -17,71 +22,25 @@ const LanchesComprar = () => {
         childrenPorcao="/porcaoComprar"
       />
       <LanchesMenuContainer>
-        <MainDivLanches>
-          <button>
-            <NavLink to="/observacao">
-              <TitleLanches>
-                <span>X-Tudo</span>
-              </TitleLanches>
-              <TextLanches>
-                <span>
-                  Dois hambúrgueres, frango, calabresa, cebola, ovo, catupiry,
-                  milho, muçarela, presunto, azeitona, tomate, alface e maionese
-                </span>
-              </TextLanches>
-              <PriceLanches>
-                <span>R$ 32,00</span>
-              </PriceLanches>
-            </NavLink>
-          </button>
-        </MainDivLanches>
-
-        <MainDivLanches>
-          <button>
-            <TitleLanches>
-              <span>X-Burgão</span>
-            </TitleLanches>
-            <TextLanches>
-              <span>
-                Dois hambúrgueres, muçarela, presunto, ovo, tomate, alface e
-                maionese
-              </span>
-            </TextLanches>
-            <PriceLanches>
-              <span>R$ 24,00</span>
-            </PriceLanches>
-          </button>
-        </MainDivLanches>
-
-        <MainDivLanches>
-          <button>
-            <TitleLanches>
-              <span>X-Frango</span>
-            </TitleLanches>
-            <TextLanches>
-              <span>Frango, muçarela, tomate, alface e maionese</span>
-            </TextLanches>
-            <PriceLanches>
-              <span>R$ 28,00</span>
-            </PriceLanches>
-          </button>
-        </MainDivLanches>
-
-        <MainDivLanches>
-          <button>
-            <TitleLanches>
-              <span>X-Burguer</span>
-            </TitleLanches>
-            <TextLanches>
-              <span>
-                Dois hambúrgueres, muçarela, tomate, alface e maionese
-              </span>
-            </TextLanches>
-            <PriceLanches>
-              <span>R$ 20,00</span>
-            </PriceLanches>
-          </button>
-        </MainDivLanches>
+        {lanches.map((lanche) => {
+          return (
+            <button key={lanche.id}>
+              <MainDivLanches>
+                <NavLink to="/observacao">
+                  <TitleLanches>
+                    <span>{lanche.nome}</span>
+                  </TitleLanches>
+                  <TextLanches>
+                    <span>{lanche.ingredientes}</span>
+                  </TextLanches>
+                  <PriceLanches>
+                    <span>{priceFormatter.format(lanche.preco)}</span>
+                  </PriceLanches>
+                </NavLink>
+              </MainDivLanches>
+            </button>
+          );
+        })}
       </LanchesMenuContainer>
     </div>
   );

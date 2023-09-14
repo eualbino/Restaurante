@@ -31,20 +31,19 @@ const BebidaAdicionar = () => {
   const{
     register,
     handleSubmit,
+    reset,
   } = useForm<newBebidaFormData>({
     resolver: zodResolver(newBebidaFormSchema)
   })
 
-  async function handleCreateNewBebida(data: newBebidaFormData) {
-    
+  async function handleCreateNewBebida(data: newBebidaFormData) { 
     const { nome, litragem, preco } = data;
-    console.log("Bebida antes")
     await createBebida({
       nome,
       litragem,
       preco,
     });
-    console.log("seila1")
+    reset()
   }
 
   return (
