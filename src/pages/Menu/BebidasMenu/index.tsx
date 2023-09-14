@@ -1,43 +1,38 @@
+import { useContext } from "react";
 import Header from "../../../components/Header";
-import { BebidasMenuContainer, MainDivBebidas, PriceBebidas, TitleBebidas } from "./styles";
+import {
+  BebidasMenuContainer,
+  MainDivBebidas,
+  PriceBebidas,
+  TitleBebidas,
+} from "./styles";
+import { BebidasContext } from "../../../context/bebidasContext";
+import { priceFormatter } from "../../../utils/formatter";
 
 const BebidasMenu = () => {
+  const { bebidas } = useContext(BebidasContext);
   return (
     <div>
-      <Header childrenLanche="/lanchesMenu" childrenBebida="/bebidasMenu" childrenPorcao="/porcoesMenu"/>
+      <Header
+        childrenLanche="/lanchesMenu"
+        childrenBebida="/bebidasMenu"
+        childrenPorcao="/porcoesMenu"
+      />
       <BebidasMenuContainer>
-        <MainDivBebidas>
-            <TitleBebidas>
-              <span>Água mineral 500ml</span>
-            </TitleBebidas>
-            <PriceBebidas>
-              <span>R$ 24,00</span>
-            </PriceBebidas>
-        </MainDivBebidas>
-        <MainDivBebidas>
-            <TitleBebidas>
-              <span>Coca-Cola 2L</span>
-            </TitleBebidas>
-            <PriceBebidas>
-              <span>R$ 24,00</span>
-            </PriceBebidas>
-        </MainDivBebidas>
-        <MainDivBebidas>
-            <TitleBebidas>
-              <span>Chope 350ml</span>
-            </TitleBebidas>
-            <PriceBebidas>
-              <span>R$ 24,00</span>
-            </PriceBebidas>
-        </MainDivBebidas>
-        <MainDivBebidas>
-            <TitleBebidas>
-              <span>H2O Limoneto</span>
-            </TitleBebidas>
-            <PriceBebidas>
-              <span>R$ 24,00</span>
-            </PriceBebidas>
-        </MainDivBebidas>
+        {bebidas.map((bebida) => {
+          return (
+            <MainDivBebidas key={bebida.id}>
+              <TitleBebidas>
+                <span>
+                  {bebida.nome}{}{bebida.litragem}
+                </span>
+              </TitleBebidas>
+              <PriceBebidas>
+                <span>{priceFormatter.format(bebida.preco)}</span>
+              </PriceBebidas>
+            </MainDivBebidas>
+          );
+        })}
       </BebidasMenuContainer>
     </div>
   );

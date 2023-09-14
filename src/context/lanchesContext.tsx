@@ -43,12 +43,11 @@ const LanchesProvider = ({ children }: LanchesProviderProps) => {
       ingredientes,
     });
     setLanches((state) => [response.data, ...state]);
-    console.log("Seila");
   }
 
   useEffect(() => {
     lancheGet();
-  }, []);
+  });
 
   return (
     <LanchesContext.Provider value={{ lanches, lancheGet, createLanche }}>

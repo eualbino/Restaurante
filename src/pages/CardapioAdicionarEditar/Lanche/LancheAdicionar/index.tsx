@@ -17,7 +17,7 @@ import { useContext } from "react";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LanchesContext } from "../../../../context/LanchesContext";
+import { LanchesContext } from "../../../../context/lanchesContext";
 
 
 const newLancheFormSchema = z.object({
