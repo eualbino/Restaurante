@@ -19,7 +19,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LanchesContext } from "../../../../context/lanchesContext";
 
-
 const newLancheFormSchema = z.object({
   nome: z.string(),
   preco: z.coerce.number(),
@@ -29,7 +28,7 @@ const newLancheFormSchema = z.object({
 type NewLancheFormInputs = z.infer<typeof newLancheFormSchema>;
 
 const LancheAdicionar = () => {
-  const { createLanche, lanches } = useContext(LanchesContext);
+  const { createLanche, lanches, deleteLanche } = useContext(LanchesContext);
 
   const {
     register,
@@ -49,6 +48,10 @@ const LancheAdicionar = () => {
       ingredientes,
     });
     reset();
+  }
+
+  async function handleDeleteLanche(id: number) {
+    await deleteLanche(id);
   }
 
   return (
@@ -72,7 +75,7 @@ const LancheAdicionar = () => {
               <input type="number" {...register("preco")} />
             </div>
             <IngredientesCreate>
-              <span>Ingledientes</span>
+              <span>Ingredientes</span>
               <textarea
                 cols={27}
                 rows={5}
@@ -93,7 +96,7 @@ const LancheAdicionar = () => {
                   <span>{lanche.nome}</span>
                 </CreatedLancheText>
                 <CreatedLancheDelete>
-                  <button>
+                  <button onClick={() => handleDeleteLanche(lanche.id)}>
                     <X />
                   </button>
                 </CreatedLancheDelete>

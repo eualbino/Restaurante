@@ -22,6 +22,7 @@ interface BebidasContextType {
   bebidas: Bebidas[];
   bebidaGet: () => Promise<void>;
   createBebida: (data: CreateBebidaInput) => Promise<void>;
+  deleteBebida: (id: number) => Promise<void>;
 }
 
 export const BebidasContext = createContext({} as BebidasContextType);
@@ -45,12 +46,17 @@ const BebidasProvider = ({ children }: BebidasProviderProps) => {
     setBebidas((state) => [response.data, ...state]);
   }
 
+  async function deleteBebida(id: number) {
+    await api.delete(`/menu/bebida/${id}`);
+    setBebidas(bebidas.filter(bebida => bebida.id !== id))
+  }
+
   useEffect(() => {
     bebidaGet();
   });
 
   return (
-    <BebidasContext.Provider value={{ bebidas, bebidaGet, createBebida }}>
+    <BebidasContext.Provider value={{ bebidas, bebidaGet, createBebida, deleteBebida }}>
       {children}
     </BebidasContext.Provider>
   );

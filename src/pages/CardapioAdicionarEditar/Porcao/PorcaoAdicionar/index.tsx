@@ -11,8 +11,47 @@ import {
   CreatedPorcaoText,
   PorcaoContain,
 } from "./styles";
+import { useContext } from "react";
+import * as z from "zod";
+import { PorcoesContext } from "../../../../context/porcaoContext";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const newPorcaoFormSchema = z.object({
+  tipo: z.string(),
+  preco: z.coerce.number(),
+  tamanho: z.string(),
+});
+
+type NewPorcaoFormInputs = z.infer<typeof newPorcaoFormSchema>;
 
 const PorcaoAdicionar = () => {
+  const { createPorcao, porcoes, deletePorcao } = useContext(PorcoesContext);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+    reset,
+  } = useForm<NewPorcaoFormInputs>({
+    resolver: zodResolver(newPorcaoFormSchema),
+  });
+
+  async function handleCreateNewPorcao(data: NewPorcaoFormInputs) {
+    const { tipo, preco, tamanho } = data;
+
+    await createPorcao({
+      tipo,
+      preco,
+      tamanho,
+    });
+    reset();
+  }
+
+  async function handleDeletePorcao(id: number) {
+    await deletePorcao(id);
+  }
+
   return (
     <div>
       <Header
@@ -23,39 +62,47 @@ const PorcaoAdicionar = () => {
       />
       <SelectOptionsAdicionar />
       <PorcaoContain>
-        <AddPorcao>
-          <div>
-            <span>Nome:</span>
-            <input type="text" />
-          </div>
-          <div>
-            <span>Tamanho:</span>
-            <input type="text" />
-          </div>
-          <div>
-            <span>Preço:</span>
-            <input type="number" />
-          </div>
-          <button>ADICIONAR</button>
-        </AddPorcao>
+        <form onSubmit={handleSubmit(handleCreateNewPorcao)}>
+          <AddPorcao>
+            <div>
+              <span>Nome:</span>
+              <input type="text" {...register("tipo")} />
+            </div>
+            <div>
+              <span>Tamanho:</span>
+              <input type="text" {...register("tamanho")} />
+            </div>
+            <div>
+              <span>Preço:</span>
+              <input type="number" {...register("preco")} />
+            </div>
+            <button type="submit" disabled={isSubmitting}>
+              ADICIONAR
+            </button>
+          </AddPorcao>
+        </form>
         <CreatedPorcaoContainer>
-          <CreatedPorcaoContain>
-            <CreatedPorcaoText>
-              <span>Mista Batata</span>
-            </CreatedPorcaoText>
-            <CreatedPorcaoDelete>
-              <button>
-                <X />
-              </button>
-            </CreatedPorcaoDelete>
-            <CreatedPorcaoEdit>
-              <button>
-                <NavLink to="/porcaoEditar" title="Editar Porção">
-                  <PencilLine />
-                </NavLink>
-              </button>
-            </CreatedPorcaoEdit>
-          </CreatedPorcaoContain>
+          {porcoes.map((porcao) => {
+            return (
+              <CreatedPorcaoContain key={porcao.id}>
+                <CreatedPorcaoText>
+                  <span>{porcao.tipo}</span>
+                </CreatedPorcaoText>
+                <CreatedPorcaoDelete>
+                  <button onClick={() => handleDeletePorcao(porcao.id)}>
+                    <X />
+                  </button>
+                </CreatedPorcaoDelete>
+                <CreatedPorcaoEdit>
+                  <button>
+                    <NavLink to="/porcaoEditar" title="Editar Porção">
+                      <PencilLine />
+                    </NavLink>
+                  </button>
+                </CreatedPorcaoEdit>
+              </CreatedPorcaoContain>
+            );
+          })}
         </CreatedPorcaoContainer>
       </PorcaoContain>
     </div>

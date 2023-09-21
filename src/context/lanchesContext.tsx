@@ -18,6 +18,7 @@ interface LancheContextType {
   lanches: Lanche[];
   lancheGet: () => Promise<void>;
   createLanche: (data: CreateLancheInput) => Promise<void>;
+  deleteLanche: (id: number) => Promise<void>;
 }
 
 interface LanchesProviderProps {
@@ -30,7 +31,7 @@ const LanchesProvider = ({ children }: LanchesProviderProps) => {
   const [lanches, setLanches] = useState<Lanche[]>([]);
 
   async function lancheGet() {
-    const response = await api.get("/menu/lanches")
+    const response = await api.get("/menu/lanches");
     setLanches(response.data);
   }
 
@@ -45,12 +46,19 @@ const LanchesProvider = ({ children }: LanchesProviderProps) => {
     setLanches((state) => [response.data, ...state]);
   }
 
+  async function deleteLanche(id: number) {
+    await api.delete(`/menu/lanche/${id}`);
+    setLanches(lanches.filter((lanche) => lanche.id !== id));
+  }
+
   useEffect(() => {
     lancheGet();
   });
 
   return (
-    <LanchesContext.Provider value={{ lanches, lancheGet, createLanche }}>
+    <LanchesContext.Provider
+      value={{ lanches, lancheGet, createLanche, deleteLanche }}
+    >
       {children}
     </LanchesContext.Provider>
   );

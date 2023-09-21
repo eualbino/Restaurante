@@ -12,9 +12,11 @@ import {
 } from "./styles";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { CheckCircle } from "phosphor-react";
 import { X } from "lucide-react";
+import { AcrescimosContext } from "../../context/acrescimoContext";
+import { priceFormatter } from "../../utils/formatter";
 
 const textObservationSchema = z.object({
   observation: z.string(),
@@ -33,9 +35,11 @@ const Observacao = () => {
     setOutput(JSON.stringify(data, null, 1));
   }
 
+  const { acrescimos } = useContext(AcrescimosContext);
+
   return (
     <ObservationContainer>
-      <Header childrenLanche="" childrenBebida="" childrenPorcao=""/>
+      <Header childrenLanche="" childrenBebida="" childrenPorcao="" />
       <ObservationContain>
         <SepareteObservationFromInsert>
           <TextObservacao>
@@ -63,21 +67,15 @@ const Observacao = () => {
         <InsertAddition>
           <span>DESEJA INSERIR ALGUM ACRÉSCIMO?</span>
           <ProductsInsert>
-            <div>
-              <button>
-                Cebola <span>R$25,00</span>
-              </button>
-            </div>
-            <div>
-              <button>
-                Cebola <span>R$25,00</span>
-              </button>
-            </div>
-            <div>
-              <button>
-                Cebola <span>R$25,00</span>
-              </button>
-            </div>
+            {acrescimos.map((acrescimo) => {
+              return (
+                <div>
+                  <button>
+                    {acrescimo.item} <span>{priceFormatter.format(acrescimo.valor)}</span>
+                  </button>
+                </div>
+              );
+            })}
           </ProductsInsert>
         </InsertAddition>
         <FinishButton>

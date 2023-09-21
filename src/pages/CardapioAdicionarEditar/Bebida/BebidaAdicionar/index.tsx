@@ -26,7 +26,7 @@ const newBebidaFormSchema = z.object({
 type newBebidaFormData = z.infer<typeof newBebidaFormSchema>
 
 const BebidaAdicionar = () => {
-  const { createBebida, bebidas } = useContext(BebidasContext);
+  const { createBebida, bebidas, deleteBebida } = useContext(BebidasContext);
 
   const{
     register,
@@ -44,6 +44,10 @@ const BebidaAdicionar = () => {
       preco,
     });
     reset()
+  }
+
+  async function handleDeleteBebida(id: number) {
+    await deleteBebida(id);
   }
 
   return (
@@ -88,7 +92,7 @@ const BebidaAdicionar = () => {
                   <span>{bebida.nome}</span>
                 </CreatedBebidaText>
                 <CreatedBebidaDelete>
-                  <button>
+                  <button onClick={() => handleDeleteBebida(bebida.id)}>
                     <X />
                   </button>
                 </CreatedBebidaDelete>
