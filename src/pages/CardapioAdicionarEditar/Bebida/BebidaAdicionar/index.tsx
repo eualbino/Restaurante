@@ -76,7 +76,7 @@ const BebidaAdicionar = () => {
             </div>
             <div>
               <span>Preço:</span>
-              <input placeholder="Preco" type="number" {...register("preco")} />
+              <input placeholder="Preco" type="number" step="0.01" {...register("preco")} />
             </div>
             <button type="submit">
               ADICIONAR

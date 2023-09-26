@@ -72,7 +72,7 @@ const LancheAdicionar = () => {
             </div>
             <div>
               <span>Preço:</span>
-              <input type="number" {...register("preco")} />
+              <input type="number" step="0.01" {...register("preco")} />
             </div>
             <IngredientesCreate>
               <span>Ingredientes</span>
@@ -102,7 +102,7 @@ const LancheAdicionar = () => {
                 </CreatedLancheDelete>
                 <CreatedLancheEdit>
                   <button>
-                    <NavLink to="/lancheEditar" title="Editar Funcionario">
+                    <NavLink to={{pathname: `/lancheEditar/${lanche.id}`}} title="Editar Funcionario">
                       <PencilLine />
                     </NavLink>
                   </button>

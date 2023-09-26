@@ -8,6 +8,11 @@ export const PorcoesMenuContainer = styled.div`
   row-gap: 2rem;
   margin: 0 auto;
   width: 65rem;
+  button {
+    all: initial;
+    all: unset;
+    cursor: pointer;
+  }
 `;
 
 export const MainDivPorcoes = styled.div`

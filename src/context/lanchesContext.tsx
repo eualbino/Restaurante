@@ -14,11 +14,18 @@ interface CreateLancheInput {
   ingredientes: string;
 }
 
+interface CreateLancheInput {
+  nome: string;
+  preco: number;
+  ingredientes: string;
+}
+
 interface LancheContextType {
   lanches: Lanche[];
   lancheGet: () => Promise<void>;
   createLanche: (data: CreateLancheInput) => Promise<void>;
   deleteLanche: (id: number) => Promise<void>;
+  editLanche: (id: number, data: CreateLancheInput) => Promise<void>;
 }
 
 interface LanchesProviderProps {
@@ -51,13 +58,23 @@ const LanchesProvider = ({ children }: LanchesProviderProps) => {
     setLanches(lanches.filter((lanche) => lanche.id !== id));
   }
 
+  async function editLanche(id: number, data: CreateLancheInput) {
+    const { nome, preco, ingredientes } = data;
+    const response = await api.put(`/menu/lanche/${id}`, {
+      nome,
+      preco,
+      ingredientes,
+    });
+    setLanches((state) => [response.data, ...state]);
+  }
+
   useEffect(() => {
     lancheGet();
   });
 
   return (
     <LanchesContext.Provider
-      value={{ lanches, lancheGet, createLanche, deleteLanche }}
+      value={{ lanches, lancheGet, createLanche, deleteLanche, editLanche }}
     >
       {children}
     </LanchesContext.Provider>

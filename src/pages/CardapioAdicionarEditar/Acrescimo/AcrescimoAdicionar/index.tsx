@@ -68,7 +68,7 @@ const AcrescimoAdicionar = () => {
             </div>
             <div>
               <span>Preço:</span>
-              <input type="number" {...register("valor")} />
+              <input type="number" step="0.01" {...register("valor")} />
             </div>
             <button type="submit" disabled={isSubmitting}>
               ADICIONAR

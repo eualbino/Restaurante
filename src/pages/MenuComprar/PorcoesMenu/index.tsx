@@ -22,17 +22,19 @@ const PorcoesComprar = () => {
       <PorcoesMenuContainer>
         {porcoes.map((porcao) => {
           return (
-            <MainDivPorcoes>
-              <TitlePorcoes>
-                <span>{porcao.tipo}</span>
-              </TitlePorcoes>
-              <TextPorcoes>
-                <span>{porcao.tamanho}</span>
-              </TextPorcoes>
-              <PricePorcoes>
-                <span>{priceFormatter.format(porcao.preco)}</span>
-              </PricePorcoes>
-            </MainDivPorcoes>
+            <button key={porcao.id}>
+              <MainDivPorcoes>
+                <TitlePorcoes>
+                  <span>{porcao.tipo}</span>
+                </TitlePorcoes>
+                <TextPorcoes>
+                  <span>{porcao.tamanho}</span>
+                </TextPorcoes>
+                <PricePorcoes>
+                  <span>{priceFormatter.format(porcao.preco)}</span>
+                </PricePorcoes>
+              </MainDivPorcoes>
+            </button>
           );
         })}
       </PorcoesMenuContainer>
