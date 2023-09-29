@@ -9,38 +9,34 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { api } from "../../../../lib/axios";
 import { useEffect, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { LanchesContext } from "../../../../context/lanchesContext";
 
 const LancheFormSchema = z.object({
-  nome: z.string(),
+  nome: z.string().nonempty(),
   preco: z.coerce.number(),
-  ingredientes: z.string(),
+  ingredientes: z.string().nonempty(),
 });
 
 type LancheFormInputs = z.infer<typeof LancheFormSchema>;
 
 const LancheEditar = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { isSubmitting },
-    reset,
-  } = useForm<LancheFormInputs>({
+  const { register, handleSubmit, reset } = useForm<LancheFormInputs>({
     resolver: zodResolver(LancheFormSchema),
   });
 
   const { id } = useParams();
-
-  const { editLanche } = useContext(LanchesContext)
+  const { editLanche } = useContext(LanchesContext);
+  const navigate = useNavigate();
 
   async function handleEditLanche(data: LancheFormInputs) {
     const { nome, preco, ingredientes } = data;
     await editLanche(id, {
       nome,
       preco,
-      ingredientes
-    })
+      ingredientes,
+    });
+    navigate("/lancheAdicionar");
   }
 
   useEffect(() => {
@@ -66,7 +62,7 @@ const LancheEditar = () => {
             </div>
             <div>
               <span>Preço:</span>
-              <input type="number" step="0.01"{...register("preco")} />
+              <input type="number" step="0.01" {...register("preco")} />
             </div>
             <IngredientesCreate>
               <span>Ingredientes</span>
@@ -77,9 +73,7 @@ const LancheEditar = () => {
                 {...register("ingredientes")}
               ></textarea>
             </IngredientesCreate>
-            <button type="submit" disabled={isSubmitting}>
-              ALTERAR
-            </button>
+            <button type="submit">ALTERAR</button>
           </AddLanche>
         </form>
       </LancheContain>

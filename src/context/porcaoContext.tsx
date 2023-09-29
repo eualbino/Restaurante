@@ -19,6 +19,7 @@ interface PorcaoContextType {
   porcaoGet: () => Promise<void>;
   createPorcao: (data: CreatePorcaoInput) => Promise<void>;
   deletePorcao: (id:number) => Promise<void>;
+  editPorcao: (id: number, data: CreatePorcaoInput) => Promise<void>
 }
 
 interface PorcaoProviderProps {
@@ -50,12 +51,22 @@ const PorcaoProvider = ({ children }: PorcaoProviderProps) => {
     setPorcoes(porcoes.filter((porcao) => porcao.id !== id));
   }
 
+  async function editPorcao(id: number, data: CreatePorcaoInput) {
+    const{ tipo, preco, tamanho } = data;
+    const response = await api.put(`/menu/porcao/${id}`, {
+      tipo,
+      preco,
+      tamanho
+    })
+    setPorcoes(state => [response.data, ...state]);
+  }
+
   useEffect(() => {
     porcaoGet();
   })
 
   return (
-    <PorcoesContext.Provider value={{ porcoes, porcaoGet, createPorcao, deletePorcao }}>
+    <PorcoesContext.Provider value={{ porcoes, porcaoGet, createPorcao, deletePorcao, editPorcao }}>
       {children}
     </PorcoesContext.Provider>
   );

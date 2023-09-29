@@ -18,8 +18,8 @@ import { AcrescimosContext } from "../../../../context/acrescimoContext";
 import { useForm } from "react-hook-form";
 
 const newAcrescimoFormSchema = z.object({
-  item: z.string(),
-  valor: z.coerce.number(),
+  item: z.string().nonempty(),
+  valor: z.coerce.number()
 });
 
 type NewAcrescimoFormInput = z.infer<typeof newAcrescimoFormSchema>;
@@ -89,7 +89,7 @@ const AcrescimoAdicionar = () => {
                 </CreatedAcrescimoDelete>
                 <CreatedAcrescimoEdit>
                   <button>
-                    <NavLink to="/acrescimoEditar" title="Editar Funcionario">
+                    <NavLink to={{pathname: `/acrescimoEditar/${acrescimo.id}`}} title="Editar Funcionario">
                       <PencilLine />
                     </NavLink>
                   </button>

@@ -17,6 +17,7 @@ interface AcrescimoContextType {
     acrescimoGet: () => Promise<void>;
     createAcrescimo: (data: CreateAcrescimoInput) => Promise<void>;
     deleteAcrescimo: (id: number) => Promise<void>;
+    editAcrescimo: (id: number, data: CreateAcrescimoInput) => Promise<void>
 }
 
 interface AcrescimoProviderProps {
@@ -47,12 +48,21 @@ const AcrescimosProvider = ({ children }: AcrescimoProviderProps) => {
     setAcrescimos(acrescimos.filter(acrescimo => acrescimo.id !== id))
   }
 
+  async function editAcrescimo(id: number, data: CreateAcrescimoInput) {
+    const { item, valor } = data
+    const response = await api.put(`/acrescimo/${id}`, {
+      item,
+      valor
+    });
+    setAcrescimos((state) => [response.data, ...state]);
+  }
+
   useEffect(() => {
     acrescimoGet();
   })
 
   return (
-    <AcrescimosContext.Provider value={{ acrescimos, acrescimoGet, createAcrescimo, deleteAcrescimo}}>
+    <AcrescimosContext.Provider value={{ acrescimos, acrescimoGet, createAcrescimo, deleteAcrescimo, editAcrescimo}}>
       {children}
     </AcrescimosContext.Provider>
   );

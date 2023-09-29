@@ -20,9 +20,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { LanchesContext } from "../../../../context/lanchesContext";
 
 const newLancheFormSchema = z.object({
-  nome: z.string(),
+  nome: z.string().nonempty(),
   preco: z.coerce.number(),
-  ingredientes: z.string(),
+  ingredientes: z.string().nonempty(),
 });
 
 type NewLancheFormInputs = z.infer<typeof newLancheFormSchema>;

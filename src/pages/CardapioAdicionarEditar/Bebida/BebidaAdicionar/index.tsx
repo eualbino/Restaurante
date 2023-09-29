@@ -18,32 +18,28 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 const newBebidaFormSchema = z.object({
-  nome: z.string(),
-  litragem: z.string(),
+  nome: z.string().nonempty(),
+  litragem: z.string().nonempty(),
   preco: z.coerce.number(),
-})
+});
 
-type newBebidaFormData = z.infer<typeof newBebidaFormSchema>
+type newBebidaFormData = z.infer<typeof newBebidaFormSchema>;
 
 const BebidaAdicionar = () => {
   const { createBebida, bebidas, deleteBebida } = useContext(BebidasContext);
 
-  const{
-    register,
-    handleSubmit,
-    reset,
-  } = useForm<newBebidaFormData>({
-    resolver: zodResolver(newBebidaFormSchema)
-  })
+  const { register, handleSubmit, reset } = useForm<newBebidaFormData>({
+    resolver: zodResolver(newBebidaFormSchema),
+  });
 
-  async function handleCreateNewBebida(data: newBebidaFormData) { 
+  async function handleCreateNewBebida(data: newBebidaFormData) {
     const { nome, litragem, preco } = data;
     await createBebida({
       nome,
       litragem,
       preco,
     });
-    reset()
+    reset();
   }
 
   async function handleDeleteBebida(id: number) {
@@ -64,23 +60,17 @@ const BebidaAdicionar = () => {
           <AddBebida>
             <div>
               <span>Nome:</span>
-              <input placeholder="Nome" type="text" {...register("nome")} />
+              <input type="text" {...register("nome")} />
             </div>
             <div>
               <span>Litragem:</span>
-              <input
-                placeholder="litragem"
-                type="text"
-                {...register("litragem")}
-              />
+              <input type="text" {...register("litragem")} />
             </div>
             <div>
               <span>Preço:</span>
-              <input placeholder="Preco" type="number" step="0.01" {...register("preco")} />
+              <input type="number" step="0.01" {...register("preco")} />
             </div>
-            <button type="submit">
-              ADICIONAR
-            </button>
+            <button type="submit">ADICIONAR</button>
           </AddBebida>
         </form>
 
@@ -98,7 +88,10 @@ const BebidaAdicionar = () => {
                 </CreatedBebidaDelete>
                 <CreatedBebidaEdit>
                   <button>
-                    <NavLink to="/bebidaEditar" title="Editar Funcionario">
+                    <NavLink
+                      to={{ pathname: `/bebidaEditar/${bebida.id}` }}
+                      title="Editar Funcionario"
+                    >
                       <PencilLine />
                     </NavLink>
                   </button>

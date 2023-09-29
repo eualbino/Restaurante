@@ -14,15 +14,16 @@ interface CreateBebidaInput {
   preco: number;
 }
 
-interface BebidasProviderProps {
-  children: ReactNode;
-}
-
 interface BebidasContextType {
   bebidas: Bebidas[];
   bebidaGet: () => Promise<void>;
   createBebida: (data: CreateBebidaInput) => Promise<void>;
   deleteBebida: (id: number) => Promise<void>;
+  editBebida: (id: number, data: CreateBebidaInput) => Promise<void>;
+}
+
+interface BebidasProviderProps {
+  children: ReactNode;
 }
 
 export const BebidasContext = createContext({} as BebidasContextType);
@@ -48,7 +49,17 @@ const BebidasProvider = ({ children }: BebidasProviderProps) => {
 
   async function deleteBebida(id: number) {
     await api.delete(`/menu/bebida/${id}`);
-    setBebidas(bebidas.filter(bebida => bebida.id !== id))
+    setBebidas(bebidas.filter((bebida) => bebida.id !== id));
+  }
+
+  async function editBebida(id: number, data: CreateBebidaInput) {
+    const { nome, litragem, preco } = data;
+    const response = await api.put(`/menu/bebida/${id}`, {
+      nome,
+      litragem,
+      preco,
+    });
+    setBebidas((state) => [response.data, ...state]);
   }
 
   useEffect(() => {
@@ -56,7 +67,9 @@ const BebidasProvider = ({ children }: BebidasProviderProps) => {
   });
 
   return (
-    <BebidasContext.Provider value={{ bebidas, bebidaGet, createBebida, deleteBebida }}>
+    <BebidasContext.Provider
+      value={{ bebidas, bebidaGet, createBebida, deleteBebida, editBebida }}
+    >
       {children}
     </BebidasContext.Provider>
   );

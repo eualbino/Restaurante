@@ -18,9 +18,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const newPorcaoFormSchema = z.object({
-  tipo: z.string(),
+  tipo: z.string().nonempty(),
   preco: z.coerce.number(),
-  tamanho: z.string(),
+  tamanho: z.string().nonempty(),
 });
 
 type NewPorcaoFormInputs = z.infer<typeof newPorcaoFormSchema>;
@@ -74,7 +74,7 @@ const PorcaoAdicionar = () => {
             </div>
             <div>
               <span>Preço:</span>
-              <input type="number" {...register("preco")} />
+              <input type="number" step="0.01" {...register("preco")} />
             </div>
             <button type="submit" disabled={isSubmitting}>
               ADICIONAR
@@ -95,7 +95,10 @@ const PorcaoAdicionar = () => {
                 </CreatedPorcaoDelete>
                 <CreatedPorcaoEdit>
                   <button>
-                    <NavLink to="/porcaoEditar" title="Editar Porção">
+                    <NavLink
+                      to={{ pathname: `/porcaoEditar/${porcao.id}` }}
+                      title="Editar Porção"
+                    >
                       <PencilLine />
                     </NavLink>
                   </button>

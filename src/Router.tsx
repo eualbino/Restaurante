@@ -29,9 +29,9 @@ const Router = () => {
             <Route path="/menu" element={<Menu/>}/>
             <Route path="/mesas" element={<Mesas/>}/>
             <Route path="/acrescimoAdicionar" element={<AcrescimoAdicionar/>}/>
-            <Route path="/acrescimoEditar" element={<AcrescimoEditar/>}/>
+            <Route path="/acrescimoEditar/:id" element={<AcrescimoEditar/>}/>
             <Route path="/bebidaAdicionar" element={<BebidaAdicionar/>}/>
-            <Route path="/bebidaEditar" element={<BebidaEditar/>}/>
+            <Route path="/bebidaEditar/:id" element={<BebidaEditar/>}/>
             <Route path="/funcionarioAdicionar" element={<FuncionarioAdicionar/>}/>
             <Route path="/funcionarioEditar" element={<FuncionarioEditar/>}/>
             <Route path="/lancheAdicionar" element={<LancheAdicionar/>}/>
@@ -43,7 +43,7 @@ const Router = () => {
             <Route path="/observacao" element={<Observacao/>}/>
             <Route path="/pedidosMesas" element={<PedidosMesas/>}/>
             <Route path="/porcaoAdicionar" element={<PorcaoAdicionar/>}/>
-            <Route path="/porcaoEditar" element={<PorcaoEditar/>}/>
+            <Route path="/porcaoEditar/:id" element={<PorcaoEditar/>}/>
             <Route path="/bebidaComprar" element={<BebidasComprar/>}/>
             <Route path="/lancheComprar" element={<LanchesComprar/>}/>
             <Route path="/porcaoComprar" element={<PorcoesComprar/>}/>
