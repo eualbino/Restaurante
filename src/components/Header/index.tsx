@@ -10,7 +10,12 @@ interface headerProps {
   location?: typeof useLocation;
 }
 
-const Header = ({ children, childrenLanche, childrenBebida, childrenPorcao }: headerProps) => {
+const Header = ({
+  children,
+  childrenLanche,
+  childrenBebida,
+  childrenPorcao,
+}: headerProps) => {
   function backPagePrevious() {
     window.history.back();
   }

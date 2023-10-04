@@ -7,22 +7,25 @@ import LanchesProvider from "./context/lanchesContext";
 import BebidasProvider from "./context/bebidasContext";
 import PorcaoProvider from "./context/porcaoContext";
 import AcrescimosProvider from "./context/acrescimoContext";
+import FuncionariosProvider from "./context/funcionarioContext";
 
 const App = () => {
   return (
     <ThemeProvider theme={defaultTheme}>
       <GlobalStyle />
-      <LanchesProvider>
-        <BebidasProvider>
-          <PorcaoProvider>
-            <AcrescimosProvider>
-              <BrowserRouter>
-                <Router />
-              </BrowserRouter>
-            </AcrescimosProvider>
-          </PorcaoProvider>
-        </BebidasProvider>
-      </LanchesProvider>
+      <FuncionariosProvider>
+        <LanchesProvider>
+          <BebidasProvider>
+            <PorcaoProvider>
+              <AcrescimosProvider>
+                <BrowserRouter>
+                  <Router />
+                </BrowserRouter>
+              </AcrescimosProvider>
+            </PorcaoProvider>
+          </BebidasProvider>
+        </LanchesProvider>
+      </FuncionariosProvider>
     </ThemeProvider>
   );
 };

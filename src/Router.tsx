@@ -33,7 +33,7 @@ const Router = () => {
             <Route path="/bebidaAdicionar" element={<BebidaAdicionar/>}/>
             <Route path="/bebidaEditar/:id" element={<BebidaEditar/>}/>
             <Route path="/funcionarioAdicionar" element={<FuncionarioAdicionar/>}/>
-            <Route path="/funcionarioEditar" element={<FuncionarioEditar/>}/>
+            <Route path="/funcionarioEditar/:id" element={<FuncionarioEditar/>}/>
             <Route path="/lancheAdicionar" element={<LancheAdicionar/>}/>
             <Route path="/lancheEditar/:id" element={<LancheEditar/>}/>
             <Route path="/bebidasMenu" element={<BebidasMenu/>}/>
