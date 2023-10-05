@@ -54,15 +54,15 @@ const PorcaoEditar = () => {
           <AddPorcao>
             <div>
               <span>Nome:</span>
-              <input type="text" {...register("tipo")} />
+              <input type="text" required {...register("tipo")} />
             </div>
             <div>
               <span>Tamanho:</span>
-              <input type="text" {...register("tamanho")} />
+              <input type="text" required {...register("tamanho")} />
             </div>
             <div>
               <span>Preço:</span>
-              <input type="number" step="0.01" {...register("preco")} />
+              <input type="number" required step="0.01" {...register("preco")} />
             </div>
             <button type="submit">ALTERAR</button>
           </AddPorcao>

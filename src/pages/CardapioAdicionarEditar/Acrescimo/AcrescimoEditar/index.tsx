@@ -57,11 +57,11 @@ const AcrescimoEditar = () => {
           <AddAcrescimo>
             <div>
               <span>Nome:</span>
-              <input type="text" {...register("item")} />
+              <input type="text" required {...register("item")} />
             </div>
             <div>
               <span>Preço:</span>
-              <input type="number" step="0.01" {...register("valor")} />
+              <input type="number" required step="0.01" {...register("valor")} />
             </div>
             <button type="submit" disabled={isSubmitting}>
               ALTERAR

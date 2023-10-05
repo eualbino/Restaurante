@@ -39,6 +39,22 @@ export const AddEmployee = styled.div`
         -webkit-appearance: none;
       }
     }
+    select{
+      border: 3px solid ${(props) => props.theme["purple-500"]};
+      border-radius: 10px;
+      background: transparent;
+      color: ${(props) => props.theme.white};
+      width: 170px;
+      height: 40px;
+      outline: none;
+      padding: 10px;
+      font-size: 15px;
+      option{
+        font-size: 15px;
+        background-color: ${props => props.theme["blue-700"]};
+        border-color: ${props => props.theme["blue-700"]};
+      }
+    }
   }
   
 

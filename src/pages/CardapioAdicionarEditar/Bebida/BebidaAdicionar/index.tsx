@@ -60,15 +60,15 @@ const BebidaAdicionar = () => {
           <AddBebida>
             <div>
               <span>Nome:</span>
-              <input type="text" {...register("nome")} />
+              <input type="text" required {...register("nome")} />
             </div>
             <div>
               <span>Litragem:</span>
-              <input type="text" {...register("litragem")} />
+              <input type="text" required {...register("litragem")} />
             </div>
             <div>
               <span>Preço:</span>
-              <input type="number" step="0.01" {...register("preco")} />
+              <input type="number" required step="0.01" {...register("preco")} />
             </div>
             <button type="submit">ADICIONAR</button>
           </AddBebida>

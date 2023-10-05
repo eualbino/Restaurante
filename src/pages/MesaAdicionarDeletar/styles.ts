@@ -31,6 +31,9 @@ export const AddTable = styled.div`
       height: 40px;
       outline: none;
       padding: 10px;
+      &[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+      }
     }
   }
 

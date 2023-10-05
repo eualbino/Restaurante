@@ -8,8 +8,37 @@ import {
   CreatedTablesText,
   TableSetupContain,
 } from "./styles";
+import { useContext } from "react";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import { MesasContext } from "../../context/mesasContext";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const newMesaFormSchema = z.object({
+  numeroMesa: z.coerce.number(),
+});
+
+type newMesaFormData = z.infer<typeof newMesaFormSchema>;
 
 const MesaAdicionarDeletar = () => {
+  const { createMesa, mesas, deleteMesa } = useContext(MesasContext);
+
+  const { register, handleSubmit, reset } = useForm<newMesaFormData>({
+    resolver: zodResolver(newMesaFormSchema),
+  });
+
+  async function handleCreateNewMesa(data: newMesaFormData) {
+    const { numeroMesa } = data;
+    await createMesa({
+      numeroMesa,
+    });
+    reset();
+  }
+
+  async function handleDeleteMesa(numeroMesa: number) {
+    await deleteMesa(numeroMesa);
+  }
+
   return (
     <div>
       <Header
@@ -19,54 +48,34 @@ const MesaAdicionarDeletar = () => {
         childrenPorcao=""
       />
       <TableSetupContain>
-        <AddTable>
-          <div>
-            <span>N da Mesa:</span>
-            <input type="text" />
-          </div>
-          <button>ADICIONAR</button>
-        </AddTable>
+        <form onSubmit={handleSubmit(handleCreateNewMesa)}>
+          <AddTable>
+            <div>
+              <span>Nº da Mesa:</span>
+              <input type="number" required {...register("numeroMesa")} />
+            </div>
+            <button type="submit">ADICIONAR</button>
+          </AddTable>
+        </form>
         <CreatedTablesContainer>
-          <CreatedTablesContain>
-            <CreatedTablesText>
-              <span>Mesa 1</span>
-            </CreatedTablesText>
-            <CreatedTablesDelete>
-              <button>
-                <X />
-              </button>
-            </CreatedTablesDelete>
-          </CreatedTablesContain>
-          <CreatedTablesContain>
-            <CreatedTablesText>
-              <span>Mesa 2</span>
-            </CreatedTablesText>
-            <CreatedTablesDelete>
-              <button>
-                <X />
-              </button>
-            </CreatedTablesDelete>
-          </CreatedTablesContain>
-          <CreatedTablesContain>
-            <CreatedTablesText>
-              <span>Mesa 3</span>
-            </CreatedTablesText>
-            <CreatedTablesDelete>
-              <button>
-                <X />
-              </button>
-            </CreatedTablesDelete>
-          </CreatedTablesContain>
-          <CreatedTablesContain>
-            <CreatedTablesText>
-              <span>Mesa 4</span>
-            </CreatedTablesText>
-            <CreatedTablesDelete>
-              <button>
-                <X />
-              </button>
-            </CreatedTablesDelete>
-          </CreatedTablesContain>
+          {mesas.map((mesa) => {
+            return (
+              <CreatedTablesContain key={mesa.numeroMesa}>
+                <CreatedTablesText>
+                  <span>Mesa {mesa.numeroMesa}</span>
+                </CreatedTablesText>
+                <CreatedTablesDelete>
+                  <button
+                    onClick={() => {
+                      handleDeleteMesa(mesa.numeroMesa);
+                    }}
+                  >
+                    <X />
+                  </button>
+                </CreatedTablesDelete>
+              </CreatedTablesContain>
+            );
+          })}
         </CreatedTablesContainer>
       </TableSetupContain>
     </div>

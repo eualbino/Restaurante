@@ -14,12 +14,6 @@ interface CreateLancheInput {
   ingredientes: string;
 }
 
-interface CreateLancheInput {
-  nome: string;
-  preco: number;
-  ingredientes: string;
-}
-
 interface LancheContextType {
   lanches: Lanche[];
   lancheGet: () => Promise<void>;
