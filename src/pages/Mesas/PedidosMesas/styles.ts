@@ -25,7 +25,7 @@ export const PedidosMesaLanches = styled.div`
     margin-top: 1.5rem;
     border: 2px solid ${(props) => props.theme["purple-500"]};
     border-radius: 8px;
-    width: 19rem;
+    width: 21rem;
     margin-left: 2.2rem;
     margin-right: 2.2rem;
   }
@@ -38,7 +38,7 @@ export const PedidosMesaLanches = styled.div`
     cursor: pointer;
     position: absolute;
     top: 19px;
-    right: 30px;
+    right: 15px;
     color: ${(props) => props.theme.white};
     background-color: ${(props) => props.theme["red-400"]};
     border: none;
@@ -56,7 +56,7 @@ export const PedidosMesaBebidas = styled.div`
     margin-top: 1.5rem;
     border: 2px solid ${(props) => props.theme["purple-500"]};
     border-radius: 8px;
-    width: 19rem;
+    width: 21rem;
     margin-left: 2.2rem;
     margin-right: 2.2rem;
   }
@@ -69,7 +69,7 @@ export const PedidosMesaBebidas = styled.div`
     cursor: pointer;
     position: absolute;
     top: 19px;
-    right: 30px;
+    right: 15px;
     color: ${(props) => props.theme.white};
     background-color: ${(props) => props.theme["red-400"]};
     border: none;
@@ -81,14 +81,15 @@ export const PedidosMesaBebidas = styled.div`
 export const PedidosMesaPorcoes = styled.div`
   text-align: center;
 
-  div {
+  div{
     position: relative;
     margin-top: 1.5rem;
     border: 2px solid ${(props) => props.theme["purple-500"]};
     border-radius: 8px;
-    width: 19rem;
+    width: 21rem;
     margin-left: 2.2rem;
     margin-right: 2.2rem;
+    white-space: nowrap;
   }
 
   span {
@@ -99,7 +100,7 @@ export const PedidosMesaPorcoes = styled.div`
     cursor: pointer;
     position: absolute;
     top: 19px;
-    right: 30px;
+    right: 15px;
     color: ${(props) => props.theme.white};
     background-color: ${(props) => props.theme["red-400"]};
     border: none;
@@ -134,18 +135,16 @@ export const ButtonOptions = styled.div`
     gap: 0.5rem;
     cursor: pointer;
 
-    &:hover{
-      box-shadow: 0px 0px 12px -5px ${props => props.theme["purple-500"]};
+    &:hover {
+      box-shadow: 0px 0px 12px -5px ${(props) => props.theme["purple-500"]};
     }
   }
-  a{
+  a {
     text-decoration: none;
-    color: ${props => props.theme.white};
-    
+    color: ${(props) => props.theme.white};
   }
 `;
 
 export const TotalPrice = styled.div`
   margin-top: 0.75rem;
-  
 `;

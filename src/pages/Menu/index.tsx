@@ -1,7 +1,8 @@
-import { NavLink } from "react-router-dom";
+import { NavLink} from "react-router-dom";
 import { MenuContainer } from "./styles";
 
 const Menu = () => {
+
   return (
     <MenuContainer>
       <nav>
@@ -12,7 +13,7 @@ const Menu = () => {
           CONFIGURAÇÕES DE FUNCIONÁRIOS
         </NavLink>
         <NavLink to="/mesaAdicionarDeletar">CONFIGURAÇÕES DE MESAS</NavLink>
-        <NavLink to="/">SAIR</NavLink>
+        <button>SAIR</button>
       </nav>
     </MenuContainer>
   );

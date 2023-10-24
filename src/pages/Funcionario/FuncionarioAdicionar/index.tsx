@@ -19,13 +19,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 const newFuncionarioFormSchema = z.object({
   nome: z.string().nonempty(),
   idade: z.coerce.number(),
-  funcao: z.enum(["Admin", "Garçom", "Atendente"]),
+  funcao: z.enum(["ADMIN", "GARCOM", "ATENDENTE"]),
   usuario: z.string().nonempty(),
   email: z.string().nonempty(),
   senha: z.string().nonempty(),
 });
 
-type newFuncionarioFormData  = z.infer<typeof newFuncionarioFormSchema>;
+type newFuncionarioFormData = z.infer<typeof newFuncionarioFormSchema>;
 
 const FuncionarioAdicionar = () => {
   const { createFuncionario, funcionarios, deleteFuncionario } =
@@ -73,9 +73,9 @@ const FuncionarioAdicionar = () => {
             <div>
               <span>Função:</span>
               <select required {...register("funcao")}>
-                <option value="Admin">Admin</option>
-                <option value="Garçom">Garçom</option>
-                <option value="Atendente">Atendente</option>
+                <option value="ADMIN">ADMIN</option>
+                <option value="GARCOM">GARCOM</option>
+                <option value="ATENDENTE">ATENDENTE</option>
               </select>
             </div>
             <div>

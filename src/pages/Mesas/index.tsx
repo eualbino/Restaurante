@@ -1,8 +1,12 @@
 import { NavLink } from "react-router-dom";
 import Header from "../../components/Header";
 import { MessasContainer } from "./styles";
+import { useContext } from "react";
+import { MesasContext } from "../../context/mesasContext";
 
 const Mesas = () => {
+  const { mesas } = useContext(MesasContext);
+
   return (
     <div>
       <Header
@@ -12,32 +16,21 @@ const Mesas = () => {
         childrenPorcao=""
       />
       <MessasContainer>
-        <div>
-          <h2>Mesa 1</h2>
-          <button>ACESSAR</button>
-        </div>
-        <div>
-          <h2>Mesa 2</h2>
-          <button>ACESSAR</button>
-        </div>
-        <div>
-          <h2>Mesa 3</h2>
-          <button>ACESSAR</button>
-        </div>
-        <div>
-          <h2>Mesa 4</h2>
-          <NavLink to="/pedidosMesas" title="Pedidos das Mesas">
-            <button>ACESSAR</button>
-          </NavLink>
-        </div>
-        <div>
-          <h2>Mesa 5</h2>
-          <button>ACESSAR</button>
-        </div>
-        <div>
-          <h2>Mesa 6</h2>
-          <button>ACESSAR</button>
-        </div>
+        {mesas.map((mesa) => {
+          return (
+            <div key={mesa.numeroMesa}>
+              <h2>Mesa {mesa.numeroMesa}</h2>
+              <button>
+                <NavLink
+                  to={{ pathname: `/pedidosMesas/${mesa.numeroMesa}` }}
+                  title="Pedidos das Mesas"
+                >
+                  ACESSAR
+                </NavLink>
+              </button>
+            </div>
+          );
+        })}
       </MessasContainer>
     </div>
   );

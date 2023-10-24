@@ -1,4 +1,4 @@
-import { Route, Routes  } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
 import AcrescimoAdicionar from "./pages/CardapioAdicionarEditar/Acrescimo/AcrescimoAdicionar";
 import AcrescimoEditar from "./pages/CardapioAdicionarEditar/Acrescimo/AcrescimoEditar";
@@ -23,30 +23,30 @@ import LanchesComprar from "./pages/MenuComprar/LanchesMenu";
 import PorcoesComprar from "./pages/MenuComprar/PorcoesMenu";
 
 const Router = () => {
-    return ( 
+    return (
         <Routes>
-            <Route path="/" element={<Login/>}/>
-            <Route path="/menu" element={<Menu/>}/>
-            <Route path="/mesas" element={<Mesas/>}/>
-            <Route path="/acrescimoAdicionar" element={<AcrescimoAdicionar/>}/>
-            <Route path="/acrescimoEditar/:id" element={<AcrescimoEditar/>}/>
-            <Route path="/bebidaAdicionar" element={<BebidaAdicionar/>}/>
-            <Route path="/bebidaEditar/:id" element={<BebidaEditar/>}/>
-            <Route path="/funcionarioAdicionar" element={<FuncionarioAdicionar/>}/>
-            <Route path="/funcionarioEditar/:id" element={<FuncionarioEditar/>}/>
-            <Route path="/lancheAdicionar" element={<LancheAdicionar/>}/>
-            <Route path="/lancheEditar/:id" element={<LancheEditar/>}/>
-            <Route path="/bebidasMenu" element={<BebidasMenu/>}/>
-            <Route path="/lanchesMenu" element={<LanchesMenu/>}/>
-            <Route path="/porcoesMenu" element={<PorcoesMenu/>}/>
-            <Route path="/mesaAdicionarDeletar" element={<MesaAdicionarDeletar/>}/>
-            <Route path="/observacao" element={<Observacao/>}/>
-            <Route path="/pedidosMesas" element={<PedidosMesas/>}/>
-            <Route path="/porcaoAdicionar" element={<PorcaoAdicionar/>}/>
-            <Route path="/porcaoEditar/:id" element={<PorcaoEditar/>}/>
-            <Route path="/bebidaComprar" element={<BebidasComprar/>}/>
-            <Route path="/lancheComprar" element={<LanchesComprar/>}/>
-            <Route path="/porcaoComprar" element={<PorcoesComprar/>}/>
+            <Route path="/" element={<Login />} />
+            <Route path="/menu" element={<Menu />} />
+            <Route path="/mesas" element={<Mesas />} />
+            <Route path="/acrescimoAdicionar" element={<AcrescimoAdicionar />} />
+            <Route path="/acrescimoEditar/:id" element={<AcrescimoEditar />} />
+            <Route path="/bebidaAdicionar" element={<BebidaAdicionar />} />
+            <Route path="/bebidaEditar/:id" element={<BebidaEditar />} />
+            <Route path="/funcionarioAdicionar" element={<FuncionarioAdicionar />} />
+            <Route path="/funcionarioEditar/:id" element={<FuncionarioEditar />} />
+            <Route path="/lancheAdicionar" element={<LancheAdicionar />} />
+            <Route path="/lancheEditar/:id" element={<LancheEditar />} />
+            <Route path="/bebidasMenu" element={<BebidasMenu />} />
+            <Route path="/lanchesMenu" element={<LanchesMenu />} />
+            <Route path="/porcoesMenu" element={<PorcoesMenu />} />
+            <Route path="/mesaAdicionarDeletar" element={<MesaAdicionarDeletar />} />
+            <Route path="/observacao/:id" element={<Observacao />} />
+            <Route path="/pedidosMesas/:id" element={<PedidosMesas />} />
+            <Route path="/porcaoAdicionar" element={<PorcaoAdicionar />} />
+            <Route path="/porcaoEditar/:id" element={<PorcaoEditar />} />
+            <Route path="/bebidaComprar" element={<BebidasComprar />} />
+            <Route path="/lancheComprar" element={<LanchesComprar />} />
+            <Route path="/porcaoComprar" element={<PorcoesComprar />} />
         </Routes>
     );
 }

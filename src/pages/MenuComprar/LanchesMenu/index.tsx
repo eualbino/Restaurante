@@ -26,7 +26,8 @@ const LanchesComprar = () => {
           return (
             <button key={lanche.id}>
               <MainDivLanches>
-                <NavLink to="/observacao">
+                <NavLink to={{ pathname: `/observacao/${lanche.id}` }}
+                >
                   <TitleLanches>
                     <span>{lanche.nome}</span>
                   </TitleLanches>

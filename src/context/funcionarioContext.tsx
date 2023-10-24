@@ -5,7 +5,7 @@ interface Funcionarios {
   id: number;
   nome: string;
   idade: number;
-  funcao: "Admin" | "Garçom" | "Atendente";
+  funcao: "ADMIN" | "GARCOM" | "ATENDENTE";
   usuario: string;
   email: string;
   senha: string;
@@ -14,7 +14,7 @@ interface Funcionarios {
 interface CreateFuncionarioInput {
   nome: string;
   idade: number;
-  funcao: "Admin" | "Garçom" | "Atendente";
+  funcao: "ADMIN" | "GARCOM" | "ATENDENTE";
   usuario: string;
   email: string;
   senha: string;
@@ -57,7 +57,7 @@ const FuncionariosProvider = ({ children }: FuncionariosProviderProps) => {
 
   async function deleteFuncionario(id: number) {
     await api.delete(`/pessoa/${id}`);
-    setFuncionarios(funcionarios.filter((bebida) => bebida.id !== id));
+    setFuncionarios(funcionarios.filter((funcionario) => funcionario.id !== id));
   }
 
   async function editFuncionario(id: number, data: CreateFuncionarioInput) {

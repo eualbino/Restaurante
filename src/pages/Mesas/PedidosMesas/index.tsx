@@ -11,13 +11,22 @@ import {
   TotalPrice,
 } from "./styles";
 import { PlusCircle, CheckCircle } from "phosphor-react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
+import { useContext } from "react";
+import { LanchesContext } from "../../../context/lanchesContext";
+import { BebidasContext } from "../../../context/bebidasContext";
+import { PorcoesContext } from "../../../context/porcaoContext";
+import { priceFormatter } from "../../../utils/formatter";
 
 const PedidosMesas = () => {
+  const { lanches } = useContext(LanchesContext)
+  const { bebidas } = useContext(BebidasContext)
+  const { porcoes } = useContext(PorcoesContext)
+  const { id } = useParams()
   return (
     <PedidosMesasContainer>
       <Header
-        children="MESA 4"
+        children={`MESA ${id}`}
         childrenLanche=""
         childrenBebida=""
         childrenPorcao=""
@@ -25,56 +34,45 @@ const PedidosMesas = () => {
       <PedidosMesasContain>
         <PedidosMesaLanches>
           <h1>LANCHES</h1>
-          <div>
-            <h2>X-Tudo</h2>
-            <span>R$ 32,00</span>
-            <button>
-              <X />
-            </button>
-          </div>
-          <div>
-            <h2>X-Tudo</h2>
-            <span>R$ 32,00</span>
-            <button>
-              <X />
-            </button>
-          </div>
+          {lanches.map((lanche) => {
+            return (
+              <div>
+                <h2>{lanche.nome}</h2>
+                <span>{priceFormatter.format(lanche.preco)}</span>
+                <button>
+                  <X />
+                </button>
+              </div>
+            )
+          })}
         </PedidosMesaLanches>
         <PedidosMesaBebidas>
           <h1>BEBIDAS</h1>
-
-          <div>
-            <h2>X-Tudo</h2>
-            <span>R$ 32,00</span>
-            <button>
-              <X />
-            </button>
-          </div>
-          <div>
-            <h2>X-Tudo</h2>
-            <span>R$ 32,00</span>
-            <button>
-              <X />
-            </button>
-          </div>
-          <div>
-            <h2>X-Tudo</h2>
-            <span>R$ 32,00</span>
-            <button>
-              <X />
-            </button>
-          </div>
+          {bebidas.map((bebida) => {
+            return (
+              <div>
+                <h2>{bebida.nome} {bebida.litragem}</h2>
+                <span>{priceFormatter.format(bebida.preco)}</span>
+                <button>
+                  <X />
+                </button>
+              </div>
+            )
+          })}
         </PedidosMesaBebidas>
         <PedidosMesaPorcoes>
           <h1>PORCOES</h1>
-          {/* Colocar isso dentro de um MAP */}
-          <div>
-            <h2>X-Tudo</h2>
-            <span>R$ 32,00</span>
-            <button>
-              <X />
-            </button>
-          </div>
+          {porcoes.map(porcao => {
+            return (
+              <div>
+                <h2>{porcao.tipo} {porcao.tamanho}</h2>
+                <span>{priceFormatter.format(porcao.preco)}</span>
+                  <button>
+                    <X />
+                  </button>
+              </div>
+            )
+          })}
         </PedidosMesaPorcoes>
       </PedidosMesasContain>
       <TotalAndButtonOptions>
