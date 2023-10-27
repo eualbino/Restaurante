@@ -21,32 +21,33 @@ import Mesas from "./pages/Mesas";
 import BebidasComprar from "./pages/MenuComprar/BebidasMenu";
 import LanchesComprar from "./pages/MenuComprar/LanchesMenu";
 import PorcoesComprar from "./pages/MenuComprar/PorcoesMenu";
+import RequireAuth from "./context/Auth/RequireAuth";
 
 const Router = () => {
     return (
         <Routes>
             <Route path="/" element={<Login />} />
-            <Route path="/menu" element={<Menu />} />
-            <Route path="/mesas" element={<Mesas />} />
-            <Route path="/acrescimoAdicionar" element={<AcrescimoAdicionar />} />
-            <Route path="/acrescimoEditar/:id" element={<AcrescimoEditar />} />
-            <Route path="/bebidaAdicionar" element={<BebidaAdicionar />} />
-            <Route path="/bebidaEditar/:id" element={<BebidaEditar />} />
-            <Route path="/funcionarioAdicionar" element={<FuncionarioAdicionar />} />
-            <Route path="/funcionarioEditar/:id" element={<FuncionarioEditar />} />
-            <Route path="/lancheAdicionar" element={<LancheAdicionar />} />
-            <Route path="/lancheEditar/:id" element={<LancheEditar />} />
-            <Route path="/bebidasMenu" element={<BebidasMenu />} />
-            <Route path="/lanchesMenu" element={<LanchesMenu />} />
-            <Route path="/porcoesMenu" element={<PorcoesMenu />} />
-            <Route path="/mesaAdicionarDeletar" element={<MesaAdicionarDeletar />} />
-            <Route path="/observacao/:id" element={<Observacao />} />
-            <Route path="/pedidosMesas/:id" element={<PedidosMesas />} />
-            <Route path="/porcaoAdicionar" element={<PorcaoAdicionar />} />
-            <Route path="/porcaoEditar/:id" element={<PorcaoEditar />} />
-            <Route path="/bebidaComprar" element={<BebidasComprar />} />
-            <Route path="/lancheComprar" element={<LanchesComprar />} />
-            <Route path="/porcaoComprar" element={<PorcoesComprar />} />
+            <Route path="/menu" element={<RequireAuth><Menu /></RequireAuth>} />
+            <Route path="/mesas" element={<RequireAuth><Mesas /></RequireAuth>} />
+            <Route path="/acrescimoAdicionar" element={<RequireAuth><AcrescimoAdicionar /></RequireAuth>} />
+            <Route path="/acrescimoEditar/:id" element={<RequireAuth><AcrescimoEditar /></RequireAuth>} />
+            <Route path="/bebidaAdicionar" element={<RequireAuth><BebidaAdicionar /></RequireAuth>} />
+            <Route path="/bebidaEditar/:id" element={<RequireAuth><BebidaEditar /></RequireAuth>} />
+            <Route path="/funcionarioAdicionar" element={<RequireAuth><FuncionarioAdicionar /></RequireAuth>} />
+            <Route path="/funcionarioEditar/:id" element={<RequireAuth><FuncionarioEditar /></RequireAuth>} />
+            <Route path="/lancheAdicionar" element={<RequireAuth><LancheAdicionar /></RequireAuth>} />
+            <Route path="/lancheEditar/:id" element={<RequireAuth><LancheEditar /></RequireAuth>} />
+            <Route path="/bebidasMenu" element={<RequireAuth><BebidasMenu /></RequireAuth>} />
+            <Route path="/lanchesMenu" element={<RequireAuth><LanchesMenu /></RequireAuth>} />
+            <Route path="/porcoesMenu" element={<RequireAuth><PorcoesMenu /></RequireAuth>} />
+            <Route path="/mesaAdicionarDeletar" element={<RequireAuth><MesaAdicionarDeletar /></RequireAuth>} />
+            <Route path="/observacao/:id" element={<RequireAuth><Observacao /></RequireAuth>} />
+            <Route path="/pedidosMesas/:id" element={<RequireAuth><PedidosMesas /></RequireAuth>} />
+            <Route path="/porcaoAdicionar" element={<RequireAuth><PorcaoAdicionar /></RequireAuth>} />
+            <Route path="/porcaoEditar/:id" element={<RequireAuth><PorcaoEditar /></RequireAuth>} />
+            <Route path="/bebidaComprar" element={<RequireAuth><BebidasComprar /></RequireAuth>} />
+            <Route path="/lancheComprar" element={<RequireAuth><LanchesComprar /></RequireAuth>} />
+            <Route path="/porcaoComprar" element={<RequireAuth><PorcoesComprar /></RequireAuth>} />
         </Routes>
     );
 }

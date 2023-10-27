@@ -44,7 +44,7 @@ const FuncionariosProvider = ({ children }: FuncionariosProviderProps) => {
 
   async function createFuncionario(data: CreateFuncionarioInput) {
     const { nome, idade, funcao, usuario, email, senha } = data;
-    const response = await api.post("/pessoa", {
+    const response = await api.post("/auth/register", {
       nome,
       idade,
       funcao,

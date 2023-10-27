@@ -9,26 +9,29 @@ import PorcaoProvider from "./context/porcaoContext";
 import AcrescimosProvider from "./context/acrescimoContext";
 import FuncionariosProvider from "./context/funcionarioContext";
 import MesasProvider from "./context/mesasContext";
+import AutenticacaoProvider from "./context/Auth/AuthContext";
 
 const App = () => {
   return (
     <ThemeProvider theme={defaultTheme}>
       <GlobalStyle />
-      <MesasProvider>
-        <FuncionariosProvider>
-          <LanchesProvider>
-            <BebidasProvider>
-              <PorcaoProvider>
-                <AcrescimosProvider>
-                  <BrowserRouter>
-                    <Router />
-                  </BrowserRouter>
-                </AcrescimosProvider>
-              </PorcaoProvider>
-            </BebidasProvider>
-          </LanchesProvider>
-        </FuncionariosProvider>
-      </MesasProvider>
+      <AutenticacaoProvider>
+        <MesasProvider>
+          <FuncionariosProvider>
+            <LanchesProvider>
+              <BebidasProvider>
+                <PorcaoProvider>
+                  <AcrescimosProvider>
+                    <BrowserRouter>
+                      <Router />
+                    </BrowserRouter>
+                  </AcrescimosProvider>
+                </PorcaoProvider>
+              </BebidasProvider>
+            </LanchesProvider>
+          </FuncionariosProvider>
+        </MesasProvider>
+      </AutenticacaoProvider>
     </ThemeProvider>
   );
 };
