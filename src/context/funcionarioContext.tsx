@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useEffect, useState } from "react";
+import { ReactNode, createContext, useEffect, useState, memo, useCallback } from "react";
 import { api } from "../lib/axios";
 
 interface Funcionarios {
@@ -34,15 +34,15 @@ interface FuncionariosProviderProps {
 
 export const FuncionariosContext = createContext({} as FuncionariosContextType);
 
-const FuncionariosProvider = ({ children }: FuncionariosProviderProps) => {
+const FuncionariosProvider: React.FC<FuncionariosProviderProps> = memo(({ children}) => {
   const [funcionarios, setFuncionarios] = useState<Funcionarios[]>([]);
 
-  async function funcionarioGet() {
+  const funcionarioGet = useCallback(async () => {
     const response = await api.get("/pessoa/pessoas");
     setFuncionarios(response.data);
-  }
+  }, [])
 
-  async function createFuncionario(data: CreateFuncionarioInput) {
+  const createFuncionario = useCallback(async (data: CreateFuncionarioInput) => {
     const { nome, idade, funcao, usuario, email, senha } = data;
     const response = await api.post("/auth/register", {
       nome,
@@ -53,14 +53,14 @@ const FuncionariosProvider = ({ children }: FuncionariosProviderProps) => {
       senha,
     });
     setFuncionarios((state) => [response.data, ...state]);
-  }
+  }, [])
 
-  async function deleteFuncionario(id: number) {
+  const deleteFuncionario = useCallback(async (id: number) => {
     await api.delete(`/pessoa/${id}`);
     setFuncionarios(funcionarios.filter((funcionario) => funcionario.id !== id));
-  }
+  }, [])
 
-  async function editFuncionario(id: number, data: CreateFuncionarioInput) {
+  const editFuncionario = useCallback(async (id: number, data: CreateFuncionarioInput) => {
     const { nome, idade, funcao, usuario, email, senha } = data;
     const response = await api.put(`/pessoa/${id}`, {
       nome,
@@ -71,7 +71,7 @@ const FuncionariosProvider = ({ children }: FuncionariosProviderProps) => {
       senha,
     });
     setFuncionarios((state) => [response.data, ...state]);
-  }
+  }, [])
 
   useEffect(() => {
     funcionarioGet();
@@ -90,6 +90,6 @@ const FuncionariosProvider = ({ children }: FuncionariosProviderProps) => {
       {children}
     </FuncionariosContext.Provider>
   );
-};
+});
 
 export default FuncionariosProvider;

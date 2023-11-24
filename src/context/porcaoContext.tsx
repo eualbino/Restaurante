@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useEffect, useState } from "react";
+import { ReactNode, createContext, memo, useCallback, useEffect, useState } from "react";
 import { api } from "../lib/axios";
 
 interface Porcao {
@@ -18,7 +18,7 @@ interface PorcaoContextType {
   porcoes: Porcao[];
   porcaoGet: () => Promise<void>;
   createPorcao: (data: CreatePorcaoInput) => Promise<void>;
-  deletePorcao: (id:number) => Promise<void>;
+  deletePorcao: (id: number) => Promise<void>;
   editPorcao: (id: number, data: CreatePorcaoInput) => Promise<void>
 }
 
@@ -28,15 +28,15 @@ interface PorcaoProviderProps {
 
 export const PorcoesContext = createContext({} as PorcaoContextType);
 
-const PorcaoProvider = ({ children }: PorcaoProviderProps) => {
+const PorcaoProvider: React.FC<PorcaoProviderProps> = memo(({ children }) => {
   const [porcoes, setPorcoes] = useState<Porcao[]>([]);
 
-  async function porcaoGet() {
+  const porcaoGet = useCallback(async () => {
     const response = await api.get("/menu/porcoes");
     setPorcoes(response.data);
-  }
+  }, []);
 
-  async function createPorcao(data: CreatePorcaoInput) {
+  const createPorcao = useCallback(async (data: CreatePorcaoInput) => {
     const { tipo, preco, tamanho } = data;
     const response = await api.post("/menu/porcao", {
       tipo,
@@ -44,22 +44,22 @@ const PorcaoProvider = ({ children }: PorcaoProviderProps) => {
       tamanho,
     });
     setPorcoes((state) => [response.data, ...state]);
-  }
+  }, []);
 
-  async function deletePorcao(id: number) {
+  const deletePorcao = useCallback(async (id: number) => {
     await api.delete(`/menu/porcao/${id}`);
     setPorcoes(porcoes.filter((porcao) => porcao.id !== id));
-  }
+  }, []);
 
-  async function editPorcao(id: number, data: CreatePorcaoInput) {
-    const{ tipo, preco, tamanho } = data;
+  const editPorcao = useCallback(async (id: number, data: CreatePorcaoInput) => {
+    const { tipo, preco, tamanho } = data;
     const response = await api.put(`/menu/porcao/${id}`, {
       tipo,
       preco,
       tamanho
     })
     setPorcoes(state => [response.data, ...state]);
-  }
+  }, []);
 
   useEffect(() => {
     porcaoGet();
@@ -70,6 +70,6 @@ const PorcaoProvider = ({ children }: PorcaoProviderProps) => {
       {children}
     </PorcoesContext.Provider>
   );
-};
+});
 
 export default PorcaoProvider;

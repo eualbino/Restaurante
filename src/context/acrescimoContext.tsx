@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useEffect, useState } from "react";
+import { ReactNode, createContext, useEffect, useState, memo, useCallback } from "react";
 import { api } from "../lib/axios";
 
 interface Acrescimo {
@@ -13,11 +13,11 @@ interface CreateAcrescimoInput {
 }
 
 interface AcrescimoContextType {
-    acrescimos: Acrescimo[]
-    acrescimoGet: () => Promise<void>;
-    createAcrescimo: (data: CreateAcrescimoInput) => Promise<void>;
-    deleteAcrescimo: (id: number) => Promise<void>;
-    editAcrescimo: (id: number, data: CreateAcrescimoInput) => Promise<void>
+  acrescimos: Acrescimo[]
+  acrescimoGet: () => Promise<void>;
+  createAcrescimo: (data: CreateAcrescimoInput) => Promise<void>;
+  deleteAcrescimo: (id: number) => Promise<void>;
+  editAcrescimo: (id: number, data: CreateAcrescimoInput) => Promise<void>
 }
 
 interface AcrescimoProviderProps {
@@ -26,46 +26,46 @@ interface AcrescimoProviderProps {
 
 export const AcrescimosContext = createContext({} as AcrescimoContextType);
 
-const AcrescimosProvider = ({ children }: AcrescimoProviderProps) => {
+const AcrescimosProvider: React.FC<AcrescimoProviderProps> = memo(({ children }) => {
   const [acrescimos, setAcrescimos] = useState<Acrescimo[]>([]);
 
-  async function acrescimoGet() {
+  const acrescimoGet = useCallback(async () => {
     const response = await api.get("/acrescimo/acrescimos");
     setAcrescimos(response.data);
-  }
+  }, [])
 
-  async function createAcrescimo(data: CreateAcrescimoInput) {
+  const createAcrescimo = useCallback(async (data: CreateAcrescimoInput) => {
     const { item, valor } = data;
     const response = await api.post("/acrescimo", {
       item,
       valor,
     });
     setAcrescimos((state) => [response.data, ...state]);
-  }
+  }, [])
 
-  async function deleteAcrescimo(id: number) {
+  const deleteAcrescimo = useCallback(async (id: number) => {
     await api.delete(`/acrescimo/${id}`);
     setAcrescimos(acrescimos.filter(acrescimo => acrescimo.id !== id))
-  }
+  }, [])
 
-  async function editAcrescimo(id: number, data: CreateAcrescimoInput) {
+  const editAcrescimo = useCallback(async (id: number, data: CreateAcrescimoInput) => {
     const { item, valor } = data
     const response = await api.put(`/acrescimo/${id}`, {
       item,
       valor
     });
     setAcrescimos((state) => [response.data, ...state]);
-  }
+  }, [])
 
   useEffect(() => {
     acrescimoGet();
   })
 
   return (
-    <AcrescimosContext.Provider value={{ acrescimos, acrescimoGet, createAcrescimo, deleteAcrescimo, editAcrescimo}}>
+    <AcrescimosContext.Provider value={{ acrescimos, acrescimoGet, createAcrescimo, deleteAcrescimo, editAcrescimo }}>
       {children}
     </AcrescimosContext.Provider>
   );
-};
+});
 
 export default AcrescimosProvider;

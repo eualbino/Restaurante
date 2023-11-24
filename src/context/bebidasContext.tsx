@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useEffect, useState } from "react";
+import { ReactNode, createContext, useEffect, useState, memo, useCallback } from "react";
 import { api } from "../lib/axios";
 
 interface Bebidas {
@@ -28,15 +28,15 @@ interface BebidasProviderProps {
 
 export const BebidasContext = createContext({} as BebidasContextType);
 
-const BebidasProvider = ({ children }: BebidasProviderProps) => {
+const BebidasProvider: React.FC<BebidasProviderProps> = memo(({ children }) => {
   const [bebidas, setBebidas] = useState<Bebidas[]>([]);
 
-  async function bebidaGet() {
+  const bebidaGet = useCallback(async () => {
     const response = await api.get("/menu/bebidas");
     setBebidas(response.data);
-  }
+  }, [])
 
-  async function createBebida(data: CreateBebidaInput) {
+  const createBebida = useCallback(async (data: CreateBebidaInput) => {
     const { nome, litragem, preco } = data;
 
     const response = await api.post("/menu/bebida", {
@@ -45,14 +45,14 @@ const BebidasProvider = ({ children }: BebidasProviderProps) => {
       preco,
     });
     setBebidas((state) => [response.data, ...state]);
-  }
+  }, [])
 
-  async function deleteBebida(id: number) {
+  const deleteBebida = useCallback(async (id: number) => {
     await api.delete(`/menu/bebida/${id}`);
     setBebidas(bebidas.filter((bebida) => bebida.id !== id));
-  }
+  }, [])
 
-  async function editBebida(id: number, data: CreateBebidaInput) {
+  const editBebida = useCallback(async (id: number, data: CreateBebidaInput) => {
     const { nome, litragem, preco } = data;
     const response = await api.put(`/menu/bebida/${id}`, {
       nome,
@@ -60,7 +60,7 @@ const BebidasProvider = ({ children }: BebidasProviderProps) => {
       preco,
     });
     setBebidas((state) => [response.data, ...state]);
-  }
+  }, [])
 
   useEffect(() => {
     bebidaGet();
@@ -73,6 +73,6 @@ const BebidasProvider = ({ children }: BebidasProviderProps) => {
       {children}
     </BebidasContext.Provider>
   );
-};
+});
 
 export default BebidasProvider;
