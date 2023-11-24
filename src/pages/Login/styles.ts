@@ -60,6 +60,11 @@ export const Content = styled.div`
     input:focus {
       outline: none;
     }
+    p{
+      margin-top: 1rem;
+      margin-bottom: -1rem;
+      color: ${props => props.theme["red-400"]}
+    }
   }
 `;
 

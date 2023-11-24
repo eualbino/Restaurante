@@ -7,15 +7,15 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 const loginUserFormSchema = z.object({
-  username: z.string().nonempty('O usuário é obrigatório'),
-  password: z.string().nonempty('A senha é obrigatório')
+  usuario: z.string().nonempty('O usuário é obrigatório'),
+  senha: z.string().nonempty('A senha é obrigatório')
 })
 
 type loginUserFormData = z.infer<typeof loginUserFormSchema>
 
 const Login = () => {
   const navigate = useNavigate()
-  const { signin } = useContext(AutenticacaoContext)
+  const { signin, errorMenssage } = useContext(AutenticacaoContext)
 
   const {
     register,
@@ -27,11 +27,11 @@ const Login = () => {
   });
 
   async function handleLoginUser(data: loginUserFormData) {
-    const { username, password } = data
-    await signin(
-      username,
-      password
-    )
+    const { usuario, senha } = data
+    await signin({
+      usuario,
+      senha
+    })
     navigate("/menu")
     reset()
   }
@@ -43,13 +43,14 @@ const Login = () => {
           <p>USUÁRIO</p>
           <div>
             <User2 size={18} />
-            <input placeholder="Usuário" {...register("username")} />
+            <input placeholder="Usuário" {...register("usuario")} />
           </div>
           <p>SENHA</p>
           <div>
             <Lock2 size={18} />
-            <input placeholder="Senha" {...register("password")} />
+            <input type="password" placeholder="Senha" {...register("senha")} />
           </div>
+          <div>{errorMenssage && <p>{errorMenssage}</p>}</div>
           <button type="submit" disabled={!isValid}>
             Entrar
           </button>

@@ -13,16 +13,26 @@ import {
 import { PlusCircle, CheckCircle } from "phosphor-react";
 import { NavLink, useParams } from "react-router-dom";
 import { useContext } from "react";
-import { LanchesContext } from "../../../context/lanchesContext";
-import { BebidasContext } from "../../../context/bebidasContext";
-import { PorcoesContext } from "../../../context/porcaoContext";
 import { priceFormatter } from "../../../utils/formatter";
+import { LancamentoContext } from "../../../context/lancamentoContext";
 
 const PedidosMesas = () => {
-  const { lanches } = useContext(LanchesContext)
-  const { bebidas } = useContext(BebidasContext)
-  const { porcoes } = useContext(PorcoesContext)
-  const { id } = useParams()
+  const { lancamentos } = useContext(LancamentoContext)
+  const { id } = useParams();
+  const numeroMesa = parseInt(id ?? '')
+
+  const calcularTotal = () => {
+    let total = 0;
+    if (lancamentos) {
+      lancamentos.filter(lancamento => lancamento.numeroMesa === numeroMesa).forEach(lancamento => {
+        lancamento.itemPedido.forEach(itemPedido => {
+          total += itemPedido.item.preco
+        })
+      })
+    }
+    return total;
+  }
+
   return (
     <PedidosMesasContainer>
       <Header
@@ -34,44 +44,51 @@ const PedidosMesas = () => {
       <PedidosMesasContain>
         <PedidosMesaLanches>
           <h1>LANCHES</h1>
-          {lanches.map((lanche) => {
-            return (
-              <div>
-                <h2>{lanche.nome}</h2>
-                <span>{priceFormatter.format(lanche.preco)}</span>
-                <button>
-                  <X />
-                </button>
-              </div>
-            )
+
+          {lancamentos && lancamentos.filter(lancamento => lancamento.numeroMesa === numeroMesa).map((lancamento) => {
+            return lancamento.itemPedido.map((itemPedido) => {
+              return (
+                <div>
+                  <h2>{itemPedido.item.nome}</h2>
+                  <span>{priceFormatter.format(itemPedido.item.preco)}</span>
+                  <button>
+                    <X />
+                  </button>
+                </div>
+              );
+            });
           })}
         </PedidosMesaLanches>
         <PedidosMesaBebidas>
           <h1>BEBIDAS</h1>
-          {bebidas.map((bebida) => {
-            return (
-              <div>
-                <h2>{bebida.nome} {bebida.litragem}</h2>
-                <span>{priceFormatter.format(bebida.preco)}</span>
-                <button>
-                  <X />
-                </button>
-              </div>
-            )
+          {lancamentos && lancamentos.filter(lancamento => lancamento.numeroMesa === numeroMesa).map((lancamento) => {
+            return lancamento.itemPedido.map((itemPedido) => {
+              return (
+                <div>
+                  <h2>{itemPedido.item.nome} {itemPedido.item.litragem}</h2>
+                  <span>{priceFormatter.format(itemPedido.item.preco)}</span>
+                  <button>
+                    <X />
+                  </button>
+                </div>
+              )
+            })
           })}
         </PedidosMesaBebidas>
         <PedidosMesaPorcoes>
           <h1>PORCOES</h1>
-          {porcoes.map(porcao => {
-            return (
-              <div>
-                <h2>{porcao.tipo} {porcao.tamanho}</h2>
-                <span>{priceFormatter.format(porcao.preco)}</span>
+          {lancamentos && lancamentos.filter(lancamento => lancamento.numeroMesa === numeroMesa).map(lancamento => {
+            return lancamento.itemPedido.map(itemPedido => {
+              return (
+                <div>
+                  <h2>{itemPedido.item.tipo} {itemPedido.item.tamanho}</h2>
+                  <span>{priceFormatter.format(itemPedido.item.preco)}</span>
                   <button>
                     <X />
                   </button>
-              </div>
-            )
+                </div>
+              )
+            })
           })}
         </PedidosMesaPorcoes>
       </PedidosMesasContain>
@@ -89,7 +106,7 @@ const PedidosMesas = () => {
           </button>
         </ButtonOptions>
         <TotalPrice>
-          <h2>TOTAL: R$ 123,00</h2>
+          <h2>TOTAL: {priceFormatter.format(calcularTotal())}</h2>
         </TotalPrice>
       </TotalAndButtonOptions>
     </PedidosMesasContainer>

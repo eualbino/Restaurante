@@ -3,14 +3,15 @@ import { api } from "../../lib/axios";
 import axios from "axios";
 
 interface User {
-    username: string,
-    password: string
+    usuario: string,
+    senha: string
 }
 
 interface AutenticacaoContextType {
     user: User | null;
-    signin: (username: string, password: string) => Promise<boolean>;
+    signin: (data: User) => Promise<boolean>;
     signout: () => void;
+    errorMenssage: string | null;
 }
 
 interface AutenticacaoProviderProps {
@@ -21,19 +22,27 @@ export const AutenticacaoContext = createContext({} as AutenticacaoContextType)
 
 const AutenticacaoProvider = ({ children }: AutenticacaoProviderProps) => {
     const [user, setUser] = useState<User | null>(null)
-
-    async function signin(username: string, password: string) {
-        const response = await api.post('/auth/login', { username, password });
-        const token = response.headers.authorization;
-        console.log('O dados do login é: ', response.data)
-        if (token) {
-            setToken(token)
-            setUser(response.data)
-            console.log("O token é: ", token)
-            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            return true
+    const [errorMenssage, setErrorMenssage] = useState<string | null>(null)
+    async function signin(data: User): Promise<boolean> {
+        const { usuario, senha } = data
+        try {
+            const response = await api.post('/auth/login', { usuario, senha })
+            const token = response.data;
+            console.warn('O dados do token é: ', response.data)
+            if (token) {
+                setToken(token)
+                setUser(response.data)
+                axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+                setErrorMenssage(null)
+                return true
+            }
+            return false
+        } catch (error: any) {
+            if (error.response && error.response.status === 403) {
+                setErrorMenssage('A senha ou usuário está incorreto')
+            }
+            return false
         }
-        return false
     }
 
     async function signout() {
@@ -47,7 +56,7 @@ const AutenticacaoProvider = ({ children }: AutenticacaoProviderProps) => {
     }
 
     return (
-        <AutenticacaoContext.Provider value={{ user, signin, signout }}>
+        <AutenticacaoContext.Provider value={{ user, signin, errorMenssage, signout }}>
             {children}
         </AutenticacaoContext.Provider>
     );

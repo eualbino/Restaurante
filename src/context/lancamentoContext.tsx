@@ -1,40 +1,59 @@
 import { ReactNode, createContext, useState } from "react";
 import { api } from "../lib/axios";
 
+interface Item {
+    id: number;
+    preco: number;
+    nome: string;
+    ingredientes?: string;
+    litragem?: string;
+    tamanho?: string;
+    tipo?: string;
+}
+
+interface Acrescimo {
+    id: number;
+    item: string;
+    valor: number;
+}
+
 interface ItemPedido {
-    item: {
-        id: number;
-    };
-    acrescimos: {
-        id: number;
-    }[];
-    observacoes: string;
+    id: number;
+    item: Item;
+    acrescimos: Acrescimo[];
     quantidade: number;
+    observacoes: string;
 }
 
 interface Lancamento {
     id: number;
     itemPedido: ItemPedido[];
-    lancamento: {
-        garcom: {
-            id: number;
-        };
-        pedido: {
-            numeroMesa: number;
-        };
-    };
+    garcom: null | number;
+    hora: string;
+    numeroMesa: number;
 }
 
 interface CreateLancamento {
-    itemPedido: ItemPedido[];
+    itemPedido: [
+        item: {
+            id: number
+        },
+        acrescimos: [
+            {
+                id: number
+            }
+        ],
+        observacoes: string,
+        quantidade: number
+    ],
     lancamento: {
         garcom: {
-            id: number;
-        };
+            id: number | null
+        },
         pedido: {
-            numeroMesa: number;
-        };
-    };
+            numeroMesa: number
+        }
+    }
 }
 
 interface LancamentosContextType {
