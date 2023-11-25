@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useState } from "react";
+import { ReactNode, createContext, memo, useCallback, useState } from "react";
 import { api } from "../lib/axios";
 
 interface Item {
@@ -69,30 +69,31 @@ interface LancamentosProviderProps {
 
 export const LancamentoContext = createContext({} as LancamentosContextType);
 
-const LancamentosProvider = ({ children }: LancamentosProviderProps) => {
+const LancamentosProvider: React.FC<LancamentosProviderProps> = memo(({ children }) => {
+
     const [lancamentos, setLancamentos] = useState<Lancamento[]>([])
 
-    async function lancamentoGet(id: number) {
+    const lancamentoGet = useCallback(async (id: number) => {
         const response = await api.get(`lancamento/${id}`);
         setLancamentos(response.data)
-    }
+    }, [])
 
-    async function createLancamento(lancamento: CreateLancamento) {
+    const createLancamento = useCallback(async (lancamento: CreateLancamento) => {
         const response = await api.post("/lancamentoController", lancamento);
         setLancamentos((state) => [response.data, ...state])
-    }
+    }, [])
 
-    async function deleteLancamento(id: number) {
+    const deleteLancamento = useCallback(async (id: number) => {
         await api.delete(`/lancamento/${id}`)
         setLancamentos(lancamentos.filter(lancamento => lancamento.id !== id))
-    }
-    
+    }, [])
+
     return (<LancamentoContext.Provider value={{
         lancamentos,
         lancamentoGet,
         createLancamento,
         deleteLancamento,
     }}>{children}</LancamentoContext.Provider>);
-}
+})
 
 export default LancamentosProvider;

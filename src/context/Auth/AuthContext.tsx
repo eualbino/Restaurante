@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useState } from "react"
+import React, { ReactNode, createContext, memo, useCallback, useState } from "react"
 import { api } from "../../lib/axios";
 import axios from "axios";
 
@@ -20,10 +20,11 @@ interface AutenticacaoProviderProps {
 
 export const AutenticacaoContext = createContext({} as AutenticacaoContextType)
 
-const AutenticacaoProvider = ({ children }: AutenticacaoProviderProps) => {
+const AutenticacaoProvider: React.FC<AutenticacaoProviderProps> = memo(({ children }) => {
+
     const [user, setUser] = useState<User | null>(null)
     const [errorMenssage, setErrorMenssage] = useState<string | null>(null)
-    async function signin(data: User): Promise<boolean> {
+    const signin = useCallback(async (data: User): Promise<boolean> => {
         const { usuario, senha } = data
         try {
             const response = await api.post('/auth/login', { usuario, senha })
@@ -43,13 +44,13 @@ const AutenticacaoProvider = ({ children }: AutenticacaoProviderProps) => {
             }
             return false
         }
-    }
+    }, [])
 
-    async function signout() {
+    const signout = useCallback(async () => {
         localStorage.removeItem('authToken')
         delete axios.defaults.headers.common['Authorization'];
         setUser(null)
-    }
+    }, [])
 
     const setToken = (token: string) => {
         localStorage.setItem('authToken', token)
@@ -60,6 +61,6 @@ const AutenticacaoProvider = ({ children }: AutenticacaoProviderProps) => {
             {children}
         </AutenticacaoContext.Provider>
     );
-}
+})
 
 export default AutenticacaoProvider;
