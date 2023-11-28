@@ -22,6 +22,7 @@ import BebidasComprar from "./pages/MenuComprar/BebidasMenu";
 import LanchesComprar from "./pages/MenuComprar/LanchesMenu";
 import PorcoesComprar from "./pages/MenuComprar/PorcoesMenu";
 import RequireAuth from "./context/Auth/RequireAuth";
+import AdminAuthority from "./context/Auth/Authority/AdminAuthority";
 
 const Router = () => {
     return (
@@ -29,25 +30,25 @@ const Router = () => {
             <Route path="/" element={<Login />} />
             <Route path="/menu" element={<RequireAuth><Menu /></RequireAuth>} />
             <Route path="/mesas" element={<RequireAuth><Mesas /></RequireAuth>} />
-            <Route path="/acrescimoAdicionar" element={<RequireAuth><AcrescimoAdicionar /></RequireAuth>} />
-            <Route path="/acrescimoEditar/:id" element={<RequireAuth><AcrescimoEditar /></RequireAuth>} />
-            <Route path="/bebidaAdicionar" element={<RequireAuth><BebidaAdicionar /></RequireAuth>} />
-            <Route path="/bebidaEditar/:id" element={<RequireAuth><BebidaEditar /></RequireAuth>} />
-            <Route path="/funcionarioAdicionar" element={<RequireAuth><FuncionarioAdicionar /></RequireAuth>} />
-            <Route path="/funcionarioEditar/:id" element={<RequireAuth><FuncionarioEditar /></RequireAuth>} />
-            <Route path="/lancheAdicionar" element={<RequireAuth><LancheAdicionar /></RequireAuth>} />
-            <Route path="/lancheEditar/:id" element={<RequireAuth><LancheEditar /></RequireAuth>} />
+            <Route path="/acrescimoAdicionar" element={<AdminAuthority><RequireAuth><AcrescimoAdicionar /></RequireAuth></AdminAuthority>} />
+            <Route path="/acrescimoEditar/:id" element={<AdminAuthority><RequireAuth><AcrescimoEditar /></RequireAuth></AdminAuthority>} />
+            <Route path="/bebidaAdicionar" element={<AdminAuthority><RequireAuth><BebidaAdicionar /></RequireAuth></AdminAuthority>} />
+            <Route path="/bebidaEditar/:id" element={<AdminAuthority><RequireAuth><BebidaEditar /></RequireAuth></AdminAuthority>} />
+            <Route path="/funcionarioAdicionar" element={<AdminAuthority><RequireAuth><FuncionarioAdicionar /></RequireAuth></AdminAuthority>} />
+            <Route path="/funcionarioEditar/:id" element={<AdminAuthority><RequireAuth><FuncionarioEditar /></RequireAuth></AdminAuthority>} />
+            <Route path="/lancheAdicionar" element={<AdminAuthority><RequireAuth><LancheAdicionar /></RequireAuth></AdminAuthority>} />
+            <Route path="/lancheEditar/:id" element={<AdminAuthority><RequireAuth><LancheEditar /></RequireAuth></AdminAuthority>} />
             <Route path="/bebidasMenu" element={<RequireAuth><BebidasMenu /></RequireAuth>} />
             <Route path="/lanchesMenu" element={<RequireAuth><LanchesMenu /></RequireAuth>} />
             <Route path="/porcoesMenu" element={<RequireAuth><PorcoesMenu /></RequireAuth>} />
-            <Route path="/mesaAdicionarDeletar" element={<RequireAuth><MesaAdicionarDeletar /></RequireAuth>} />
-            <Route path="/observacao/:id" element={<RequireAuth><Observacao /></RequireAuth>} />
+            <Route path="/mesaAdicionarDeletar" element={<AdminAuthority><RequireAuth><MesaAdicionarDeletar /></RequireAuth></AdminAuthority>} />
+            <Route path="/observacao/:idMesa/:idProduto" element={<RequireAuth><Observacao /></RequireAuth>} />
             <Route path="/pedidosMesas/:id" element={<RequireAuth><PedidosMesas /></RequireAuth>} />
-            <Route path="/porcaoAdicionar" element={<RequireAuth><PorcaoAdicionar /></RequireAuth>} />
-            <Route path="/porcaoEditar/:id" element={<RequireAuth><PorcaoEditar /></RequireAuth>} />
-            <Route path="/bebidaComprar" element={<RequireAuth><BebidasComprar /></RequireAuth>} />
-            <Route path="/lancheComprar" element={<RequireAuth><LanchesComprar /></RequireAuth>} />
-            <Route path="/porcaoComprar" element={<RequireAuth><PorcoesComprar /></RequireAuth>} />
+            <Route path="/porcaoAdicionar" element={<AdminAuthority><RequireAuth><PorcaoAdicionar /></RequireAuth></AdminAuthority>} />
+            <Route path="/porcaoEditar/:id" element={<AdminAuthority><RequireAuth><PorcaoEditar /></RequireAuth></AdminAuthority>} />
+            <Route path="/bebidaComprar/:id" element={<RequireAuth><BebidasComprar /></RequireAuth>} />
+            <Route path="/lancheComprar/:id" element={<RequireAuth><LanchesComprar /></RequireAuth>} />
+            <Route path="/porcaoComprar/:id" element={<RequireAuth><PorcoesComprar /></RequireAuth>} />
         </Routes>
     );
 }

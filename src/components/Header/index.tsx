@@ -1,6 +1,6 @@
 import { AlignJustify, ArrowLeft } from "lucide-react";
 import { HeaderContainer, HeaderMenuContain } from "./styles";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useParams } from "react-router-dom";
 
 interface headerProps {
   children?: string;
@@ -9,13 +9,13 @@ interface headerProps {
   childrenBebida: string;
   location?: typeof useLocation;
 }
-
 const Header = ({
   children,
   childrenLanche,
   childrenBebida,
   childrenPorcao,
 }: headerProps) => {
+  const { id } = useParams()
   function backPagePrevious() {
     window.history.back();
   }
@@ -40,9 +40,9 @@ const Header = ({
       {location.pathname === "/lanchesMenu" ||
       location.pathname === "/bebidasMenu" ||
       location.pathname === "/porcoesMenu" ||
-      location.pathname === "/lancheComprar" ||
-      location.pathname === "/bebidaComprar" ||
-      location.pathname === "/porcaoComprar" ? (
+      location.pathname === `/lancheComprar/${id}` ||
+      location.pathname === `/bebidaComprar/${id}` ||
+      location.pathname === `/porcaoComprar/${id}` ? (
         <HeaderMenuContain>
           <nav>
             <NavLink to={childrenLanche} title="Menu de lanches">

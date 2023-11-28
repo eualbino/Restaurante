@@ -7,7 +7,6 @@ interface Mesa {
 
 interface MesaContextType {
   mesas: Mesa[];
-  mesaGet: () => Promise<void>;
   createMesa: (data: Mesa) => Promise<void>;
   deleteMesa: (numeroMesa: number) => Promise<void>;
 }
@@ -24,27 +23,27 @@ const [mesas, setMesas] = useState<Mesa[]>([]);
 const mesaGet = useCallback(async () => {
   const response = await api.get("/mesa/mesas");
   setMesas(response.data);
-}, [])
+}, [setMesas])
 
 const createMesa = useCallback(async (data: Mesa) => {
   const { numeroMesa } = data;
-  const response = await api.post("/mesa", {
+  await api.post("/mesa", {
     numeroMesa,
   });
-  setMesas((state) => [response.data, ...state]);
-}, [])
+  await mesaGet()
+}, [mesaGet])
 
 const deleteMesa = useCallback(async (numeroMesa: number) => {
   await api.delete(`/mesa/${numeroMesa}`);
   setMesas(mesas.filter((mesa) => mesa.numeroMesa !== numeroMesa));
-}, [])
+}, [setMesas, mesas])
 
 useEffect(() => {
   mesaGet();
-})
+},[mesaGet])
 
 return (
-  <MesasContext.Provider value={{ mesas, mesaGet, createMesa, deleteMesa }}>
+  <MesasContext.Provider value={{ mesas, createMesa, deleteMesa }}>
     {children}
   </MesasContext.Provider>
 );

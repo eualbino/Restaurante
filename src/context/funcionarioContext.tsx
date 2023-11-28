@@ -22,7 +22,6 @@ interface CreateFuncionarioInput {
 
 interface FuncionariosContextType {
   funcionarios: Funcionarios[];
-  funcionarioGet: () => Promise<void>;
   createFuncionario: (data: CreateFuncionarioInput) => Promise<void>;
   deleteFuncionario: (id: number) => Promise<void>;
   editFuncionario: (id: number, data: CreateFuncionarioInput) => Promise<void>;
@@ -40,11 +39,11 @@ const FuncionariosProvider: React.FC<FuncionariosProviderProps> = memo(({ childr
   const funcionarioGet = useCallback(async () => {
     const response = await api.get("/pessoa/pessoas");
     setFuncionarios(response.data);
-  }, [])
+  }, [setFuncionarios])
 
   const createFuncionario = useCallback(async (data: CreateFuncionarioInput) => {
     const { nome, idade, funcao, usuario, email, senha } = data;
-    const response = await api.post("/auth/register", {
+    await api.post("/auth/register", {
       nome,
       idade,
       funcao,
@@ -52,17 +51,18 @@ const FuncionariosProvider: React.FC<FuncionariosProviderProps> = memo(({ childr
       email,
       senha,
     });
-    setFuncionarios((state) => [response.data, ...state]);
-  }, [])
+
+    await funcionarioGet()
+  }, [funcionarioGet])
 
   const deleteFuncionario = useCallback(async (id: number) => {
     await api.delete(`/pessoa/${id}`);
     setFuncionarios(funcionarios.filter((funcionario) => funcionario.id !== id));
-  }, [])
+  }, [setFuncionarios, funcionarios])
 
   const editFuncionario = useCallback(async (id: number, data: CreateFuncionarioInput) => {
     const { nome, idade, funcao, usuario, email, senha } = data;
-    const response = await api.put(`/pessoa/${id}`, {
+    await api.put(`/pessoa/${id}`, {
       nome,
       idade,
       funcao,
@@ -70,18 +70,17 @@ const FuncionariosProvider: React.FC<FuncionariosProviderProps> = memo(({ childr
       email,
       senha,
     });
-    setFuncionarios((state) => [response.data, ...state]);
-  }, [])
+    await funcionarioGet()
+  }, [funcionarioGet])
 
   useEffect(() => {
     funcionarioGet();
-  });
+  },[funcionarioGet]);
 
   return (
     <FuncionariosContext.Provider
       value={{
         funcionarios,
-        funcionarioGet,
         createFuncionario,
         deleteFuncionario,
         editFuncionario,

@@ -54,6 +54,8 @@ const LancheAdicionar = () => {
     await deleteLanche(id);
   }
 
+  
+
   return (
     <div>
       <Header
@@ -90,9 +92,9 @@ const LancheAdicionar = () => {
           </AddLanche>
         </form>
         <CreatedLancheContainer>
-          {lanches.map((lanche) => {
+          {lanches.map((lanche, i) => {
             return (
-              <CreatedLancheContain key={lanche.id}>
+              <CreatedLancheContain key={i}>
                 <CreatedLancheText>
                   <span>{lanche.nome}</span>
                 </CreatedLancheText>

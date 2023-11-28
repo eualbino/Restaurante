@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import Header from "../../../components/Header";
 import {
   LanchesMenuContainer,
@@ -13,20 +13,21 @@ import { priceFormatter } from "../../../utils/formatter";
 
 const LanchesComprar = () => {
   const { lanches } = useContext(LanchesContext);
+  const { id } = useParams()
 
   return (
     <div>
       <Header
-        childrenLanche="/lancheComprar"
-        childrenBebida="/bebidaComprar"
-        childrenPorcao="/porcaoComprar"
+        childrenLanche={`/lancheComprar/${id}`}
+        childrenBebida={`/bebidaComprar/${id}`}
+        childrenPorcao={`/porcaoComprar/${id}`}
       />
       <LanchesMenuContainer>
         {lanches.map((lanche) => {
           return (
             <button key={lanche.id}>
               <MainDivLanches>
-                <NavLink to={{ pathname: `/observacao/${lanche.id}` }}
+                <NavLink to={{ pathname: `/observacao/${id}/${lanche.id}` }}
                 >
                   <TitleLanches>
                     <span>{lanche.nome}</span>

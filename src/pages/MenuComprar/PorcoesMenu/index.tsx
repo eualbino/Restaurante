@@ -9,15 +9,17 @@ import {
 } from "../../Menu/PorcoesMenu/styles";
 import { PorcoesContext } from "../../../context/porcaoContext";
 import { priceFormatter } from "../../../utils/formatter";
+import { useParams } from "react-router-dom";
 
 const PorcoesComprar = () => {
   const { porcoes } = useContext(PorcoesContext);
+  const { id } = useParams()
   return (
     <div>
       <Header
-        childrenLanche="/lancheComprar"
-        childrenBebida="/bebidaComprar"
-        childrenPorcao="/porcaoComprar"
+        childrenLanche={`/lancheComprar/${id}`}
+        childrenBebida={`/bebidaComprar/${id}`}
+        childrenPorcao={`/porcaoComprar/${id}`}
       />
       <PorcoesMenuContainer>
         {porcoes.map((porcao) => {

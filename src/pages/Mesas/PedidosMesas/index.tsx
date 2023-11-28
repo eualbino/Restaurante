@@ -94,7 +94,7 @@ const PedidosMesas = () => {
       </PedidosMesasContain>
       <TotalAndButtonOptions>
         <ButtonOptions>
-          <NavLink to="/lancheComprar" title="Adicionar lanche ao menu">
+          <NavLink to={{pathname: `/lancheComprar/${id}`}}title="Adicionar lanche ao menu">
             <button>
               <span>Adicionar</span>
               <PlusCircle size={24} color="#ffffff" weight="fill" />

@@ -16,7 +16,6 @@ interface CreateBebidaInput {
 
 interface BebidasContextType {
   bebidas: Bebidas[];
-  bebidaGet: () => Promise<void>;
   createBebida: (data: CreateBebidaInput) => Promise<void>;
   deleteBebida: (id: number) => Promise<void>;
   editBebida: (id: number, data: CreateBebidaInput) => Promise<void>;
@@ -34,41 +33,41 @@ const BebidasProvider: React.FC<BebidasProviderProps> = memo(({ children }) => {
   const bebidaGet = useCallback(async () => {
     const response = await api.get("/menu/bebidas");
     setBebidas(response.data);
-  }, [])
+  }, [setBebidas])
 
   const createBebida = useCallback(async (data: CreateBebidaInput) => {
     const { nome, litragem, preco } = data;
 
-    const response = await api.post("/menu/bebida", {
+    await api.post("/menu/bebida", {
       nome,
       litragem,
       preco,
     });
-    setBebidas((state) => [response.data, ...state]);
-  }, [])
+    await bebidaGet()
+  }, [bebidaGet])
 
   const deleteBebida = useCallback(async (id: number) => {
     await api.delete(`/menu/bebida/${id}`);
     setBebidas(bebidas.filter((bebida) => bebida.id !== id));
-  }, [])
+  }, [setBebidas, bebidas])
 
   const editBebida = useCallback(async (id: number, data: CreateBebidaInput) => {
     const { nome, litragem, preco } = data;
-    const response = await api.put(`/menu/bebida/${id}`, {
+    await api.put(`/menu/bebida/${id}`, {
       nome,
       litragem,
       preco,
     });
-    setBebidas((state) => [response.data, ...state]);
-  }, [])
+    await bebidaGet()
+  }, [bebidaGet])
 
   useEffect(() => {
     bebidaGet();
-  });
+  },[bebidaGet]);
 
   return (
     <BebidasContext.Provider
-      value={{ bebidas, bebidaGet, createBebida, deleteBebida, editBebida }}
+      value={{ bebidas, createBebida, deleteBebida, editBebida }}
     >
       {children}
     </BebidasContext.Provider>

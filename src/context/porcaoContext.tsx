@@ -16,7 +16,6 @@ interface CreatePorcaoInput {
 
 interface PorcaoContextType {
   porcoes: Porcao[];
-  porcaoGet: () => Promise<void>;
   createPorcao: (data: CreatePorcaoInput) => Promise<void>;
   deletePorcao: (id: number) => Promise<void>;
   editPorcao: (id: number, data: CreatePorcaoInput) => Promise<void>
@@ -38,35 +37,35 @@ const PorcaoProvider: React.FC<PorcaoProviderProps> = memo(({ children }) => {
 
   const createPorcao = useCallback(async (data: CreatePorcaoInput) => {
     const { tipo, preco, tamanho } = data;
-    const response = await api.post("/menu/porcao", {
+    await api.post("/menu/porcao", {
       tipo,
       preco,
       tamanho,
     });
-    setPorcoes((state) => [response.data, ...state]);
-  }, []);
+    await porcaoGet()
+  }, [porcaoGet]);
 
   const deletePorcao = useCallback(async (id: number) => {
     await api.delete(`/menu/porcao/${id}`);
     setPorcoes(porcoes.filter((porcao) => porcao.id !== id));
-  }, []);
+  }, [setPorcoes, porcoes]);
 
   const editPorcao = useCallback(async (id: number, data: CreatePorcaoInput) => {
     const { tipo, preco, tamanho } = data;
-    const response = await api.put(`/menu/porcao/${id}`, {
+    await api.put(`/menu/porcao/${id}`, {
       tipo,
       preco,
       tamanho
     })
-    setPorcoes(state => [response.data, ...state]);
-  }, []);
+    await porcaoGet()
+  }, [porcaoGet]);
 
   useEffect(() => {
     porcaoGet();
-  })
+  }, [porcaoGet])
 
   return (
-    <PorcoesContext.Provider value={{ porcoes, porcaoGet, createPorcao, deletePorcao, editPorcao }}>
+    <PorcoesContext.Provider value={{ porcoes, createPorcao, deletePorcao, editPorcao }}>
       {children}
     </PorcoesContext.Provider>
   );

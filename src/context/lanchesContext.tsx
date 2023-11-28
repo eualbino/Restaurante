@@ -16,7 +16,6 @@ interface CreateLancheInput {
 
 interface LancheContextType {
   lanches: Lanche[];
-  lancheGet: () => Promise<void>;
   createLanche: (data: CreateLancheInput) => Promise<void>;
   deleteLanche: (id: number) => Promise<void>;
   editLanche: (id: number, data: CreateLancheInput) => Promise<void>;
@@ -34,41 +33,44 @@ const LanchesProvider: React.FC<LanchesProviderProps> = memo(({ children }) => {
   const lancheGet = useCallback(async () => {
     const response = await api.get("/menu/lanches");
     setLanches(response.data);
-  }, [])
+  }, [setLanches])
 
   const createLanche = useCallback(async (data: CreateLancheInput) => {
     const { nome, preco, ingredientes } = data;
-
-    const response = await api.post("/menu/lanche", {
+    
+    await api.post("/menu/lanche", {
       nome,
       preco,
       ingredientes,
     });
-    setLanches((state) => [response.data, ...state]);
-  }, [])
+
+    await lancheGet()
+  }, [lancheGet])
 
   const deleteLanche = useCallback(async (id: number) => {
     await api.delete(`/menu/lanche/${id}`);
     setLanches(lanches.filter((lanche) => lanche.id !== id));
-  }, [])
+  }, [setLanches, lanches])
 
   const editLanche = useCallback(async (id: number, data: CreateLancheInput) => {
     const { nome, preco, ingredientes } = data;
-    const response = await api.put(`/menu/lanche/${id}`, {
+
+    await api.put(`/menu/lanche/${id}`, {
       nome,
       preco,
       ingredientes,
     });
-    setLanches((state) => [response.data, ...state]);
-  }, [])
+
+    await lancheGet();
+  }, [lancheGet])
 
   useEffect(() => {
     lancheGet();
-  });
+  }, [lancheGet]);
 
   return (
     <LanchesContext.Provider
-      value={{ lanches, lancheGet, createLanche, deleteLanche, editLanche }}
+      value={{ lanches, createLanche, deleteLanche, editLanche }}
     >
       {children}
     </LanchesContext.Provider>

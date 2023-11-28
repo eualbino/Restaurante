@@ -3,7 +3,7 @@ import { api } from "../../lib/axios";
 import axios from "axios";
 
 interface User {
-    usuario: string,
+    usuario: string
     senha: string
 }
 
@@ -23,16 +23,16 @@ export const AutenticacaoContext = createContext({} as AutenticacaoContextType)
 const AutenticacaoProvider: React.FC<AutenticacaoProviderProps> = memo(({ children }) => {
 
     const [user, setUser] = useState<User | null>(null)
-    const [errorMenssage, setErrorMenssage] = useState<string | null>(null)
+    const [errorMenssage, setErrorMenssage] = useState<string | null>(null)   
+
     const signin = useCallback(async (data: User): Promise<boolean> => {
         const { usuario, senha } = data
         try {
             const response = await api.post('/auth/login', { usuario, senha })
             const token = response.data;
-            console.warn('O dados do token é: ', response.data)
             if (token) {
                 setToken(token)
-                setUser(response.data)
+                setUser(data)
                 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
                 setErrorMenssage(null)
                 return true
@@ -45,6 +45,8 @@ const AutenticacaoProvider: React.FC<AutenticacaoProviderProps> = memo(({ childr
             return false
         }
     }, [])
+
+    
 
     const signout = useCallback(async () => {
         localStorage.removeItem('authToken')

@@ -14,7 +14,6 @@ interface CreateAcrescimoInput {
 
 interface AcrescimoContextType {
   acrescimos: Acrescimo[]
-  acrescimoGet: () => Promise<void>;
   createAcrescimo: (data: CreateAcrescimoInput) => Promise<void>;
   deleteAcrescimo: (id: number) => Promise<void>;
   editAcrescimo: (id: number, data: CreateAcrescimoInput) => Promise<void>
@@ -36,33 +35,33 @@ const AcrescimosProvider: React.FC<AcrescimoProviderProps> = memo(({ children })
 
   const createAcrescimo = useCallback(async (data: CreateAcrescimoInput) => {
     const { item, valor } = data;
-    const response = await api.post("/acrescimo", {
+    await api.post("/acrescimo", {
       item,
       valor,
     });
-    setAcrescimos((state) => [response.data, ...state]);
-  }, [])
+    await acrescimoGet()
+  }, [acrescimoGet])
 
   const deleteAcrescimo = useCallback(async (id: number) => {
     await api.delete(`/acrescimo/${id}`);
     setAcrescimos(acrescimos.filter(acrescimo => acrescimo.id !== id))
-  }, [])
+  }, [setAcrescimos, acrescimos])
 
   const editAcrescimo = useCallback(async (id: number, data: CreateAcrescimoInput) => {
     const { item, valor } = data
-    const response = await api.put(`/acrescimo/${id}`, {
+    await api.put(`/acrescimo/${id}`, {
       item,
       valor
     });
-    setAcrescimos((state) => [response.data, ...state]);
-  }, [])
+    await acrescimoGet()
+  }, [acrescimoGet])
 
   useEffect(() => {
     acrescimoGet();
-  })
+  },[acrescimoGet])
 
   return (
-    <AcrescimosContext.Provider value={{ acrescimos, acrescimoGet, createAcrescimo, deleteAcrescimo, editAcrescimo }}>
+    <AcrescimosContext.Provider value={{ acrescimos, createAcrescimo, deleteAcrescimo, editAcrescimo }}>
       {children}
     </AcrescimosContext.Provider>
   );

@@ -86,7 +86,7 @@ const LancamentosProvider: React.FC<LancamentosProviderProps> = memo(({ children
     const deleteLancamento = useCallback(async (id: number) => {
         await api.delete(`/lancamento/${id}`)
         setLancamentos(lancamentos.filter(lancamento => lancamento.id !== id))
-    }, [])
+    }, [setLancamentos, lancamentos])
 
     return (<LancamentoContext.Provider value={{
         lancamentos,
