@@ -12,47 +12,45 @@ import {
 } from "./styles";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { CheckCircle } from "phosphor-react";
 import { X } from "lucide-react";
 import { AcrescimosContext } from "../../context/acrescimoContext";
 import { priceFormatter } from "../../utils/formatter";
 
-const textObservationSchema = z.object({
+const newAcrescimoSchema = z.object({
   observation: z.string(),
+  acrescimos: z.array(z.string())
 });
 
-type textObservationData = z.infer<typeof textObservationSchema>;
+
+
+type newAcrescimoData = z.infer<typeof newAcrescimoSchema>;
 
 const Observacao = () => {
-  const [output, setOutput] = useState("");
-
-  const { register, handleSubmit } = useForm<textObservationData>({
-    resolver: zodResolver(textObservationSchema),
-  });
-
-  function observationValue(data: any) {
-    setOutput(JSON.stringify(data, null, 1));
-  }
 
   const { acrescimos } = useContext(AcrescimosContext);
+
+  const { register } = useForm<newAcrescimoData>({
+    resolver: zodResolver(newAcrescimoSchema),
+  });
+
+
 
   return (
     <ObservationContainer>
       <Header childrenLanche="" childrenBebida="" childrenPorcao="" />
       <ObservationContain>
+        <form>
         <SepareteObservationFromInsert>
           <TextObservacao>
             <span>DESEJA INSERIR ALGUMA OBSERVAÇÃO?</span>
-            <form onSubmit={handleSubmit(observationValue)}>
-              <textarea
-                cols={40}
-                rows={6}
-                placeholder="Ex: sem alface, sem tomate"
-                {...register("observation")}
-              ></textarea>
-            </form>
-            <pre>{output}</pre>
+            <textarea
+              cols={40}
+              rows={6}
+              placeholder="Ex: sem alface, sem tomate"
+              {...register("observation")}
+            ></textarea>
           </TextObservacao>
 
           <InsertedAddition>
@@ -69,7 +67,7 @@ const Observacao = () => {
           <ProductsInsert>
             {acrescimos.map((acrescimo) => {
               return (
-                <div>
+                <div key={acrescimo.id}>
                   <button>
                     {acrescimo.item} <span>{priceFormatter.format(acrescimo.valor)}</span>
                   </button>
@@ -82,6 +80,7 @@ const Observacao = () => {
           <span>Finalizar</span>
           <CheckCircle size={24} color="#ffffff" weight="fill" />
         </FinishButton>
+        </form>
       </ObservationContain>
     </ObservationContainer>
   );
