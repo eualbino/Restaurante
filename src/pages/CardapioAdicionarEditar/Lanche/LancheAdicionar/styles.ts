@@ -70,7 +70,7 @@ export const AddLanche = styled.div`
 
 export const IngredientesCreate = styled.div`
     margin-left: 3rem;
-`
+`;
 
 export const CreatedLancheContainer = styled.div`
   display: flex;

@@ -18,7 +18,7 @@ export const LanchesMenuContainer = styled.div`
 export const MainDivLanches = styled.div`
     display: flex;
     flex-direction: column;
-    border: 3px solid ${props => props.theme["purple-500"]};
+    border: 3px solid ${(props) => props.theme["purple-500"]};
     border-radius: 12px;
     justify-content: space-between;
     height: 9.3rem;
@@ -33,14 +33,14 @@ export const TitleLanches = styled.div`
     margin-top: 0.3rem;
     font-size: 22px;
     font-weight: bold;
-    color: ${props => props.theme.white};
+    color: ${(props) => props.theme.white};
 `;
 
 export const TextLanches = styled.div`
     margin-left: 0.5rem;
     font-size: 15px;
     padding: 0.3rem;
-    color: ${props => props.theme.white};
+    color: ${(props) => props.theme.white};
 `;
 
 export const PriceLanches = styled.div`
@@ -49,5 +49,5 @@ export const PriceLanches = styled.div`
     text-align: right;
     margin-right: 0.4rem;
     padding-bottom: 3px;
-    color: ${props => props.theme["green-300"]};
+    color: ${(props) => props.theme["green-300"]};
 `;

@@ -32,7 +32,7 @@ export const MessasContainer = styled.div`
       cursor: pointer;
       a{
         text-decoration: none;
-        color: ${props => props.theme.white};
+        color: ${(props) => props.theme.white};
       }
     }
   }

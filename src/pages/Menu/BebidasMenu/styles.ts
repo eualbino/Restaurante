@@ -18,7 +18,7 @@ export const BebidasMenuContainer = styled.div`
 export const MainDivBebidas = styled.div`
     display: flex;
     flex-direction: column;
-    border: 3px solid ${props => props.theme["purple-500"]};
+    border: 3px solid ${(props) => props.theme["purple-500"]};
     border-radius: 12px;
     justify-content: space-between;
     height: 6rem;
@@ -43,5 +43,5 @@ export const PriceBebidas = styled.div`
     text-align: right;
     margin-right: 0.4rem;
     padding-bottom: 3px;
-    color: ${props => props.theme["green-300"]};
+    color: ${(props) => props.theme["green-300"]};
 `;

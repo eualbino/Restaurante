@@ -7,8 +7,8 @@ export const GlobalStyle = createGlobalStyle`
         box-sizing: border-box;
     }
     body{
-        background-color: ${props => props.theme["blue-700"]};
-        color: ${props => props.theme.white};
+        background-color: ${(props) => props.theme["blue-700"]};
+        color: ${(props) => props.theme.white};
         -webkit-font-smoothing: antialiased;
     }
     body, input, button{
@@ -19,7 +19,7 @@ export const GlobalStyle = createGlobalStyle`
 
     }
     body::-webkit-scrollbar-thumb{
-        background-color: ${props => props.theme["purple-500"]};
+        background-color: ${(props) => props.theme["purple-500"]};
         border-radius: 10px;
     }
 `;

@@ -51,8 +51,8 @@ export const AddEmployee = styled.div`
       font-size: 15px;
       option{
         font-size: 15px;
-        background-color: ${props => props.theme["blue-700"]};
-        border-color: ${props => props.theme["blue-700"]};
+        background-color: ${(props) => props.theme["blue-700"]};
+        border-color: ${(props) => props.theme["blue-700"]};
       }
     }
   }

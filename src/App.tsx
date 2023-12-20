@@ -12,28 +12,28 @@ import MesasProvider from "./context/mesasContext";
 import AutenticacaoProvider from "./context/Auth/AuthContext";
 
 const App = () => {
-  return (
-    <ThemeProvider theme={defaultTheme}>
-      <GlobalStyle />
-      <AutenticacaoProvider>
-        <MesasProvider>
-          <FuncionariosProvider>
-            <LanchesProvider>
-              <BebidasProvider>
-                <PorcaoProvider>
-                  <AcrescimosProvider>
-                    <BrowserRouter>
-                      <Router />
-                    </BrowserRouter>
-                  </AcrescimosProvider>
-                </PorcaoProvider>
-              </BebidasProvider>
-            </LanchesProvider>
-          </FuncionariosProvider>
-        </MesasProvider>
-      </AutenticacaoProvider>
-    </ThemeProvider>
-  );
+	return (
+		<ThemeProvider theme={defaultTheme}>
+			<GlobalStyle />
+			<AutenticacaoProvider>
+				<MesasProvider>
+					<FuncionariosProvider>
+						<LanchesProvider>
+							<BebidasProvider>
+								<PorcaoProvider>
+									<AcrescimosProvider>
+										<BrowserRouter>
+											<Router />
+										</BrowserRouter>
+									</AcrescimosProvider>
+								</PorcaoProvider>
+							</BebidasProvider>
+						</LanchesProvider>
+					</FuncionariosProvider>
+				</MesasProvider>
+			</AutenticacaoProvider>
+		</ThemeProvider>
+	);
 };
 
 export default App;

@@ -63,7 +63,7 @@ export const Content = styled.div`
     p{
       margin-top: 1rem;
       margin-bottom: -1rem;
-      color: ${props => props.theme["red-400"]}
+      color: ${(props) => props.theme["red-400"]}
     }
   }
 `;
@@ -76,4 +76,4 @@ export const User2 = styled(lucide.User2)`
 export const Lock2 = styled(lucide.Lock)`
     margin-left: 1rem;
     position: absolute;
-`
+`;
