@@ -1,11 +1,4 @@
-import {
-	ReactNode,
-	createContext,
-	useEffect,
-	useState,
-	memo,
-	useCallback,
-} from "react";
+import { ReactNode, createContext, useState, memo } from "react";
 import { api } from "../lib/axios";
 
 interface Lanche {
@@ -38,52 +31,38 @@ const LanchesProvider: React.FC<LanchesProviderProps> = memo(
 	({ children }) => {
 		const [lanches, setLanches] = useState<Lanche[]>([]);
 
-		const lancheGet = useCallback(async () => {
+		const lancheGet = async () => {
 			const response = await api.get("/menu/lanches");
 			setLanches(response.data);
-		}, [setLanches]);
+		};
 
-		const createLanche = useCallback(
-			async (data: CreateLancheInput) => {
-				const { nome, preco, ingredientes } = data;
+		const createLanche = async (data: CreateLancheInput) => {
+			const { nome, preco, ingredientes } = data;
 
-				await api.post("/menu/lanche", {
-					nome,
-					preco,
-					ingredientes,
-				});
+			await api.post("/menu/lanche", {
+				nome,
+				preco,
+				ingredientes,
+			});
+			await lancheGet();
+		};
 
-				await lancheGet();
-			},
-			[lancheGet],
-		);
+		const deleteLanche = async (id: number) => {
+			await api.delete(`/menu/lanche/${id}`);
+			setLanches(lanches.filter((lanches) => lanches.id !== id));
+		};
 
-		const deleteLanche = useCallback(
-			async (id: number) => {
-				await api.delete(`/menu/lanche/${id}`);
-				setLanches(lanches.filter((lanche) => lanche.id !== id));
-			},
-			[setLanches, lanches],
-		);
+		const editLanche = async (id: number, data: CreateLancheInput) => {
+			const { nome, preco, ingredientes } = data;
 
-		const editLanche = useCallback(
-			async (id: number, data: CreateLancheInput) => {
-				const { nome, preco, ingredientes } = data;
+			await api.put(`/menu/lanche/${id}`, {
+				nome,
+				preco,
+				ingredientes,
+			});
 
-				await api.put(`/menu/lanche/${id}`, {
-					nome,
-					preco,
-					ingredientes,
-				});
-
-				await lancheGet();
-			},
-			[lancheGet],
-		);
-
-		useEffect(() => {
-			lancheGet();
-		}, [lancheGet]);
+			await lancheGet();
+		};
 
 		return (
 			<LanchesContext.Provider

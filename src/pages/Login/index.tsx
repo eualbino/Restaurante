@@ -2,9 +2,9 @@ import { Content, Lock2, LoginContainer, User2 } from "./styles";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AutenticacaoContext } from "../../context/Auth/AuthContext";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AutenticacaoContext } from "../../data/Auth/AuthContext";
 
 const loginUserFormSchema = z.object({
 	usuario: z.string().nonempty("O usuário é obrigatório"),

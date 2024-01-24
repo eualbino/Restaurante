@@ -21,8 +21,8 @@ import Mesas from "./pages/Mesas";
 import BebidasComprar from "./pages/MenuComprar/BebidasMenu";
 import LanchesComprar from "./pages/MenuComprar/LanchesMenu";
 import PorcoesComprar from "./pages/MenuComprar/PorcoesMenu";
-import RequireAuth from "./context/Auth/RequireAuth";
-import AdminAuthority from "./context/Auth/Authority/AdminAuthority";
+import RequireAuth from "./data/Auth/RequireAuth";
+import AdminAuthority from "./data/Auth/Authority/AdminAuthority";
 
 const Router = () => {
 	return (

@@ -44,37 +44,31 @@ const FuncionariosProvider: React.FC<FuncionariosProviderProps> = memo(
 	({ children }) => {
 		const [funcionarios, setFuncionarios] = useState<Funcionarios[]>([]);
 
-		const funcionarioGet = useCallback(async () => {
+		const funcionarioGet = async () => {
 			const response = await api.get("/pessoa/pessoas");
 			setFuncionarios(response.data);
-		}, [setFuncionarios]);
+		};
 
-		const createFuncionario = useCallback(
-			async (data: CreateFuncionarioInput) => {
-				const { nome, idade, funcao, usuario, email, senha } = data;
-				await api.post("/auth/register", {
-					nome,
-					idade,
-					funcao,
-					usuario,
-					email,
-					senha,
-				});
+		const createFuncionario = async (data: CreateFuncionarioInput) => {
+			const { nome, idade, funcao, usuario, email, senha } = data;
+			await api.post("/auth/register", {
+				nome,
+				idade,
+				funcao,
+				usuario,
+				email,
+				senha,
+			});
 
-				await funcionarioGet();
-			},
-			[funcionarioGet],
-		);
+			await funcionarioGet();
+		};
 
-		const deleteFuncionario = useCallback(
-			async (id: number) => {
-				await api.delete(`/pessoa/${id}`);
-				setFuncionarios(
-					funcionarios.filter((funcionario) => funcionario.id !== id),
-				);
-			},
-			[setFuncionarios, funcionarios],
-		);
+		const deleteFuncionario = async (id: number) => {
+			await api.delete(`/pessoa/${id}`);
+			setFuncionarios(
+				funcionarios.filter((funcionario) => funcionario.id !== id),
+			);
+		};
 
 		const editFuncionario = useCallback(
 			async (id: number, data: CreateFuncionarioInput) => {
@@ -91,10 +85,6 @@ const FuncionariosProvider: React.FC<FuncionariosProviderProps> = memo(
 			},
 			[funcionarioGet],
 		);
-
-		useEffect(() => {
-			funcionarioGet();
-		}, [funcionarioGet]);
 
 		return (
 			<FuncionariosContext.Provider

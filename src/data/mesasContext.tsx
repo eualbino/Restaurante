@@ -1,11 +1,4 @@
-import {
-	ReactNode,
-	createContext,
-	useState,
-	useEffect,
-	memo,
-	useCallback,
-} from "react";
+import { ReactNode, createContext, useState, useEffect, memo } from "react";
 import { api } from "../lib/axios";
 
 interface Mesa {
@@ -27,33 +20,23 @@ export const MesasContext = createContext({} as MesaContextType);
 const MesasProvider: React.FC<MesasProviderProps> = memo(({ children }) => {
 	const [mesas, setMesas] = useState<Mesa[]>([]);
 
-	const mesaGet = useCallback(async () => {
+	const mesaGet = async () => {
 		const response = await api.get("/mesa/mesas");
 		setMesas(response.data);
-	}, [setMesas]);
+	};
 
-	const createMesa = useCallback(
-		async (data: Mesa) => {
-			const { numeroMesa } = data;
-			await api.post("/mesa", {
-				numeroMesa,
-			});
-			await mesaGet();
-		},
-		[mesaGet],
-	);
+	const createMesa = async (data: Mesa) => {
+		const { numeroMesa } = data;
+		await api.post("/mesa", {
+			numeroMesa,
+		});
+		await mesaGet();
+	};
 
-	const deleteMesa = useCallback(
-		async (numeroMesa: number) => {
-			await api.delete(`/mesa/${numeroMesa}`);
-			setMesas(mesas.filter((mesa) => mesa.numeroMesa !== numeroMesa));
-		},
-		[setMesas, mesas],
-	);
-
-	useEffect(() => {
-		mesaGet();
-	}, [mesaGet]);
+	const deleteMesa = async (numeroMesa: number) => {
+		await api.delete(`/mesa/${numeroMesa}`);
+		setMesas(mesas.filter((mesa) => mesa.numeroMesa !== numeroMesa));
+	};
 
 	return (
 		<MesasContext.Provider value={{ mesas, createMesa, deleteMesa }}>

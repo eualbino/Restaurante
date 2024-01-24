@@ -15,7 +15,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useContext } from "react";
 import { CheckCircle } from "phosphor-react";
 import { X } from "lucide-react";
-import { AcrescimosContext } from "../../context/acrescimoContext";
+import { AcrescimosContext } from "../../data/acrescimoContext";
 import { priceFormatter } from "../../utils/formatter";
 
 const newAcrescimoSchema = z.object({
@@ -45,13 +45,13 @@ const Observacao = () => {
 								rows={6}
 								placeholder="Ex: sem alface, sem tomate"
 								{...register("observation")}
-							></textarea>
+							/>
 						</TextObservacao>
 
 						<InsertedAddition>
 							<div>
 								<span>2x Cattupiry - R$12,00</span>
-								<button>
+								<button type="button">
 									<X />
 								</button>
 							</div>
@@ -63,7 +63,7 @@ const Observacao = () => {
 							{acrescimos.map((acrescimo) => {
 								return (
 									<div key={acrescimo.id}>
-										<button>
+										<button type="submit">
 											{acrescimo.item}{" "}
 											<span>{priceFormatter.format(acrescimo.valor)}</span>
 										</button>

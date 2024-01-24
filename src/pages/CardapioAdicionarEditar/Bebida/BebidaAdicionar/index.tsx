@@ -13,9 +13,10 @@ import {
 import { NavLink } from "react-router-dom";
 import * as z from "zod";
 import { useContext } from "react";
-import { BebidasContext } from "../../../../context/bebidasContext";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { BebidasContext } from "../../../../data/bebidasContext";
 
 const newBebidaFormSchema = z.object({
 	nome: z.string().nonempty(),
@@ -87,12 +88,15 @@ const BebidaAdicionar = () => {
 									<span>{bebida.nome}</span>
 								</CreatedBebidaText>
 								<CreatedBebidaDelete>
-									<button onClick={() => handleDeleteBebida(bebida.id)}>
+									<button
+										type="submit"
+										onClick={() => handleDeleteBebida(bebida.id)}
+									>
 										<X />
 									</button>
 								</CreatedBebidaDelete>
 								<CreatedBebidaEdit>
-									<button>
+									<button type="button">
 										<NavLink
 											to={{ pathname: `/bebidaEditar/${bebida.id}` }}
 											title="Editar Funcionario"

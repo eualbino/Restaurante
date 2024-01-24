@@ -6,7 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import * as z from "zod";
 import { useEffect, useContext } from "react";
 import { api } from "../../../../lib/axios";
-import { BebidasContext } from "../../../../context/bebidasContext";
+import { BebidasContext } from "../../../../data/bebidasContext";
 
 const BebidaFormSchema = z.object({
 	nome: z.string().nonempty(),

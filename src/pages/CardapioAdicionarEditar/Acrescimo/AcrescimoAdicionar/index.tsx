@@ -14,8 +14,8 @@ import { NavLink } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useContext } from "react";
-import { AcrescimosContext } from "../../../../context/acrescimoContext";
 import { useForm } from "react-hook-form";
+import { AcrescimosContext } from "../../../../data/acrescimoContext";
 
 const newAcrescimoFormSchema = z.object({
 	item: z.string().nonempty(),
@@ -88,12 +88,15 @@ const AcrescimoAdicionar = () => {
 									<span>{acrescimo.item}</span>
 								</CreatedAcrescimoText>
 								<CreatedAcrescimoDelete>
-									<button onClick={() => handleDeleteAcrescimo(acrescimo.id)}>
+									<button
+										type="submit"
+										onClick={() => handleDeleteAcrescimo(acrescimo.id)}
+									>
 										<X />
 									</button>
 								</CreatedAcrescimoDelete>
 								<CreatedAcrescimoEdit>
-									<button>
+									<button type="button">
 										<NavLink
 											to={{ pathname: `/acrescimoEditar/${acrescimo.id}` }}
 											title="Editar Funcionario"

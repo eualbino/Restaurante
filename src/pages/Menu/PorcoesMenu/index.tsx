@@ -7,7 +7,7 @@ import {
 	TextPorcoes,
 	TitlePorcoes,
 } from "./styles";
-import { PorcoesContext } from "../../../context/porcaoContext";
+import { PorcoesContext } from "../../../data/porcaoContext";
 import { priceFormatter } from "../../../utils/formatter";
 
 const PorcoesMenu = () => {

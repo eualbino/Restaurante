@@ -8,7 +8,7 @@ import {
 	TitleLanches,
 } from "../../Menu/LanchesMenu/styles";
 import { useContext } from "react";
-import { LanchesContext } from "../../../context/lanchesContext";
+import { LanchesContext } from "../../../data/lanchesContext";
 import { priceFormatter } from "../../../utils/formatter";
 
 const LanchesComprar = () => {
@@ -25,7 +25,7 @@ const LanchesComprar = () => {
 			<LanchesMenuContainer>
 				{lanches.map((lanche) => {
 					return (
-						<button key={lanche.id}>
+						<button type="submit" key={lanche.id}>
 							<MainDivLanches>
 								<NavLink to={{ pathname: `/observacao/${id}/${lanche.id}` }}>
 									<TitleLanches>

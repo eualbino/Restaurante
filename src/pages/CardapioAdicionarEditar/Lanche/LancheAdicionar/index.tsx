@@ -17,7 +17,7 @@ import { useContext } from "react";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LanchesContext } from "../../../../context/lanchesContext";
+import { LanchesContext } from "../../../../data/lanchesContext";
 
 const newLancheFormSchema = z.object({
 	nome: z.string().nonempty(),
@@ -87,7 +87,7 @@ const LancheAdicionar = () => {
 								placeholder="Ex: Dois Hamburguer, frango, catupiry..."
 								required
 								{...register("ingredientes")}
-							></textarea>
+							/>
 						</IngredientesCreate>
 						<button type="submit" disabled={isSubmitting}>
 							ADICIONAR
@@ -95,19 +95,22 @@ const LancheAdicionar = () => {
 					</AddLanche>
 				</form>
 				<CreatedLancheContainer>
-					{lanches.map((lanche, i) => {
+					{lanches.map((lanche) => {
 						return (
-							<CreatedLancheContain key={i}>
+							<CreatedLancheContain key={lanche.id}>
 								<CreatedLancheText>
 									<span>{lanche.nome}</span>
 								</CreatedLancheText>
 								<CreatedLancheDelete>
-									<button onClick={() => handleDeleteLanche(lanche.id)}>
+									<button
+										type="submit"
+										onClick={() => handleDeleteLanche(lanche.id)}
+									>
 										<X />
 									</button>
 								</CreatedLancheDelete>
 								<CreatedLancheEdit>
-									<button>
+									<button type="button">
 										<NavLink
 											to={{ pathname: `/lancheEditar/${lanche.id}` }}
 											title="Editar Funcionario"

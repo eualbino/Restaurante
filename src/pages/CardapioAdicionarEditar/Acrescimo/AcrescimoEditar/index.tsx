@@ -2,11 +2,11 @@ import { useContext, useEffect } from "react";
 import Header from "../../../../components/Header";
 import { AcrescimoContain, AddAcrescimo } from "../AcrescimoAdicionar/styles";
 import * as z from "zod";
-import { AcrescimosContext } from "../../../../context/acrescimoContext";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate, useParams } from "react-router-dom";
 import { api } from "../../../../lib/axios";
+import { AcrescimosContext } from "../../../../data/acrescimoContext";
 
 const AcrescimoFormSchema = z.object({
 	item: z.string().nonempty(),

@@ -13,7 +13,7 @@ import {
 } from "./styles";
 import { useContext } from "react";
 import * as z from "zod";
-import { PorcoesContext } from "../../../../context/porcaoContext";
+import { PorcoesContext } from "../../../../data/porcaoContext";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -94,12 +94,15 @@ const PorcaoAdicionar = () => {
 									<span>{porcao.tipo}</span>
 								</CreatedPorcaoText>
 								<CreatedPorcaoDelete>
-									<button onClick={() => handleDeletePorcao(porcao.id)}>
+									<button
+										type="submit"
+										onClick={() => handleDeletePorcao(porcao.id)}
+									>
 										<X />
 									</button>
 								</CreatedPorcaoDelete>
 								<CreatedPorcaoEdit>
-									<button>
+									<button type="button">
 										<NavLink
 											to={{ pathname: `/porcaoEditar/${porcao.id}` }}
 											title="Editar Porção"

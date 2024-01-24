@@ -10,7 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { api } from "../../../../lib/axios";
 import { useEffect, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { LanchesContext } from "../../../../context/lanchesContext";
+import { LanchesContext } from "../../../../data/lanchesContext";
 
 const LancheFormSchema = z.object({
 	nome: z.string().nonempty(),
@@ -77,7 +77,7 @@ const LancheEditar = () => {
 								placeholder="Ex: Dois Hamburguer, frango, catupiry..."
 								required
 								{...register("ingredientes")}
-							></textarea>
+							/>
 						</IngredientesCreate>
 						<button type="submit">ALTERAR</button>
 					</AddLanche>

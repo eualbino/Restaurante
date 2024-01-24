@@ -6,7 +6,7 @@ import {
 	PriceBebidas,
 	TitleBebidas,
 } from "../../Menu/BebidasMenu/styles";
-import { BebidasContext } from "../../../context/bebidasContext";
+import { BebidasContext } from "../../../data/bebidasContext";
 import { priceFormatter } from "../../../utils/formatter";
 import { useParams } from "react-router-dom";
 
@@ -23,7 +23,7 @@ const BebidasComprar = () => {
 			<BebidasMenuContainer>
 				{bebidas.map((bebida) => {
 					return (
-						<button key={bebida.id}>
+						<button type="submit" key={bebida.id}>
 							<MainDivBebidas>
 								<TitleBebidas>
 									<span>

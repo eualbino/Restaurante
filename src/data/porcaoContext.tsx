@@ -60,7 +60,7 @@ const PorcaoProvider: React.FC<PorcaoProviderProps> = memo(({ children }) => {
 			await api.delete(`/menu/porcao/${id}`);
 			setPorcoes(porcoes.filter((porcao) => porcao.id !== id));
 		},
-		[setPorcoes, porcoes],
+		[porcoes],
 	);
 
 	const editPorcao = useCallback(
@@ -75,10 +75,6 @@ const PorcaoProvider: React.FC<PorcaoProviderProps> = memo(({ children }) => {
 		},
 		[porcaoGet],
 	);
-
-	useEffect(() => {
-		porcaoGet();
-	}, [porcaoGet]);
 
 	return (
 		<PorcoesContext.Provider

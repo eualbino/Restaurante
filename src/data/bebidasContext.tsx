@@ -38,10 +38,10 @@ const BebidasProvider: React.FC<BebidasProviderProps> = memo(
 	({ children }) => {
 		const [bebidas, setBebidas] = useState<Bebidas[]>([]);
 
-		const bebidaGet = useCallback(async () => {
+		const bebidaGet = async () => {
 			const response = await api.get("/menu/bebidas");
 			setBebidas(response.data);
-		}, [setBebidas]);
+		};
 
 		const createBebida = useCallback(
 			async (data: CreateBebidaInput) => {
@@ -57,13 +57,10 @@ const BebidasProvider: React.FC<BebidasProviderProps> = memo(
 			[bebidaGet],
 		);
 
-		const deleteBebida = useCallback(
-			async (id: number) => {
-				await api.delete(`/menu/bebida/${id}`);
-				setBebidas(bebidas.filter((bebida) => bebida.id !== id));
-			},
-			[setBebidas, bebidas],
-		);
+		const deleteBebida = async (id: number) => {
+			await api.delete(`/menu/bebida/${id}`);
+			setBebidas(bebidas.filter((bebida) => bebida.id !== id));
+		};
 
 		const editBebida = useCallback(
 			async (id: number, data: CreateBebidaInput) => {
@@ -77,10 +74,6 @@ const BebidasProvider: React.FC<BebidasProviderProps> = memo(
 			},
 			[bebidaGet],
 		);
-
-		useEffect(() => {
-			bebidaGet();
-		}, [bebidaGet]);
 
 		return (
 			<BebidasContext.Provider

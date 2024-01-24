@@ -8,7 +8,7 @@ import {
 	TextLanches,
 	TitleLanches,
 } from "./styles";
-import { LanchesContext } from "../../../context/lanchesContext";
+import { LanchesContext } from "../../../data/lanchesContext";
 
 const LanchesMenu = () => {
 	const { lanches } = useContext(LanchesContext);

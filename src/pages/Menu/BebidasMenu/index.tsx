@@ -6,7 +6,7 @@ import {
 	PriceBebidas,
 	TitleBebidas,
 } from "./styles";
-import { BebidasContext } from "../../../context/bebidasContext";
+import { BebidasContext } from "../../../data/bebidasContext";
 import { priceFormatter } from "../../../utils/formatter";
 
 const BebidasMenu = () => {

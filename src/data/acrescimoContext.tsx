@@ -73,10 +73,6 @@ const AcrescimosProvider: React.FC<AcrescimoProviderProps> = memo(
 			[acrescimoGet],
 		);
 
-		useEffect(() => {
-			acrescimoGet();
-		}, [acrescimoGet]);
-
 		return (
 			<AcrescimosContext.Provider
 				value={{ acrescimos, createAcrescimo, deleteAcrescimo, editAcrescimo }}

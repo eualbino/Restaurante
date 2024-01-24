@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { useNavigate, useParams } from "react-router-dom";
 import { useContext, useEffect } from "react";
-import { FuncionariosContext } from "../../../context/funcionarioContext";
+import { FuncionariosContext } from "../../../data/funcionarioContext";
 import { api } from "../../../lib/axios";
 
 const FuncionarioFormSchema = z.object({

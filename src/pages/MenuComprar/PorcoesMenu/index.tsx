@@ -7,7 +7,7 @@ import {
 	TextPorcoes,
 	TitlePorcoes,
 } from "../../Menu/PorcoesMenu/styles";
-import { PorcoesContext } from "../../../context/porcaoContext";
+import { PorcoesContext } from "../../../data/porcaoContext";
 import { priceFormatter } from "../../../utils/formatter";
 import { useParams } from "react-router-dom";
 
@@ -24,7 +24,7 @@ const PorcoesComprar = () => {
 			<PorcoesMenuContainer>
 				{porcoes.map((porcao) => {
 					return (
-						<button key={porcao.id}>
+						<button type="submit" key={porcao.id}>
 							<MainDivPorcoes>
 								<TitlePorcoes>
 									<span>{porcao.tipo}</span>

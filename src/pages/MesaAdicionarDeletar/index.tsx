@@ -11,7 +11,7 @@ import {
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { MesasContext } from "../../context/mesasContext";
+import { MesasContext } from "../../data/mesasContext";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const newMesaFormSchema = z.object({
@@ -66,6 +66,7 @@ const MesaAdicionarDeletar = () => {
 								</CreatedTablesText>
 								<CreatedTablesDelete>
 									<button
+										type="submit"
 										onClick={() => {
 											handleDeleteMesa(mesa.numeroMesa);
 										}}

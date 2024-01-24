@@ -3,7 +3,7 @@ import Header from "../../../../components/Header";
 import { AddPorcao, PorcaoContain } from "../PorcaoAdicionar/styles";
 import * as z from "zod";
 import { useEffect, useContext } from "react";
-import { PorcoesContext } from "../../../../context/porcaoContext";
+import { PorcoesContext } from "../../../../data/porcaoContext";
 import { useNavigate, useParams } from "react-router-dom";
 import { api } from "../../../../lib/axios";
 import { zodResolver } from "@hookform/resolvers/zod";

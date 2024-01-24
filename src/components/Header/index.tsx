@@ -46,17 +46,17 @@ const Header = ({
 				<HeaderMenuContain>
 					<nav>
 						<NavLink to={childrenLanche} title="Menu de lanches">
-							<button>
+							<button type="button">
 								<span>Lanches</span>
 							</button>
 						</NavLink>
 						<NavLink to={childrenBebida} title="Menu de bebidas">
-							<button>
+							<button type="button">
 								<span>Bebidas</span>
 							</button>
 						</NavLink>
 						<NavLink to={childrenPorcao} title="Menu de porcoes">
-							<button>
+							<button type="button">
 								<span>Porções</span>
 							</button>
 						</NavLink>

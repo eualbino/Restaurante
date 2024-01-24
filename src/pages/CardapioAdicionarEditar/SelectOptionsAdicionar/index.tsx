@@ -10,16 +10,16 @@ const SelectOptionsAdicionar = () => {
 			<SelectOptionsAdicionarEditarContain>
 				<nav>
 					<NavLink to="/lancheAdicionar" title="Adicionar lanches">
-						<button>Lanches</button>
+						<button type="button">Lanches</button>
 					</NavLink>
 					<NavLink to="/bebidaAdicionar" title="Adicionar Bebidas">
-						<button>Bebidas</button>
+						<button type="button">Bebidas</button>
 					</NavLink>
 					<NavLink to="/porcaoAdicionar" title="Adicionar Bebidas">
-						<button>Porções</button>
+						<button type="button">Porções</button>
 					</NavLink>
 					<NavLink to="/acrescimoAdicionar" title="Adicionar Acrescimo">
-						<button>Acréscimo</button>
+						<button type="button">Acréscimo</button>
 					</NavLink>
 				</nav>
 			</SelectOptionsAdicionarEditarContain>

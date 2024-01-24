@@ -12,7 +12,7 @@ import {
 import { NavLink } from "react-router-dom";
 import * as z from "zod";
 import { useContext } from "react";
-import { FuncionariosContext } from "../../../context/funcionarioContext";
+import { FuncionariosContext } from "../../../data/funcionarioContext";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -58,7 +58,7 @@ const FuncionarioAdicionar = () => {
 				childrenLanche=""
 				childrenBebida=""
 				childrenPorcao=""
-			></Header>
+			/>
 			<EmployeeContain>
 				<form onSubmit={handleSubmit(handleCreateNewFuncionario)}>
 					<AddEmployee>
@@ -102,13 +102,14 @@ const FuncionarioAdicionar = () => {
 								</CreatedEmployeesText>
 								<CreatedEmployeesDelete>
 									<button
+										type="submit"
 										onClick={() => handleDeleteFuncionario(funcionario.id)}
 									>
 										<X />
 									</button>
 								</CreatedEmployeesDelete>
 								<CreatedEmployeesEdit>
-									<button>
+									<button type="button">
 										<NavLink
 											to={{ pathname: `/funcionarioEditar/${funcionario.id}` }}
 											title="Editar Funcionario"

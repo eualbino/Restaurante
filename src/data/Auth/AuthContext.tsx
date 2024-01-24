@@ -6,7 +6,7 @@ import React, {
 	useState,
 } from "react";
 import { api } from "../../lib/axios";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 interface User {
 	usuario: string;
@@ -39,14 +39,16 @@ const AutenticacaoProvider: React.FC<AutenticacaoProviderProps> = memo(
 				if (token) {
 					setToken(token);
 					setUser(data);
-					axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+					axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 					setErrorMenssage(null);
 					return true;
 				}
 				return false;
-			} catch (error: any) {
-				if (error.response && error.response.status === 403) {
-					setErrorMenssage("A senha ou usuário está incorreto");
+			} catch (error: unknown) {
+				if (error instanceof AxiosError) {
+					if (error.response && error.response.status === 403) {
+						setErrorMenssage("A senha ou usuário está incorreto");
+					}
 				}
 				return false;
 			}
@@ -54,7 +56,7 @@ const AutenticacaoProvider: React.FC<AutenticacaoProviderProps> = memo(
 
 		const signout = useCallback(async () => {
 			localStorage.removeItem("authToken");
-			delete axios.defaults.headers.common["Authorization"];
+			axios.defaults.headers.common.Authorization = undefined;
 			setUser(null);
 		}, []);
 
