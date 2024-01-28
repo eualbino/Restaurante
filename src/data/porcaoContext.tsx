@@ -1,14 +1,6 @@
-import {
-	ReactNode,
-	createContext,
-	memo,
-	useCallback,
-	useEffect,
-	useState,
-} from "react";
 import { api } from "../lib/axios";
 
-interface Porcao {
+interface GetPorcaoSchema {
 	id: number;
 	tipo: string;
 	preco: number;
@@ -21,68 +13,24 @@ interface CreatePorcaoInput {
 	tamanho: string;
 }
 
-interface PorcaoContextType {
-	porcoes: Porcao[];
-	createPorcao: (data: CreatePorcaoInput) => Promise<void>;
-	deletePorcao: (id: number) => Promise<void>;
-	editPorcao: (id: number, data: CreatePorcaoInput) => Promise<void>;
+export async function porcaoGet() {
+	const response = await api.get<GetPorcaoSchema[]>("/menu/porcoes");
+	return response.data;
 }
 
-interface PorcaoProviderProps {
-	children: ReactNode;
+export async function porcaoGetId(id: string) {
+	const response = await api.get<GetPorcaoSchema>(`/menu/porcao/${id}`);
+	return response.data;
 }
 
-export const PorcoesContext = createContext({} as PorcaoContextType);
+export async function createPorcao(data: CreatePorcaoInput) {
+	await api.post("/menu/porcao", data);
+}
 
-const PorcaoProvider: React.FC<PorcaoProviderProps> = memo(({ children }) => {
-	const [porcoes, setPorcoes] = useState<Porcao[]>([]);
+export async function deletePorcao(id: number) {
+	await api.delete(`/menu/porcao/${id}`);
+}
 
-	const porcaoGet = useCallback(async () => {
-		const response = await api.get("/menu/porcoes");
-		setPorcoes(response.data);
-	}, []);
-
-	const createPorcao = useCallback(
-		async (data: CreatePorcaoInput) => {
-			const { tipo, preco, tamanho } = data;
-			await api.post("/menu/porcao", {
-				tipo,
-				preco,
-				tamanho,
-			});
-			await porcaoGet();
-		},
-		[porcaoGet],
-	);
-
-	const deletePorcao = useCallback(
-		async (id: number) => {
-			await api.delete(`/menu/porcao/${id}`);
-			setPorcoes(porcoes.filter((porcao) => porcao.id !== id));
-		},
-		[porcoes],
-	);
-
-	const editPorcao = useCallback(
-		async (id: number, data: CreatePorcaoInput) => {
-			const { tipo, preco, tamanho } = data;
-			await api.put(`/menu/porcao/${id}`, {
-				tipo,
-				preco,
-				tamanho,
-			});
-			await porcaoGet();
-		},
-		[porcaoGet],
-	);
-
-	return (
-		<PorcoesContext.Provider
-			value={{ porcoes, createPorcao, deletePorcao, editPorcao }}
-		>
-			{children}
-		</PorcoesContext.Provider>
-	);
-});
-
-export default PorcaoProvider;
+export async function editPorcao(id: string, data: CreatePorcaoInput) {
+	await api.put(`/menu/porcao/${id}`, data);
+}

@@ -1,14 +1,6 @@
-import {
-	ReactNode,
-	createContext,
-	useEffect,
-	useState,
-	memo,
-	useCallback,
-} from "react";
 import { api } from "../lib/axios";
 
-interface Bebidas {
+interface GetBebidasSchema {
 	id: number;
 	nome: string;
 	litragem: string;
@@ -21,68 +13,24 @@ interface CreateBebidaInput {
 	preco: number;
 }
 
-interface BebidasContextType {
-	bebidas: Bebidas[];
-	createBebida: (data: CreateBebidaInput) => Promise<void>;
-	deleteBebida: (id: number) => Promise<void>;
-	editBebida: (id: number, data: CreateBebidaInput) => Promise<void>;
+export async function bebidaGet() {
+	const response = await api.get<GetBebidasSchema[]>("/menu/bebidas");
+	return response.data;
 }
 
-interface BebidasProviderProps {
-	children: ReactNode;
+export async function bebidaGetId(id: string) {
+	const response = await api.get<GetBebidasSchema>(`/menu/bebida/${id}`);
+	return response.data;
 }
 
-export const BebidasContext = createContext({} as BebidasContextType);
+export async function createBebida(data: CreateBebidaInput) {
+	await api.post("/menu/bebida", data);
+}
 
-const BebidasProvider: React.FC<BebidasProviderProps> = memo(
-	({ children }) => {
-		const [bebidas, setBebidas] = useState<Bebidas[]>([]);
+export async function deleteBebida(id: number) {
+	await api.delete(`/menu/bebida/${id}`);
+}
 
-		const bebidaGet = async () => {
-			const response = await api.get("/menu/bebidas");
-			setBebidas(response.data);
-		};
-
-		const createBebida = useCallback(
-			async (data: CreateBebidaInput) => {
-				const { nome, litragem, preco } = data;
-
-				await api.post("/menu/bebida", {
-					nome,
-					litragem,
-					preco,
-				});
-				await bebidaGet();
-			},
-			[bebidaGet],
-		);
-
-		const deleteBebida = async (id: number) => {
-			await api.delete(`/menu/bebida/${id}`);
-			setBebidas(bebidas.filter((bebida) => bebida.id !== id));
-		};
-
-		const editBebida = useCallback(
-			async (id: number, data: CreateBebidaInput) => {
-				const { nome, litragem, preco } = data;
-				await api.put(`/menu/bebida/${id}`, {
-					nome,
-					litragem,
-					preco,
-				});
-				await bebidaGet();
-			},
-			[bebidaGet],
-		);
-
-		return (
-			<BebidasContext.Provider
-				value={{ bebidas, createBebida, deleteBebida, editBebida }}
-			>
-				{children}
-			</BebidasContext.Provider>
-		);
-	},
-);
-
-export default BebidasProvider;
+export async function editBebida(id: string, data: CreateBebidaInput) {
+	await api.put(`/menu/bebida/${id}`, data);
+}

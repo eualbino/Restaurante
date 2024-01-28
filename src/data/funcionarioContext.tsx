@@ -1,14 +1,6 @@
-import {
-	ReactNode,
-	createContext,
-	useEffect,
-	useState,
-	memo,
-	useCallback,
-} from "react";
 import { api } from "../lib/axios";
 
-interface Funcionarios {
+interface FuncionarioGetSchema {
 	id: number;
 	nome: string;
 	idade: number;
@@ -27,78 +19,27 @@ interface CreateFuncionarioInput {
 	senha: string;
 }
 
-interface FuncionariosContextType {
-	funcionarios: Funcionarios[];
-	createFuncionario: (data: CreateFuncionarioInput) => Promise<void>;
-	deleteFuncionario: (id: number) => Promise<void>;
-	editFuncionario: (id: number, data: CreateFuncionarioInput) => Promise<void>;
+export async function funcionarioGet() {
+	const response = await api.get<FuncionarioGetSchema[]>("/pessoa/pessoas");
+	return response.data;
 }
 
-interface FuncionariosProviderProps {
-	children: ReactNode;
+export async function funcionarioGetId(id: string) {
+	const response = await api.get<FuncionarioGetSchema>(`/pessoa/${id}`);
+	return response.data;
 }
 
-export const FuncionariosContext = createContext({} as FuncionariosContextType);
+export async function createFuncionario(data: CreateFuncionarioInput) {
+	await api.post("/auth/register", data);
+}
 
-const FuncionariosProvider: React.FC<FuncionariosProviderProps> = memo(
-	({ children }) => {
-		const [funcionarios, setFuncionarios] = useState<Funcionarios[]>([]);
+export async function deleteFuncionario(id: number) {
+	await api.delete(`/pessoa/${id}`);
+}
 
-		const funcionarioGet = async () => {
-			const response = await api.get("/pessoa/pessoas");
-			setFuncionarios(response.data);
-		};
-
-		const createFuncionario = async (data: CreateFuncionarioInput) => {
-			const { nome, idade, funcao, usuario, email, senha } = data;
-			await api.post("/auth/register", {
-				nome,
-				idade,
-				funcao,
-				usuario,
-				email,
-				senha,
-			});
-
-			await funcionarioGet();
-		};
-
-		const deleteFuncionario = async (id: number) => {
-			await api.delete(`/pessoa/${id}`);
-			setFuncionarios(
-				funcionarios.filter((funcionario) => funcionario.id !== id),
-			);
-		};
-
-		const editFuncionario = useCallback(
-			async (id: number, data: CreateFuncionarioInput) => {
-				const { nome, idade, funcao, usuario, email, senha } = data;
-				await api.put(`/pessoa/${id}`, {
-					nome,
-					idade,
-					funcao,
-					usuario,
-					email,
-					senha,
-				});
-				await funcionarioGet();
-			},
-			[funcionarioGet],
-		);
-
-		return (
-			<FuncionariosContext.Provider
-				value={{
-					funcionarios,
-					createFuncionario,
-					deleteFuncionario,
-					editFuncionario,
-				}}
-			>
-				{children}
-			</FuncionariosContext.Provider>
-		);
-	},
-);
-
-export default FuncionariosProvider;
+export async function editFuncionario(
+	id: string,
+	data: CreateFuncionarioInput,
+) {
+	await api.put(`/pessoa/${id}`, data);
+}

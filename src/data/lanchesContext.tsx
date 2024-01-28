@@ -1,77 +1,36 @@
-import { ReactNode, createContext, useState, memo } from "react";
 import { api } from "../lib/axios";
 
-interface Lanche {
-	id: number;
-	nome: string;
-	preco: number;
-	ingredientes: string;
+interface GetLancheInput {
+  id: number;
+  nome: string;
+  preco: number;
+  ingredientes: string;
 }
 
 interface CreateLancheInput {
-	nome: string;
-	preco: number;
-	ingredientes: string;
+  nome: string;
+  preco: number;
+  ingredientes: string;
 }
 
-interface LancheContextType {
-	lanches: Lanche[];
-	createLanche: (data: CreateLancheInput) => Promise<void>;
-	deleteLanche: (id: number) => Promise<void>;
-	editLanche: (id: number, data: CreateLancheInput) => Promise<void>;
+export async function lancheGet() {
+  const response = await api.get<GetLancheInput[]>("/menu/lanches");
+  return response.data;
 }
 
-interface LanchesProviderProps {
-	children: ReactNode;
+export async function lancheGetId(id: string) {
+  const response = await api.get<GetLancheInput>(`/menu/lanche/${id}`);
+  return response.data;
 }
 
-export const LanchesContext = createContext({} as LancheContextType);
+export async function createLanche(data: CreateLancheInput) {
+  await api.post("/menu/lanche", data);
+}
 
-const LanchesProvider: React.FC<LanchesProviderProps> = memo(
-	({ children }) => {
-		const [lanches, setLanches] = useState<Lanche[]>([]);
+export async function deleteLanche(id: number) {
+  await api.delete(`/menu/lanche/${id}`);
+}
 
-		const lancheGet = async () => {
-			const response = await api.get("/menu/lanches");
-			setLanches(response.data);
-		};
-
-		const createLanche = async (data: CreateLancheInput) => {
-			const { nome, preco, ingredientes } = data;
-
-			await api.post("/menu/lanche", {
-				nome,
-				preco,
-				ingredientes,
-			});
-			await lancheGet();
-		};
-
-		const deleteLanche = async (id: number) => {
-			await api.delete(`/menu/lanche/${id}`);
-			setLanches(lanches.filter((lanches) => lanches.id !== id));
-		};
-
-		const editLanche = async (id: number, data: CreateLancheInput) => {
-			const { nome, preco, ingredientes } = data;
-
-			await api.put(`/menu/lanche/${id}`, {
-				nome,
-				preco,
-				ingredientes,
-			});
-
-			await lancheGet();
-		};
-
-		return (
-			<LanchesContext.Provider
-				value={{ lanches, createLanche, deleteLanche, editLanche }}
-			>
-				{children}
-			</LanchesContext.Provider>
-		);
-	},
-);
-
-export default LanchesProvider;
+export async function editLanche(id: string, data: CreateLancheInput) {
+  await api.put(`/menu/lanche/${id}`, data);
+}
