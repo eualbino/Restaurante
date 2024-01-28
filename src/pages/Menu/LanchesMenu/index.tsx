@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useQuery } from "@tanstack/react-query";
 import Header from "../../../components/Header";
 import { priceFormatter } from "../../../utils/formatter";
 import {
@@ -8,10 +8,13 @@ import {
 	TextLanches,
 	TitleLanches,
 } from "./styles";
-import { LanchesContext } from "../../../data/lanchesContext";
+import { lancheGet } from "../../../data/lanchesContext";
 
 const LanchesMenu = () => {
-	const { lanches } = useContext(LanchesContext);
+	const { data: lanches } = useQuery({
+		queryKey: ["lanches"],
+		queryFn: lancheGet,
+	});
 	return (
 		<div>
 			<Header
@@ -20,7 +23,7 @@ const LanchesMenu = () => {
 				childrenPorcao="/porcoesMenu"
 			/>
 			<LanchesMenuContainer>
-				{lanches.map((lanche) => {
+				{lanches?.map((lanche) => {
 					return (
 						<MainDivLanches key={lanche.id}>
 							<TitleLanches>

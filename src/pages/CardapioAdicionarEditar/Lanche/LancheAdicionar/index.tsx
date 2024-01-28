@@ -13,23 +13,27 @@ import {
 	LancheContain,
 } from "./styles";
 import * as z from "zod";
-import { useContext } from "react";
-
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LanchesContext } from "../../../../data/lanchesContext";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+	createLanche,
+	deleteLanche,
+	lancheGet,
+} from "../../../../data/lanchesContext";
+import toast from "react-hot-toast";
 
 const newLancheFormSchema = z.object({
-	nome: z.string().nonempty(),
+	nome: z.string().nonempty("É necessário ter o nome do lanche!"),
 	preco: z.coerce.number(),
-	ingredientes: z.string().nonempty(),
+	ingredientes: z
+		.string()
+		.nonempty("É necessário ter os ingredientes do lanche!"),
 });
 
 type NewLancheFormInputs = z.infer<typeof newLancheFormSchema>;
 
 const LancheAdicionar = () => {
-	const { createLanche, lanches, deleteLanche } = useContext(LanchesContext);
-
 	const {
 		register,
 		handleSubmit,
@@ -39,19 +43,37 @@ const LancheAdicionar = () => {
 		resolver: zodResolver(newLancheFormSchema),
 	});
 
-	async function handleCreateNewLanche(data: NewLancheFormInputs) {
-		const { nome, preco, ingredientes } = data;
+	const { data: lanches, refetch } = useQuery({
+		queryKey: ["lanche"],			
+		queryFn: lancheGet,
+	});
 
-		await createLanche({
-			nome,
-			preco,
-			ingredientes,
-		});
+	const { mutateAsync: adicionaLanche } = useMutation({
+		mutationFn: createLanche,
+		onSuccess: () => {
+			refetch()
+		}
+	});
+
+	const { mutateAsync: deleteLancheFn } = useMutation({
+		mutationFn: deleteLanche,
+		onSuccess: () => {
+			refetch()
+		}
+	});
+
+	async function handleCreateNewLanche(data: NewLancheFormInputs) {
+		try {
+			await adicionaLanche(data);
+			toast.success("Cadastrado com sucesso!");
+		} catch (err) {
+			toast.error("Erro ao cadastrar um lanche!");
+		}
 		reset();
 	}
 
 	async function handleDeleteLanche(id: number) {
-		await deleteLanche(id);
+		await deleteLancheFn(id);
 	}
 
 	return (
@@ -95,7 +117,7 @@ const LancheAdicionar = () => {
 					</AddLanche>
 				</form>
 				<CreatedLancheContainer>
-					{lanches.map((lanche) => {
+					{lanches?.map((lanche) => {
 						return (
 							<CreatedLancheContain key={lanche.id}>
 								<CreatedLancheText>

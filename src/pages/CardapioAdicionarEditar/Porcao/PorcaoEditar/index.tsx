@@ -2,79 +2,90 @@ import { useForm } from "react-hook-form";
 import Header from "../../../../components/Header";
 import { AddPorcao, PorcaoContain } from "../PorcaoAdicionar/styles";
 import * as z from "zod";
-import { useEffect, useContext } from "react";
-import { PorcoesContext } from "../../../../data/porcaoContext";
 import { useNavigate, useParams } from "react-router-dom";
-import { api } from "../../../../lib/axios";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { editPorcao, porcaoGetId } from "../../../../data/porcaoContext";
+import { useEffect } from "react";
 
 const PorcaoFormSchema = z.object({
-	tipo: z.string().nonempty(),
-	preco: z.coerce.number(),
-	tamanho: z.string().nonempty(),
+  tipo: z.string().nonempty(),
+  preco: z.coerce.number(),
+  tamanho: z.string().nonempty(),
 });
 
 type PorcaoFormInputs = z.infer<typeof PorcaoFormSchema>;
 
 const PorcaoEditar = () => {
-	const { register, handleSubmit, reset } = useForm<PorcaoFormInputs>({
-		resolver: zodResolver(PorcaoFormSchema),
-	});
+  const { register, handleSubmit, reset } = useForm<PorcaoFormInputs>({
+    resolver: zodResolver(PorcaoFormSchema),
+  });
 
-	const { id } = useParams();
-	const { editPorcao } = useContext(PorcoesContext);
-	const navigate = useNavigate();
+  const { id } = useParams();
+  const idParams = id ?? "";
+  const navigate = useNavigate();
 
-	async function handleEditPorcao(data: PorcaoFormInputs) {
-		const { tipo, tamanho, preco } = data;
-		await editPorcao(id, {
-			tipo,
-			tamanho,
-			preco,
-		});
-		navigate("/porcaoAdicionar");
-	}
+  const { data: porcaoId, refetch } = useQuery({
+    queryKey: ["pocoes"],
+    queryFn: () => porcaoGetId(idParams),
+  });
 
-	useEffect(() => {
-		api.get(`/menu/porcao/${id}`).then((response) => {
-			reset(response.data);
-		});
-	}, [id, reset]);
+  useEffect(() => {
+    if (porcaoId) {
+      reset({
+        tipo: porcaoId?.tipo ?? "",
+        preco: porcaoId?.preco ?? 0,
+        tamanho: porcaoId?.tamanho ?? "",
+      });
+    }
+  }, [porcaoId, reset]);
 
-	return (
-		<div>
-			<Header
-				children="EDITAR PORÇÃO"
-				childrenLanche=""
-				childrenBebida=""
-				childrenPorcao=""
-			/>
-			<PorcaoContain>
-				<form onSubmit={handleSubmit(handleEditPorcao)}>
-					<AddPorcao>
-						<div>
-							<span>Nome:</span>
-							<input type="text" required {...register("tipo")} />
-						</div>
-						<div>
-							<span>Tamanho:</span>
-							<input type="text" required {...register("tamanho")} />
-						</div>
-						<div>
-							<span>Preço:</span>
-							<input
-								type="number"
-								required
-								step="0.01"
-								{...register("preco")}
-							/>
-						</div>
-						<button type="submit">ALTERAR</button>
-					</AddPorcao>
-				</form>
-			</PorcaoContain>
-		</div>
-	);
+  const { mutateAsync: edicaoPorcao } = useMutation({
+    mutationFn: (data: PorcaoFormInputs) => editPorcao(idParams, data),
+    onSuccess: () => {
+      refetch();
+    },
+  });
+
+  async function handleEditPorcao(data: PorcaoFormInputs) {
+    await edicaoPorcao(data);
+    navigate("/porcaoAdicionar");
+  }
+
+  return (
+    <div>
+      <Header
+        children="EDITAR PORÇÃO"
+        childrenLanche=""
+        childrenBebida=""
+        childrenPorcao=""
+      />
+      <PorcaoContain>
+        <form onSubmit={handleSubmit(handleEditPorcao)}>
+          <AddPorcao>
+            <div>
+              <span>Nome:</span>
+              <input type="text" required {...register("tipo")} />
+            </div>
+            <div>
+              <span>Tamanho:</span>
+              <input type="text" required {...register("tamanho")} />
+            </div>
+            <div>
+              <span>Preço:</span>
+              <input
+                type="number"
+                required
+                step="0.01"
+                {...register("preco")}
+              />
+            </div>
+            <button type="submit">ALTERAR</button>
+          </AddPorcao>
+        </form>
+      </PorcaoContain>
+    </div>
+  );
 };
 
 export default PorcaoEditar;

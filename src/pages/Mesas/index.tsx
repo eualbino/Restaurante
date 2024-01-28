@@ -1,11 +1,14 @@
 import { NavLink } from "react-router-dom";
 import Header from "../../components/Header";
 import { MessasContainer } from "./styles";
-import { useContext } from "react";
-import { MesasContext } from "../../data/mesasContext";
+import { useQuery } from "@tanstack/react-query";
+import { mesaGet } from "../../data/mesasContext";
 
 const Mesas = () => {
-	const { mesas } = useContext(MesasContext);
+	const { data: mesas } = useQuery({
+		queryKey: ["mesas"],
+		queryFn: mesaGet,
+	});
 
 	return (
 		<div>
@@ -16,7 +19,7 @@ const Mesas = () => {
 				childrenPorcao=""
 			/>
 			<MessasContainer>
-				{mesas.map((mesa) => {
+				{mesas?.map((mesa) => {
 					return (
 						<div key={mesa.numeroMesa}>
 							<h2>Mesa {mesa.numeroMesa}</h2>

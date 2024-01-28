@@ -8,11 +8,11 @@ import {
 	CreatedTablesText,
 	TableSetupContain,
 } from "./styles";
-import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { MesasContext } from "../../data/mesasContext";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { createMesa, deleteMesa, mesaGet } from "../../data/mesasContext";
 
 const newMesaFormSchema = z.object({
 	numeroMesa: z.coerce.number(),
@@ -21,22 +21,36 @@ const newMesaFormSchema = z.object({
 type newMesaFormData = z.infer<typeof newMesaFormSchema>;
 
 const MesaAdicionarDeletar = () => {
-	const { createMesa, mesas, deleteMesa } = useContext(MesasContext);
-
 	const { register, handleSubmit, reset } = useForm<newMesaFormData>({
 		resolver: zodResolver(newMesaFormSchema),
 	});
 
+	const { data: mesas, refetch } = useQuery({
+		queryKey: ["mesas"],
+		queryFn: mesaGet,
+	});
+
+	const { mutateAsync: criacaoMesa } = useMutation({
+		mutationFn: createMesa,
+		onSuccess: () => {
+			refetch()
+		}
+	});
+
+	const { mutateAsync: deletarMesa } = useMutation({
+		mutationFn: deleteMesa,
+		onSuccess: () => {
+			refetch()
+		}
+	});
+
 	async function handleCreateNewMesa(data: newMesaFormData) {
-		const { numeroMesa } = data;
-		await createMesa({
-			numeroMesa,
-		});
+		await criacaoMesa(data);
 		reset();
 	}
 
 	async function handleDeleteMesa(numeroMesa: number) {
-		await deleteMesa(numeroMesa);
+		await deletarMesa(numeroMesa);
 	}
 
 	return (
@@ -58,7 +72,7 @@ const MesaAdicionarDeletar = () => {
 					</AddTable>
 				</form>
 				<CreatedTablesContainer>
-					{mesas.map((mesa) => {
+					{mesas?.map((mesa) => {
 						return (
 							<CreatedTablesContain key={mesa.numeroMesa}>
 								<CreatedTablesText>

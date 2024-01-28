@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import Header from "../../../components/Header";
 import {
 	MainDivPorcoes,
@@ -7,13 +6,19 @@ import {
 	TextPorcoes,
 	TitlePorcoes,
 } from "../../Menu/PorcoesMenu/styles";
-import { PorcoesContext } from "../../../data/porcaoContext";
+import { porcaoGet } from "../../../data/porcaoContext";
 import { priceFormatter } from "../../../utils/formatter";
 import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
 const PorcoesComprar = () => {
-	const { porcoes } = useContext(PorcoesContext);
 	const { id } = useParams();
+
+	const { data: porcoes } = useQuery({
+		queryKey: ["porcoes"],
+		queryFn: porcaoGet,
+	});
+
 	return (
 		<div>
 			<Header
@@ -22,7 +27,7 @@ const PorcoesComprar = () => {
 				childrenPorcao={`/porcaoComprar/${id}`}
 			/>
 			<PorcoesMenuContainer>
-				{porcoes.map((porcao) => {
+				{porcoes?.map((porcao) => {
 					return (
 						<button type="submit" key={porcao.id}>
 							<MainDivPorcoes>

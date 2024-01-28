@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import Header from "../../../components/Header";
 import {
 	MainDivPorcoes,
@@ -7,11 +6,16 @@ import {
 	TextPorcoes,
 	TitlePorcoes,
 } from "./styles";
-import { PorcoesContext } from "../../../data/porcaoContext";
+import { porcaoGet } from "../../../data/porcaoContext";
 import { priceFormatter } from "../../../utils/formatter";
+import { useQuery } from "@tanstack/react-query";
 
 const PorcoesMenu = () => {
-	const { porcoes } = useContext(PorcoesContext);
+	const { data: porcoes } = useQuery({
+		queryKey: ["porcoes"],
+		queryFn: porcaoGet,
+	});
+
 	return (
 		<div>
 			<Header
@@ -20,7 +24,7 @@ const PorcoesMenu = () => {
 				childrenPorcao="/porcoesMenu"
 			/>
 			<PorcoesMenuContainer>
-				{porcoes.map((porcao) => {
+				{porcoes?.map((porcao) => {
 					return (
 						<MainDivPorcoes>
 							<TitlePorcoes>

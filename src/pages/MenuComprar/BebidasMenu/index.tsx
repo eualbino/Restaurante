@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import Header from "../../../components/Header";
 import {
 	BebidasMenuContainer,
@@ -6,13 +5,19 @@ import {
 	PriceBebidas,
 	TitleBebidas,
 } from "../../Menu/BebidasMenu/styles";
-import { BebidasContext } from "../../../data/bebidasContext";
 import { priceFormatter } from "../../../utils/formatter";
 import { useParams } from "react-router-dom";
+import { bebidaGet } from "../../../data/bebidasContext";
+import { useQuery } from "@tanstack/react-query";
 
 const BebidasComprar = () => {
-	const { bebidas } = useContext(BebidasContext);
 	const { id } = useParams();
+
+	const { data: bebidas } = useQuery({
+		queryKey: ["bebidas"],
+		queryFn: bebidaGet,
+	});
+
 	return (
 		<div>
 			<Header
@@ -21,7 +26,7 @@ const BebidasComprar = () => {
 				childrenPorcao={`/porcaoComprar/${id}`}
 			/>
 			<BebidasMenuContainer>
-				{bebidas.map((bebida) => {
+				{bebidas?.map((bebida) => {
 					return (
 						<button type="submit" key={bebida.id}>
 							<MainDivBebidas>

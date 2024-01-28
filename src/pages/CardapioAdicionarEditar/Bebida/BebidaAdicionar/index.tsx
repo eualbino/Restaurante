@@ -12,39 +12,54 @@ import {
 } from "./styles";
 import { NavLink } from "react-router-dom";
 import * as z from "zod";
-import { useContext } from "react";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { BebidasContext } from "../../../../data/bebidasContext";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+	bebidaGet,
+	createBebida,
+	deleteBebida,
+} from "../../../../data/bebidasContext";
 
 const newBebidaFormSchema = z.object({
-	nome: z.string().nonempty(),
-	litragem: z.string().nonempty(),
+	nome: z.string().nonempty("É preciso colocar nome em bebida!"),
+	litragem: z.string().nonempty("É preciso colocar a litragem da bebida!"),
 	preco: z.coerce.number(),
 });
 
 type newBebidaFormData = z.infer<typeof newBebidaFormSchema>;
 
 const BebidaAdicionar = () => {
-	const { createBebida, bebidas, deleteBebida } = useContext(BebidasContext);
-
 	const { register, handleSubmit, reset } = useForm<newBebidaFormData>({
 		resolver: zodResolver(newBebidaFormSchema),
 	});
 
+	const { data: bebidas, refetch } = useQuery({
+		queryKey: ["bebidas"],
+		queryFn: bebidaGet,
+	});
+
+	const { mutateAsync: adicionaBebida } = useMutation({
+		mutationFn: createBebida,
+		onSuccess: () => {
+			refetch()
+		}
+	});
+
+	const { mutateAsync: removeBebida } = useMutation({
+		mutationFn: deleteBebida,
+		onSuccess: () => {
+			refetch()
+		}
+	});
+
 	async function handleCreateNewBebida(data: newBebidaFormData) {
-		const { nome, litragem, preco } = data;
-		await createBebida({
-			nome,
-			litragem,
-			preco,
-		});
+		await adicionaBebida(data);
 		reset();
 	}
 
 	async function handleDeleteBebida(id: number) {
-		await deleteBebida(id);
+		await removeBebida(id);
 	}
 
 	return (
@@ -81,7 +96,7 @@ const BebidaAdicionar = () => {
 				</form>
 
 				<CreatedBebidaContainer>
-					{bebidas.map((bebida) => {
+					{bebidas?.map((bebida) => {
 						return (
 							<CreatedBebidaContain key={bebida.id}>
 								<CreatedBebidaText>

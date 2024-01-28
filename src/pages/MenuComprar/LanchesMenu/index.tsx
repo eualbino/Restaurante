@@ -7,13 +7,17 @@ import {
 	TextLanches,
 	TitleLanches,
 } from "../../Menu/LanchesMenu/styles";
-import { useContext } from "react";
-import { LanchesContext } from "../../../data/lanchesContext";
 import { priceFormatter } from "../../../utils/formatter";
+import { lancheGet } from "../../../data/lanchesContext";
+import { useQuery } from "@tanstack/react-query";
 
 const LanchesComprar = () => {
-	const { lanches } = useContext(LanchesContext);
 	const { id } = useParams();
+
+	const { data: lanches } = useQuery({
+		queryKey: ["lanches"],
+		queryFn: lancheGet,
+	});
 
 	return (
 		<div>
@@ -23,7 +27,7 @@ const LanchesComprar = () => {
 				childrenPorcao={`/porcaoComprar/${id}`}
 			/>
 			<LanchesMenuContainer>
-				{lanches.map((lanche) => {
+				{lanches?.map((lanche) => {
 					return (
 						<button type="submit" key={lanche.id}>
 							<MainDivLanches>

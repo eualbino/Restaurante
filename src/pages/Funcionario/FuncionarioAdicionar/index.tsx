@@ -11,10 +11,14 @@ import {
 } from "./styles";
 import { NavLink } from "react-router-dom";
 import * as z from "zod";
-import { useContext } from "react";
-import { FuncionariosContext } from "../../../data/funcionarioContext";
+import {
+	createFuncionario,
+	deleteFuncionario,
+	funcionarioGet,
+} from "../../../data/funcionarioContext";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 const newFuncionarioFormSchema = z.object({
 	nome: z.string().nonempty(),
@@ -28,28 +32,36 @@ const newFuncionarioFormSchema = z.object({
 type newFuncionarioFormData = z.infer<typeof newFuncionarioFormSchema>;
 
 const FuncionarioAdicionar = () => {
-	const { createFuncionario, funcionarios, deleteFuncionario } =
-		useContext(FuncionariosContext);
-
 	const { register, handleSubmit, reset } = useForm<newFuncionarioFormData>({
 		resolver: zodResolver(newFuncionarioFormSchema),
 	});
 
+	const { data: funcionarios, refetch } = useQuery({
+		queryKey: ["funcionarios"],
+		queryFn: funcionarioGet,
+	});
+
+	const { mutateAsync: criacaoFuncionario} = useMutation({
+		mutationFn: createFuncionario,
+		onSuccess: () => {
+			refetch()
+		}
+	});
+
+	const { mutateAsync: deletarFuncionario } = useMutation({
+		mutationFn: deleteFuncionario,
+		onSuccess: () => {
+			refetch()
+		}
+	});
+
 	async function handleCreateNewFuncionario(data: newFuncionarioFormData) {
-		const { nome, idade, funcao, usuario, email, senha } = data;
-		await createFuncionario({
-			nome,
-			idade,
-			funcao,
-			usuario,
-			email,
-			senha,
-		});
+		await criacaoFuncionario(data);
 		reset();
 	}
 
 	async function handleDeleteFuncionario(id: number) {
-		await deleteFuncionario(id);
+		await deletarFuncionario(id);
 	}
 	return (
 		<div>
@@ -94,7 +106,7 @@ const FuncionarioAdicionar = () => {
 					</AddEmployee>
 				</form>
 				<CreatedEmployeesContainer>
-					{funcionarios.map((funcionario) => {
+					{funcionarios?.map((funcionario) => {
 						return (
 							<CreatedEmployeesContain key={funcionario.id}>
 								<CreatedEmployeesText>

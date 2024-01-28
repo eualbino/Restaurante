@@ -12,11 +12,11 @@ import {
 } from "./styles";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useContext } from "react";
 import { CheckCircle } from "phosphor-react";
 import { X } from "lucide-react";
-import { AcrescimosContext } from "../../data/acrescimoContext";
+import { acrescimoGet } from "../../data/acrescimoContext";
 import { priceFormatter } from "../../utils/formatter";
+import { useQuery } from "@tanstack/react-query";
 
 const newAcrescimoSchema = z.object({
 	observation: z.string(),
@@ -26,7 +26,10 @@ const newAcrescimoSchema = z.object({
 type newAcrescimoData = z.infer<typeof newAcrescimoSchema>;
 
 const Observacao = () => {
-	const { acrescimos } = useContext(AcrescimosContext);
+	const { data: acrescimos } = useQuery({
+		queryKey: ["acrescimo"],
+		queryFn: acrescimoGet,
+	});
 
 	const { register } = useForm<newAcrescimoData>({
 		resolver: zodResolver(newAcrescimoSchema),
@@ -60,7 +63,7 @@ const Observacao = () => {
 					<InsertAddition>
 						<span>DESEJA INSERIR ALGUM ACRÉSCIMO?</span>
 						<ProductsInsert>
-							{acrescimos.map((acrescimo) => {
+							{acrescimos?.map((acrescimo) => {
 								return (
 									<div key={acrescimo.id}>
 										<button type="submit">

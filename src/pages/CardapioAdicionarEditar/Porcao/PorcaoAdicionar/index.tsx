@@ -11,11 +11,15 @@ import {
 	CreatedPorcaoText,
 	PorcaoContain,
 } from "./styles";
-import { useContext } from "react";
 import * as z from "zod";
-import { PorcoesContext } from "../../../../data/porcaoContext";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+	createPorcao,
+	deletePorcao,
+	porcaoGet,
+} from "../../../../data/porcaoContext";
 
 const newPorcaoFormSchema = z.object({
 	tipo: z.string().nonempty(),
@@ -26,8 +30,6 @@ const newPorcaoFormSchema = z.object({
 type NewPorcaoFormInputs = z.infer<typeof newPorcaoFormSchema>;
 
 const PorcaoAdicionar = () => {
-	const { createPorcao, porcoes, deletePorcao } = useContext(PorcoesContext);
-
 	const {
 		register,
 		handleSubmit,
@@ -37,19 +39,32 @@ const PorcaoAdicionar = () => {
 		resolver: zodResolver(newPorcaoFormSchema),
 	});
 
-	async function handleCreateNewPorcao(data: NewPorcaoFormInputs) {
-		const { tipo, preco, tamanho } = data;
+	const { data: porcoes, refetch } = useQuery({
+		queryKey: ["porcao"],
+		queryFn: porcaoGet,
+	});
 
-		await createPorcao({
-			tipo,
-			preco,
-			tamanho,
-		});
+	const { mutateAsync: adicionaPorcao } = useMutation({
+		mutationFn: createPorcao,
+		onSuccess: () => {
+			refetch()
+		}
+	});
+
+	const { mutateAsync: removePorcao } = useMutation({
+		mutationFn: deletePorcao,
+		onSuccess: () => {
+			refetch()
+		}
+	});
+
+	async function handleCreateNewPorcao(data: NewPorcaoFormInputs) {
+		await adicionaPorcao(data);
 		reset();
 	}
 
 	async function handleDeletePorcao(id: number) {
-		await deletePorcao(id);
+		await removePorcao(id);
 	}
 
 	return (
@@ -87,7 +102,7 @@ const PorcaoAdicionar = () => {
 					</AddPorcao>
 				</form>
 				<CreatedPorcaoContainer>
-					{porcoes.map((porcao) => {
+					{porcoes?.map((porcao) => {
 						return (
 							<CreatedPorcaoContain key={porcao.id}>
 								<CreatedPorcaoText>
